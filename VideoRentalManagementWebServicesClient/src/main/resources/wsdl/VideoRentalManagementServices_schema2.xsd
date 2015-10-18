@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://vo.vrms.c4networks.com/" xmlns:tns="http://vo.vrms.c4networks.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:complexType name="CustomerDetails">
+    <xs:sequence>
+      <xs:element name="customerId" type="xs:int" minOccurs="0"/>
+      <xs:element name="vrmsId" type="xs:string" minOccurs="0"/>
+      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="address" type="xs:string" minOccurs="0"/>
+      <xs:element name="phone" type="xs:string" minOccurs="0"/>
+      <xs:element name="mobile" type="xs:string" minOccurs="0"/>
+      <xs:element name="createdBy" type="xs:int" minOccurs="0"/>
+      <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="lastModifiedBy" type="xs:int" minOccurs="0"/>
+      <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+      <xs:element name="categoriesesForCreatedBy" type="tns:CustomerDetails" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="rentalDetailses" type="tns:CustomerDetails" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="categoriesesForLastModifiedBy" type="tns:CustomerDetails" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="moviesesForCreatedBy" type="tns:CustomerDetails" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="moviesesForLastModifiedBy" type="tns:CustomerDetails" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

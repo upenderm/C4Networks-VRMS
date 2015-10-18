@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<web-app id="WebApp_ID" version="2.5"
+	xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+	<display-name>VideoRentalManagementWebServices</display-name>
+
+	<listener>
+		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
+	</listener>
+	<welcome-file-list>
+		<welcome-file>index.jsp</welcome-file>
+	</welcome-file-list>
+
+	<!-- Configure JAX-WS RI (Metro) servlet to respond on the WorkflowWebServices 
+		context-root -->
+	<servlet>
+		<servlet-name>VideoRentalManagementWebServices</servlet-name>
+		<servlet-class>com.sun.xml.ws.transport.http.servlet.WSServlet</servlet-class>
+		<load-on-startup>1</load-on-startup>
+	</servlet>
+
+	<!-- Configure a general URL mapping to include /services/* on ACSWebServices 
+		servlet context-root -->
+	<servlet-mapping>
+		<servlet-name>VideoRentalManagementWebServices</servlet-name>
+		<url-pattern>/services/*</url-pattern>
+	</servlet-mapping>
+ </web-app>

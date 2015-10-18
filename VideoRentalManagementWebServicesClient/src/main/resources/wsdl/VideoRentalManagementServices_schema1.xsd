@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<xs:schema version="1.0" targetNamespace="http://webservices.vrms.c4networks.com/" xmlns:ns1="http://vo.vrms.c4networks.com/" xmlns:tns="http://webservices.vrms.c4networks.com/" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+
+  <xs:import namespace="http://vo.vrms.c4networks.com/" schemaLocation="VideoRentalManagementServices_schema2.xsd"/>
+
+  <xs:element name="getAllCustomers" type="tns:getAllCustomers"/>
+
+  <xs:element name="getAllCustomersResponse" type="tns:getAllCustomersResponse"/>
+
+  <xs:complexType name="getAllCustomers">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="getAllCustomersResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:CustomerDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+</xs:schema>
+

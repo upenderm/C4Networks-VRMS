@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+			"-//OpenSymphony Group//XWork Validator 1.0//EN"
+				"http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+
+	<field name="firstName">
+		<field-validator type="requiredstring">
+			<message>First Name is required</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[([a-zA-Z&-:\s]*)]]></param>
+			<message>First Name is invalid</message>
+		</field-validator>
+	</field>
+	
+	<field name="lastName">
+		<field-validator type="requiredstring">
+			<message>Last Name is required</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[([a-zA-Z&-:\s]*)]]></param>
+			<message>Last Name is invalid</message>
+		</field-validator>
+	</field>
+	
+	<field name="email">
+		<field-validator type="required">
+			<message>Email is required</message>
+		</field-validator>
+		<field-validator type="email">
+			<message>Email is not valid</message>
+		</field-validator>
+	</field>
+	
+	<field name="address">
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[([a-zA-Z0-9&-:\s]*)]]></param>
+			<message>Last Name is invalid</message>
+		</field-validator>
+	</field>
+	
+	<field name="phone">
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[([0-9]*)]]></param>
+			<message>Phone is invalid</message>
+		</field-validator>
+	</field>
+	
+	<field name="mobile">
+		<field-validator type="requiredstring">
+			<message>Mobile is required</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[([0-9]*)]]></param>
+			<message>Mobile is not valid</message>
+		</field-validator>
+		<field-validator type="stringlength">
+	        <param name="minLength">10</param>
+	        <param name="maxLength">10</param>
+	        <message>Your mobile number should be ${minLength} characters</message>
+    	</field-validator>
+	</field>
+
+</validators>

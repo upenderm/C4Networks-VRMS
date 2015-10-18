@@ -1,0 +1,87 @@
+body{
+	font-family: verdana;
+	background-color : #FBFBEF;
+}
+table{
+	background-color: #cccccc;
+	border-style: solid;
+	border-color: #990000;
+	
+}
+td{
+	font-family: verdana;
+	border-spacing: 2px;
+	
+}
+a img {
+	width: 40px;
+	height: 40px;
+}
+h2 {
+	text-align: center;
+	color: #800000;
+}
+.smallTable{
+	width: 30%;	
+	border-radius:10px;
+	font-size: 11px;
+	margin: auto;
+}
+.midTable{
+	width: 50%;
+	border-radius:10px;
+	font-size: 11px;
+	margin: auto;
+}
+.bigTable{
+	width: 90%;
+	border-radius:10px;
+	font-size: 11px;
+	margin: auto;
+}
+.keyClass{
+	font-weight: bold;
+	font-style: 
+}
+.valueClass{
+	
+}
+.submitClass{
+	height: 40px;
+	width: 150px;
+	font-weight: bold;
+}
+.submitClassExt{
+	height: 50px;
+	width: 300px;
+	font-weight: bold;
+}
+.headerRow{
+	font-weight: bold;
+	color: #800000;
+	
+}
+.errorMsg {
+	margin: auto;
+	color: red;
+	background : #F3E2A9;
+	border:1px solid #FF8000;
+	width: 30%;
+	font-size: small;
+	border-radius:10px;
+}
+.successMsg {
+	margin: auto;
+	color: green;
+	background : #FBF5EF;
+	border:1px solid #DBA901;
+	width: 30%;
+	font-size: small;
+	border-radius:10px;
+}
+.homeImg {
+	text-align: center;
+}
+.selwidth {
+	width: 200px;
+}
