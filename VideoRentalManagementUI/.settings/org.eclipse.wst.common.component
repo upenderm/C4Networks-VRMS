@@ -10,7 +10,7 @@
         <dependent-module archiveName="vrms-webservices-client-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/VideoRentalManagementWebServicesClient/VideoRentalManagementWebServicesClient">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="context-root" value="vrms-ui"/>
+        <property name="context-root" value="VideoRentalManagementUI"/>
         <property name="java-output-path" value="/VideoRentalManagementUI/target/classes"/>
     </wb-module>
 </project-modules>

@@ -52,12 +52,7 @@
             </key>
             <one-to-many class="com.c4networks.vrms.vo.Categories" />
         </set>
-        <set name="rentalDetailses" inverse="true">
-            <key>
-                <column name="customer_id" not-null="true" />
-            </key>
-            <one-to-many class="com.c4networks.vrms.vo.RentalDetails" />
-        </set>
+        
         <set name="categoriesesForLastModifiedBy" inverse="true">
             <key>
                 <column name="last_modified_by" not-null="true" />
