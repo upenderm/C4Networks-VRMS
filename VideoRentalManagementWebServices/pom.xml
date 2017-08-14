@@ -22,56 +22,64 @@
 			<artifactId>vrms-services</artifactId>
 			<version>1.0.0-SNAPSHOT</version>
 		</dependency>
-		
-
+<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-rt -->
+<!-- <dependency>
+    <groupId>com.sun.xml.ws</groupId>
+    <artifactId>jaxws-rt</artifactId>
+    <version>2.2.10</version>
+    <type>pom</type>
+</dependency>
+ -->
 	</dependencies>
 
 	<build>
 		<finalName>VideoRentalManagementWebServices</finalName>
-		<plugins>
-			<plugin>
-				<groupId>org.jvnet.jax-ws-commons</groupId>
-				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>2.2</version>
-				<executions>
-					<execution>
-						<id>VideoRentalManagementServicesWS</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>wsgen</goal>
-						</goals>
-						<configuration>
-							<target>2.1</target>
-							<sei>com.c4networks.vrms.webservices.VideoRentalManagementServicesWS</sei>
-							<genWsdl>true</genWsdl>
-							<!--<resourceDestDir>${project.build.directory}/generated-sources/wsdl/external</resourceDestDir> -->
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-			<plugin>
-				<artifactId>maven-resources-plugin</artifactId>
-				<version>2.7</version>
-				<executions>
-					<execution>
-						<id>copy-resources</id>
-						<!-- here the phase you need -->
-						<phase>compile</phase>
-						<goals>
-							<goal>copy-resources</goal>
-						</goals>
-						<configuration>
-							<outputDirectory>../VideoRentalManagementWebServicesClient/src/main/resources/wsdl</outputDirectory>
-							<resources>
-								<resource>
-									<directory>target/generated-sources/wsdl</directory>
-									<filtering>true</filtering>
-								</resource>
-							</resources>
-						</configuration>
-					</execution>
-				</executions>
-			</plugin>
-		</plugins>
+		<!-- <pluginManagement> -->
+			<plugins>
+				<plugin>
+					<groupId>org.jvnet.jax-ws-commons</groupId>
+					<artifactId>jaxws-maven-plugin</artifactId>
+					<version>2.2</version>
+					<executions>
+						<execution>
+							<id>VideoRentalManagementServicesWS</id>
+							<phase>compile</phase>
+							<goals>
+								<goal>wsgen</goal>
+							</goals>
+							<configuration>
+								<target>2.1</target>
+								<sei>com.c4networks.vrms.webservices.VideoRentalManagementServicesWS</sei>
+								<genWsdl>true</genWsdl>
+								<resourceDestDir>${project.build.directory}/generated-sources/wsdl/external</resourceDestDir>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+				<plugin>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.7</version>
+					<executions>
+						<execution>
+							<id>copy-resources</id>
+							<!-- here the phase you need -->
+							<phase>compile</phase>
+							<goals>
+								<goal>copy-resources</goal>
+							</goals>
+							<configuration>
+								<outputDirectory>../VideoRentalManagementWebServicesClient/src/main/resources/wsdl</outputDirectory>
+								<resources>
+									<resource>
+										<directory>target/generated-sources/wsdl</directory>
+										<filtering>true</filtering>
+									</resource>
+								</resources>
+							</configuration>
+						</execution>
+					</executions>
+				</plugin>
+			</plugins>
+		<!-- </pluginManagement> -->
 	</build>
 </project>
