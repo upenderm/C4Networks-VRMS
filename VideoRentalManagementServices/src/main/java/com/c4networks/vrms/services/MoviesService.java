@@ -1,11 +1,14 @@
 package com.c4networks.vrms.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.c4networks.vrms.vo.Categories;
 import com.c4networks.vrms.services.dao.CategoriesDAO;
@@ -15,17 +18,23 @@ import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
 import com.c4networks.vrms.vo.Movies;
 import com.c4networks.vrms.services.dao.MoviesDAO;
 
+@Service
 public class MoviesService {
+	
+	@Autowired
+	private MoviesDAO moviesDAO;
 
 	private static final Logger logger = Logger.getLogger(CustomerDetailsService.class.getName());
 	
 	public List<Movies> getMoviesList() {
 		logger.info("in getMoviesList() of MoviesService");
-		List<Movies> moviesList;
-		MoviesDAO moviesDAO = new MoviesDAO();
-		moviesList = moviesDAO.findAll();
-		logger.info("Movies List size :"+moviesList.size());
-		
+		List<Movies> moviesList=new ArrayList<>();
+		try {
+			moviesList = moviesDAO.findAll();
+			logger.info("Movies List size :"+moviesList.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return moviesList;
 	}
 
@@ -36,7 +45,6 @@ public class MoviesService {
 		try {
 			session = HibernateSessionFactory.getSession();
 			transaction = session.beginTransaction();
-			MoviesDAO dao = new MoviesDAO();
 		
 			Movies bean = new Movies();
 			bean.setMovieName(action.getMovieName().trim());
@@ -52,7 +60,7 @@ public class MoviesService {
 			bean.setCustomerDetailsByLastModifiedBy(customerDetails);
 			bean.setLastModifiedDate(new Date());
 			
-			dao.save(bean);
+			moviesDAO.save(bean);
 			transaction.commit();
 			if(transaction.wasCommitted()){
 				result = 1;

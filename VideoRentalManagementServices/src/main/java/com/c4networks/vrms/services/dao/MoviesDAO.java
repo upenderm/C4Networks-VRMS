@@ -7,6 +7,7 @@ import org.apache.commons.logging.LogFactory;
 import org.hibernate.LockMode;
 import org.hibernate.Query;
 import org.hibernate.criterion.Example;
+import org.springframework.stereotype.Repository;
 
 import com.c4networks.vrms.services.hibernate.BaseHibernateDAO;
 import com.c4networks.vrms.vo.Movies;
@@ -18,6 +19,7 @@ import com.c4networks.vrms.vo.Movies;
  * @author MyEclipse Persistence Tools
  */
 
+@Repository
 public class MoviesDAO extends BaseHibernateDAO {
 	private static final Log log = LogFactory.getLog(MoviesDAO.class);
 	// property constants

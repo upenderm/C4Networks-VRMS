@@ -1,27 +1,38 @@
 package com.c4networks.vrms.services;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.c4networks.vrms.vo.CustomerDetails;
 import com.c4networks.vrms.services.dao.CustomerDetailsDAO;
+import com.c4networks.vrms.services.dao.MoviesDAO;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
+import com.c4networks.vrms.vo.CustomerDetails;
+import com.c4networks.vrms.vo.Movies;
 
+@Service
 public class CustomerDetailsService {
 
+	@Autowired
+	private CustomerDetailsDAO customerDetailsDAO;
+	
 	private static final Logger logger = Logger.getLogger(CustomerDetailsService.class.getName());
-			
-	public List<CustomerDetails> getCustomers(){
+
+	public List<CustomerDetails> getCustomers() {
 		logger.info("In getCustomers() of CustomerDetailsService");
-		List<CustomerDetails> customerList;
-		CustomerDetailsDAO customerDetailsDAO = new CustomerDetailsDAO();
-		customerList = customerDetailsDAO.findAll();
-		logger.info("Customer List size :"+customerList.size());
-		
+		List<CustomerDetails> customerList = new ArrayList<>();
+		try {
+			customerList = customerDetailsDAO.findAll();
+			logger.info("Customer List size :" + customerList.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return customerList;
 	}
 
@@ -32,12 +43,11 @@ public class CustomerDetailsService {
 		try {
 			session = HibernateSessionFactory.getSession();
 			transaction = session.beginTransaction();
-			CustomerDetailsDAO dao = new CustomerDetailsDAO();
-		
+
 			CustomerDetails bean = new CustomerDetails();
 
 			String vrmsReference = "VRMS";
-			List<String> maxVrmsReference = dao.getMaxVrmsReference();
+			List<String> maxVrmsReference = customerDetailsDAO.getMaxVrmsReference();
 			logger.info("Size-------" + maxVrmsReference.size());
 			if (maxVrmsReference.size() > 0) {
 				String maxId = (String) maxVrmsReference.get(0);
@@ -67,17 +77,18 @@ public class CustomerDetailsService {
 			bean.setCreatedDate(new Date());
 			bean.setLastModifiedBy(1);
 			bean.setLastModifiedDate(new Date());
-			
-			dao.save(bean);
+
+			customerDetailsDAO.save(bean);
 			transaction.commit();
-			if(transaction.wasCommitted()){
+			if (transaction.wasCommitted()) {
 				result = 1;
 			}
-		
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 
 		return result;
 	}
+
 }

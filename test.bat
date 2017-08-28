@@ -1,9 +1,10 @@
-@echo off
-rmdir /q /s rd "C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\VideoRentalManagementWebServices"
-del C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\VideoRentalManagementWebServices.war
-copy "E:\GIT Codebase\C4Networks-VRMS-master\VideoRentalManagementWebServices\target\*.war" "C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps"
+@echo on
+call mvn clean install
+REM rmdir /q /s rd "C:\Apache\apache-tomcat-7.0.79\webapps\VideoRentalManagementWebServices"
+REM del C:\Apache\apache-tomcat-7.0.79\webapps\VideoRentalManagementWebServices.war
+REM copy "G:\Codebase\C4Networks-VRMS\VideoRentalManagementWebServices\target\*.war" "C:\Apache\apache-tomcat-7.0.79\webapps"
 
-rmdir /q /s rd "C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\VideoRentalManagementUI"
-del C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps\VideoRentalManagementUI.war
-copy "E:\GIT Codebase\C4Networks-VRMS-master\VideoRentalManagementUI\target\*.war" "C:\Program Files\Apache Software Foundation\Tomcat 7.0\webapps"
+REM rmdir /q /s rd "C:\Apache\apache-tomcat-7.0.79\webapps\VideoRentalManagementUI"
+REM del C:\Apache\apache-tomcat-7.0.79\webapps\VideoRentalManagementUI.war
+REM copy "G:\Codebase\C4Networks-VRMS\VideoRentalManagementUI\target\*.war" "C:\Apache\apache-tomcat-7.0.79\webapps"
 pause

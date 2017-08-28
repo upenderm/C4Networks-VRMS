@@ -2,7 +2,7 @@
 <jsp:directive.page import="java.util.ArrayList"  />
 <% final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(this.getClass());
 logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 <link type="text/css" href="css/vrms.css" rel="stylesheet" />
@@ -10,8 +10,8 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 </head>
 <body>
 	<s:form theme="simple" action="customerAction_viewCustomerList.action">
-	<center>
-		<table class="smallTable">
+	
+		<table class="bigTable">
 			<tr>
 				<td class="keyClass"><s:submit cssClass="submitClass" value="View Customer List"></s:submit></td>
 				<td class="valueClass"><s:submit cssClass="submitClass" value="Add Customer" action="customerAction_defineCustomer"></s:submit></td>
@@ -30,7 +30,7 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 			</tr>
 		</table>
 		<img alt="" src="images/Home.png" />
-	</center>	
+	
 	</s:form>
 </body>
 </html>

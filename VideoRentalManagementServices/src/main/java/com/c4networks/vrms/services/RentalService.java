@@ -108,8 +108,8 @@ public class RentalService {
 		return result;
 	}
 
-	public Integer closeRental(RentalDetails action, boolean bonusCheck) {
-		logger.info("rental id received is :" + action.getRentalDetailsId());
+	public Integer closeRental(RentalDetails rentalDetails, boolean bonusCheck) {
+		logger.info("rental id received is :" + rentalDetails.getRentalDetailsId());
 
 		Session session = null;
 		Transaction transaction = null;
@@ -120,17 +120,17 @@ public class RentalService {
 
 			RentalDetailsDAO dao = new RentalDetailsDAO();
 
-			RentalDetails bean = dao.findById(action.getRentalDetailsId());
+			RentalDetails bean = dao.findById(rentalDetails.getRentalDetailsId());
 
 			bean.setRentalStatus("CLOSE");
 			bean.setActualReturnDate(new Date());
 
-			bean.setComments(action.getComments());
-			bean.setAmount(action.getAmount());
+			bean.setComments(rentalDetails.getComments());
+			bean.setAmount(rentalDetails.getAmount());
 
 			session.update(bean);
 
-			logger.info("bonus check from action is :" + bonusCheck);
+			logger.info("bonus check from rentalDetails is :" + bonusCheck);
 			if (bonusCheck) {
 				List<RentalDetails> list = dao.findByProperty("customerDetails.customerId", bean.getCustomerDetails().getCustomerId(), "bonusStatus", "ACTIVE");
 				for (RentalDetails rd : list) {

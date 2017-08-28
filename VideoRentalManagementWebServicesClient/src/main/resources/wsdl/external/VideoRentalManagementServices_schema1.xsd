@@ -7,9 +7,121 @@
 
   <xs:element name="addCustomerResponse" type="tns:addCustomerResponse"/>
 
+  <xs:element name="addMovies" type="tns:addMovies"/>
+
+  <xs:element name="addMoviesResponse" type="tns:addMoviesResponse"/>
+
+  <xs:element name="closeRental" type="tns:closeRental"/>
+
+  <xs:element name="closeRentalResponse" type="tns:closeRentalResponse"/>
+
   <xs:element name="getAllCustomers" type="tns:getAllCustomers"/>
 
   <xs:element name="getAllCustomersResponse" type="tns:getAllCustomersResponse"/>
+
+  <xs:element name="getRentalsByCustomerId" type="tns:getRentalsByCustomerId"/>
+
+  <xs:element name="getRentalsByCustomerIdResponse" type="tns:getRentalsByCustomerIdResponse"/>
+
+  <xs:element name="rentalFinalize" type="tns:rentalFinalize"/>
+
+  <xs:element name="rentalFinalizeResponse" type="tns:rentalFinalizeResponse"/>
+
+  <xs:element name="viewActiveRentals" type="tns:viewActiveRentals"/>
+
+  <xs:element name="viewActiveRentalsResponse" type="tns:viewActiveRentalsResponse"/>
+
+  <xs:element name="viewAllCategories" type="tns:viewAllCategories"/>
+
+  <xs:element name="viewAllCategoriesResponse" type="tns:viewAllCategoriesResponse"/>
+
+  <xs:element name="viewAllMovies" type="tns:viewAllMovies"/>
+
+  <xs:element name="viewAllMoviesResponse" type="tns:viewAllMoviesResponse"/>
+
+  <xs:element name="viewAllRentals" type="tns:viewAllRentals"/>
+
+  <xs:element name="viewAllRentalsResponse" type="tns:viewAllRentalsResponse"/>
+
+  <xs:element name="viewBonusByCustomerById" type="tns:viewBonusByCustomerById"/>
+
+  <xs:element name="viewBonusByCustomerByIdResponse" type="tns:viewBonusByCustomerByIdResponse"/>
+
+  <xs:element name="viewRentalHistoryByCustomerId" type="tns:viewRentalHistoryByCustomerId"/>
+
+  <xs:element name="viewRentalHistoryByCustomerIdResponse" type="tns:viewRentalHistoryByCustomerIdResponse"/>
+
+  <xs:complexType name="viewAllMovies">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllMoviesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:movies" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="movies">
+    <xs:sequence>
+      <xs:element name="copies" type="xs:int" minOccurs="0"/>
+      <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="movieDesc" type="xs:string" minOccurs="0"/>
+      <xs:element name="movieId" type="xs:int" minOccurs="0"/>
+      <xs:element name="movieName" type="xs:string" minOccurs="0"/>
+      <xs:element name="rentalDetailses" type="ns1:CustomerDetails" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewActiveRentals">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="viewActiveRentalsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:rentalDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rentalDetails">
+    <xs:sequence>
+      <xs:element name="actualReturnDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="amount" type="xs:int" minOccurs="0"/>
+      <xs:element name="bonusPoints" type="xs:int" minOccurs="0"/>
+      <xs:element name="bonusStatus" type="xs:string" minOccurs="0"/>
+      <xs:element name="comments" type="xs:string" minOccurs="0"/>
+      <xs:element name="expectedReturnDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="lateCharges" type="xs:int" minOccurs="0"/>
+      <xs:element name="rentalDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="rentalDetailsId" type="xs:int" minOccurs="0"/>
+      <xs:element name="rentalId" type="xs:string" minOccurs="0"/>
+      <xs:element name="rentalStatus" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewRentalHistoryByCustomerId">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewRentalHistoryByCustomerIdResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:rentalDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRentalsByCustomerId">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getRentalsByCustomerIdResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:rentalDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
 
   <xs:complexType name="getAllCustomers">
     <xs:sequence/>
@@ -28,6 +140,88 @@
   </xs:complexType>
 
   <xs:complexType name="addCustomerResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rentalFinalize">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rentalFinalizeResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addMovies">
+    <xs:sequence>
+      <xs:element name="arg0" type="tns:movies" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addMoviesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllCategories">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllCategoriesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:categories" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="categories">
+    <xs:sequence>
+      <xs:element name="categoryDesc" type="xs:string" minOccurs="0"/>
+      <xs:element name="categoryId" type="xs:int" minOccurs="0"/>
+      <xs:element name="categoryName" type="xs:string" minOccurs="0"/>
+      <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="movieses" type="tns:categories" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
+      <xs:element name="price" type="xs:int" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllRentals">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllRentalsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="tns:rentalDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewBonusByCustomerById">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewBonusByCustomerByIdResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="closeRental">
+    <xs:sequence>
+      <xs:element name="arg0" type="tns:rentalDetails" minOccurs="0"/>
+      <xs:element name="arg1" type="xs:boolean"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="closeRentalResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:int" minOccurs="0"/>
     </xs:sequence>
