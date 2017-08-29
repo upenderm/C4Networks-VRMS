@@ -1,27 +1,11 @@
 package com.c4networks.vrms.services;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.log4j.Logger;
-
 import com.c4networks.vrms.vo.Categories;
-import com.c4networks.vrms.services.dao.CategoriesDAO;
 
-public class CategoriesDetailsService {
-	private static final Logger logger = Logger.getLogger(CategoriesDetailsService.class.getName());
+public interface CategoriesDetailsService {
 
-	public List<Categories> getCategories() {
-		logger.info("in getCategories() of CategoriesDetailsService");
-		List<Categories> categoriesList = new ArrayList<>();
-		try {
-			CategoriesDAO categoriesDAO = new CategoriesDAO();
-			categoriesList = categoriesDAO.findAll();
-			logger.info("Categories list size :" + categoriesList.size());
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return categoriesList;
-	}
-
+	public List<Categories> getCategories();
+	
 }
