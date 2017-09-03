@@ -7,6 +7,7 @@ import javax.jws.WebMethod;
 import javax.jws.WebService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.SpringBeanAutowiringSupport;
 
 import com.c4networks.vrms.services.CategoriesDetailsService;
 import com.c4networks.vrms.services.CustomerDetailsService;
@@ -37,6 +38,7 @@ public class VideoRentalManagementServicesWS {
 	public List<CustomerDetails> getAllCustomers() {
 		List<CustomerDetails> custDtlsList = new ArrayList<>();
 		try {
+			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 			custDtlsList = customerDetailsService.getCustomers();
 		} catch (Exception e) {
 			e.printStackTrace();

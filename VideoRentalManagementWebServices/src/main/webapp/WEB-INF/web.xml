@@ -7,6 +7,10 @@
 	<listener>
 		<listener-class>com.sun.xml.ws.transport.http.servlet.WSServletContextListener</listener-class>
 	</listener>
+	
+	<listener>
+		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
+	</listener>
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
@@ -25,4 +29,4 @@
 		<servlet-name>VideoRentalManagementWebServices</servlet-name>
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
- </web-app>
+</web-app>

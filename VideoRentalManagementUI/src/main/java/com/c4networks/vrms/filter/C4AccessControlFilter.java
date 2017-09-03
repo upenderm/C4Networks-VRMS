@@ -27,14 +27,14 @@ public class C4AccessControlFilter implements Filter{
 			throws IOException, ServletException {
 		logger.info("C4AccessControlFilter.doFilter");
 		
-		String token = (String)request.getAttribute("c4Token");
+		/*String token = (String)request.getAttribute("c4Token");
 		if(token.equals("C4NetworkToken")){
 			filterChain.doFilter(request, response);
 		}
 		else{
 			request.getRequestDispatcher("/error").forward(request, response);
-		}
-		
+		}*/
+		filterChain.doFilter(request, response);
 	}
 
 	@Override

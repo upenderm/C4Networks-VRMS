@@ -8,13 +8,14 @@ import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
 import com.c4networks.vrms.services.dao.CustomerDetailsDAOImpl;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
 import com.c4networks.vrms.vo.CustomerDetails;
 
-@Service
+@Component
 public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 	@Autowired

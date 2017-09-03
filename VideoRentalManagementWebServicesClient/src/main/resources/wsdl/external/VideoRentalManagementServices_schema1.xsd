@@ -145,18 +145,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="rentalFinalize">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="rentalFinalizeResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="addMovies">
     <xs:sequence>
       <xs:element name="arg0" type="tns:movies" minOccurs="0"/>
@@ -166,6 +154,18 @@
   <xs:complexType name="addMoviesResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rentalFinalize">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="rentalFinalizeResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 

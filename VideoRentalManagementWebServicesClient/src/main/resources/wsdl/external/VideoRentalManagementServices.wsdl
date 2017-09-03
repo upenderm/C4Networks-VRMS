@@ -9,23 +9,11 @@
       <xsd:import namespace="http://vo.vrms.c4networks.com/" schemaLocation="VideoRentalManagementServices_schema2.xsd"/>
     </xsd:schema>
   </types>
-  <message name="rentalFinalize">
-    <part name="parameters" element="tns:rentalFinalize"/>
-  </message>
-  <message name="rentalFinalizeResponse">
-    <part name="parameters" element="tns:rentalFinalizeResponse"/>
-  </message>
   <message name="getAllCustomers">
     <part name="parameters" element="tns:getAllCustomers"/>
   </message>
   <message name="getAllCustomersResponse">
     <part name="parameters" element="tns:getAllCustomersResponse"/>
-  </message>
-  <message name="addCustomer">
-    <part name="parameters" element="tns:addCustomer"/>
-  </message>
-  <message name="addCustomerResponse">
-    <part name="parameters" element="tns:addCustomerResponse"/>
   </message>
   <message name="addMovies">
     <part name="parameters" element="tns:addMovies"/>
@@ -33,11 +21,11 @@
   <message name="addMoviesResponse">
     <part name="parameters" element="tns:addMoviesResponse"/>
   </message>
-  <message name="viewAllMovies">
-    <part name="parameters" element="tns:viewAllMovies"/>
+  <message name="addCustomer">
+    <part name="parameters" element="tns:addCustomer"/>
   </message>
-  <message name="viewAllMoviesResponse">
-    <part name="parameters" element="tns:viewAllMoviesResponse"/>
+  <message name="addCustomerResponse">
+    <part name="parameters" element="tns:addCustomerResponse"/>
   </message>
   <message name="viewAllRentals">
     <part name="parameters" element="tns:viewAllRentals"/>
@@ -45,17 +33,23 @@
   <message name="viewAllRentalsResponse">
     <part name="parameters" element="tns:viewAllRentalsResponse"/>
   </message>
+  <message name="viewAllMovies">
+    <part name="parameters" element="tns:viewAllMovies"/>
+  </message>
+  <message name="viewAllMoviesResponse">
+    <part name="parameters" element="tns:viewAllMoviesResponse"/>
+  </message>
   <message name="closeRental">
     <part name="parameters" element="tns:closeRental"/>
   </message>
   <message name="closeRentalResponse">
     <part name="parameters" element="tns:closeRentalResponse"/>
   </message>
-  <message name="viewAllCategories">
-    <part name="parameters" element="tns:viewAllCategories"/>
+  <message name="rentalFinalize">
+    <part name="parameters" element="tns:rentalFinalize"/>
   </message>
-  <message name="viewAllCategoriesResponse">
-    <part name="parameters" element="tns:viewAllCategoriesResponse"/>
+  <message name="rentalFinalizeResponse">
+    <part name="parameters" element="tns:rentalFinalizeResponse"/>
   </message>
   <message name="viewActiveRentals">
     <part name="parameters" element="tns:viewActiveRentals"/>
@@ -69,50 +63,52 @@
   <message name="viewBonusByCustomerByIdResponse">
     <part name="parameters" element="tns:viewBonusByCustomerByIdResponse"/>
   </message>
-  <message name="viewRentalHistoryByCustomerId">
-    <part name="parameters" element="tns:viewRentalHistoryByCustomerId"/>
-  </message>
-  <message name="viewRentalHistoryByCustomerIdResponse">
-    <part name="parameters" element="tns:viewRentalHistoryByCustomerIdResponse"/>
-  </message>
   <message name="getRentalsByCustomerId">
     <part name="parameters" element="tns:getRentalsByCustomerId"/>
   </message>
   <message name="getRentalsByCustomerIdResponse">
     <part name="parameters" element="tns:getRentalsByCustomerIdResponse"/>
   </message>
+  <message name="viewAllCategories">
+    <part name="parameters" element="tns:viewAllCategories"/>
+  </message>
+  <message name="viewAllCategoriesResponse">
+    <part name="parameters" element="tns:viewAllCategoriesResponse"/>
+  </message>
+  <message name="viewRentalHistoryByCustomerId">
+    <part name="parameters" element="tns:viewRentalHistoryByCustomerId"/>
+  </message>
+  <message name="viewRentalHistoryByCustomerIdResponse">
+    <part name="parameters" element="tns:viewRentalHistoryByCustomerIdResponse"/>
+  </message>
   <portType name="VideoRentalManagementServicesManager">
-    <operation name="rentalFinalize">
-      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/rentalFinalizeRequest" message="tns:rentalFinalize"/>
-      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/rentalFinalizeResponse" message="tns:rentalFinalizeResponse"/>
-    </operation>
     <operation name="getAllCustomers">
       <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/getAllCustomersRequest" message="tns:getAllCustomers"/>
       <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/getAllCustomersResponse" message="tns:getAllCustomersResponse"/>
-    </operation>
-    <operation name="addCustomer">
-      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/addCustomerRequest" message="tns:addCustomer"/>
-      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/addCustomerResponse" message="tns:addCustomerResponse"/>
     </operation>
     <operation name="addMovies">
       <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/addMoviesRequest" message="tns:addMovies"/>
       <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/addMoviesResponse" message="tns:addMoviesResponse"/>
     </operation>
-    <operation name="viewAllMovies">
-      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllMoviesRequest" message="tns:viewAllMovies"/>
-      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllMoviesResponse" message="tns:viewAllMoviesResponse"/>
+    <operation name="addCustomer">
+      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/addCustomerRequest" message="tns:addCustomer"/>
+      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/addCustomerResponse" message="tns:addCustomerResponse"/>
     </operation>
     <operation name="viewAllRentals">
       <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllRentalsRequest" message="tns:viewAllRentals"/>
       <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllRentalsResponse" message="tns:viewAllRentalsResponse"/>
     </operation>
+    <operation name="viewAllMovies">
+      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllMoviesRequest" message="tns:viewAllMovies"/>
+      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllMoviesResponse" message="tns:viewAllMoviesResponse"/>
+    </operation>
     <operation name="closeRental">
       <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/closeRentalRequest" message="tns:closeRental"/>
       <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/closeRentalResponse" message="tns:closeRentalResponse"/>
     </operation>
-    <operation name="viewAllCategories">
-      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllCategoriesRequest" message="tns:viewAllCategories"/>
-      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllCategoriesResponse" message="tns:viewAllCategoriesResponse"/>
+    <operation name="rentalFinalize">
+      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/rentalFinalizeRequest" message="tns:rentalFinalize"/>
+      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/rentalFinalizeResponse" message="tns:rentalFinalizeResponse"/>
     </operation>
     <operation name="viewActiveRentals">
       <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewActiveRentalsRequest" message="tns:viewActiveRentals"/>
@@ -122,36 +118,22 @@
       <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewBonusByCustomerByIdRequest" message="tns:viewBonusByCustomerById"/>
       <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewBonusByCustomerByIdResponse" message="tns:viewBonusByCustomerByIdResponse"/>
     </operation>
-    <operation name="viewRentalHistoryByCustomerId">
-      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewRentalHistoryByCustomerIdRequest" message="tns:viewRentalHistoryByCustomerId"/>
-      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewRentalHistoryByCustomerIdResponse" message="tns:viewRentalHistoryByCustomerIdResponse"/>
-    </operation>
     <operation name="getRentalsByCustomerId">
       <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/getRentalsByCustomerIdRequest" message="tns:getRentalsByCustomerId"/>
       <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/getRentalsByCustomerIdResponse" message="tns:getRentalsByCustomerIdResponse"/>
     </operation>
+    <operation name="viewAllCategories">
+      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllCategoriesRequest" message="tns:viewAllCategories"/>
+      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewAllCategoriesResponse" message="tns:viewAllCategoriesResponse"/>
+    </operation>
+    <operation name="viewRentalHistoryByCustomerId">
+      <input wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewRentalHistoryByCustomerIdRequest" message="tns:viewRentalHistoryByCustomerId"/>
+      <output wsam:Action="http://webservices.vrms.c4networks.com/VideoRentalManagementServicesManager/viewRentalHistoryByCustomerIdResponse" message="tns:viewRentalHistoryByCustomerIdResponse"/>
+    </operation>
   </portType>
   <binding name="VideoRentalManagementServicesPortBinding" type="tns:VideoRentalManagementServicesManager">
     <soap:binding transport="http://schemas.xmlsoap.org/soap/http" style="document"/>
-    <operation name="rentalFinalize">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
     <operation name="getAllCustomers">
-      <soap:operation soapAction=""/>
-      <input>
-        <soap:body use="literal"/>
-      </input>
-      <output>
-        <soap:body use="literal"/>
-      </output>
-    </operation>
-    <operation name="addCustomer">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -169,7 +151,7 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="viewAllMovies">
+    <operation name="addCustomer">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -187,6 +169,15 @@
         <soap:body use="literal"/>
       </output>
     </operation>
+    <operation name="viewAllMovies">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
     <operation name="closeRental">
       <soap:operation soapAction=""/>
       <input>
@@ -196,7 +187,7 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="viewAllCategories">
+    <operation name="rentalFinalize">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -223,7 +214,7 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="viewRentalHistoryByCustomerId">
+    <operation name="getRentalsByCustomerId">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>
@@ -232,7 +223,16 @@
         <soap:body use="literal"/>
       </output>
     </operation>
-    <operation name="getRentalsByCustomerId">
+    <operation name="viewAllCategories">
+      <soap:operation soapAction=""/>
+      <input>
+        <soap:body use="literal"/>
+      </input>
+      <output>
+        <soap:body use="literal"/>
+      </output>
+    </operation>
+    <operation name="viewRentalHistoryByCustomerId">
       <soap:operation soapAction=""/>
       <input>
         <soap:body use="literal"/>

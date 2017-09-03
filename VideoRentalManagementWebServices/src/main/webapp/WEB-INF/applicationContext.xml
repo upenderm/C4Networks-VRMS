@@ -8,11 +8,10 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-
-	<context:component-scan base-package="com.c4networks.vrms.webservices" />
-
 	<context:annotation-config />
 	
-	<import resource="classpath:applicationContext.xml"/>
-
+	<context:component-scan base-package="com.c4networks.vrms" />
+	
+	<import resource="classpath*:spring-vrms-services.xml"/>
+  
 </beans>
