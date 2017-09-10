@@ -10,11 +10,8 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.c4networks.vrms.services.dao.CategoriesDAO;
 import com.c4networks.vrms.services.dao.CustomerDetailsDAO;
-import com.c4networks.vrms.services.dao.CustomerDetailsDAOImpl;
 import com.c4networks.vrms.services.dao.MoviesDAO;
-import com.c4networks.vrms.services.dao.MoviesDAOImpl;
 import com.c4networks.vrms.services.dao.RentalDetailsDAO;
 import com.c4networks.vrms.services.dao.RentalDetailsDAOImpl;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
@@ -40,7 +37,7 @@ public class RentalServiceImpl implements RentalService{
 	public List<RentalDetails> getActiveRentalsList() {
 		logger.info("In getActiveRentalsList() of RentalService");
 		List<RentalDetails> rentalsList;
-		rentalsList = rentalDetailsDAO.findByProperty("rentalStatus", "OPEN");
+		rentalsList = rentalDetailsDAO.findByProperty("rentalStatus", "ACTIVE");
 		logger.info("Rental List size :" + rentalsList.size());
 
 		return rentalsList;
@@ -184,7 +181,7 @@ public class RentalServiceImpl implements RentalService{
 			Date rntdDate = rd.getRentalDate();
 			Date currDate = new Date();
 //			int diff = currDate.compareTo(rntdDate);
-			int diff = (int)DateFormatter.getNoofDays(currDate, rntdDate);
+			int diff = (int) DateFormatter.getNoofDays(currDate, rntdDate);
 			logger.info("difference in dates is :" + diff);
 
 			Integer price = rd.getMovies().getCategories().getPrice();

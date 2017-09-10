@@ -22,6 +22,9 @@
         <property name="email" type="java.lang.String">
             <column name="email" length="45" not-null="true" />
         </property>
+        <property name="status" type="java.lang.String">
+            <column name="status" length="10" not-null="true" />
+        </property>
         <property name="address" type="java.lang.String">
             <column name="address" length="100" />
         </property>
@@ -43,33 +46,5 @@
         <property name="lastModifiedDate" type="java.util.Date">
             <column name="last_modified_date" length="0" not-null="true" />
         </property>
-        <property name="status" type="java.lang.String">
-            <column name="status" length="10" not-null="true" />
-        </property>
-        <set name="categoriesesForCreatedBy" inverse="true">
-            <key>
-                <column name="created_by" not-null="true" />
-            </key>
-            <one-to-many class="com.c4networks.vrms.vo.Categories" />
-        </set>
-        
-        <set name="categoriesesForLastModifiedBy" inverse="true">
-            <key>
-                <column name="last_modified_by" not-null="true" />
-            </key>
-            <one-to-many class="com.c4networks.vrms.vo.Categories" />
-        </set>
-        <set name="moviesesForCreatedBy" inverse="true">
-            <key>
-                <column name="created_by" not-null="true" />
-            </key>
-            <one-to-many class="com.c4networks.vrms.vo.Movies" />
-        </set>
-        <set name="moviesesForLastModifiedBy" inverse="true">
-            <key>
-                <column name="last_modified_by" not-null="true" />
-            </key>
-            <one-to-many class="com.c4networks.vrms.vo.Movies" />
-        </set>
     </class>
 </hibernate-mapping>

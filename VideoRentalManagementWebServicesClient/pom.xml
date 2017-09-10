@@ -39,11 +39,11 @@
 								<goal>wsimport</goal>
 							</goals>
 							<configuration>
-								<wsdlDirectory>src/main/resources/wsdl</wsdlDirectory>
+								<wsdlDirectory>src/main/resources/wsdl/external</wsdlDirectory>
 								<wsdlFiles>
 									<wsdlFile>VideoRentalManagementServices.wsdl</wsdlFile>
 								</wsdlFiles>
-								<wsdlLocation>/wsdl/VideoRentalManagementServices.wsdl</wsdlLocation>
+								<wsdlLocation>/wsdl/external/VideoRentalManagementServices.wsdl</wsdlLocation>
 							</configuration>
 						</execution>
 					</executions>

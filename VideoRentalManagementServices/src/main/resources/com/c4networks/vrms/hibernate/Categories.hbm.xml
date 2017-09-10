@@ -10,35 +10,29 @@
             <column name="category_id" />
             <generator class="assigned" />
         </id>
-        <many-to-one name="customerDetailsByLastModifiedBy" class="com.c4networks.vrms.vo.CustomerDetails" fetch="select">
-            <column name="last_modified_by" not-null="true" />
-        </many-to-one>
-        <many-to-one name="customerDetailsByCreatedBy" class="com.c4networks.vrms.vo.CustomerDetails" fetch="select">
-            <column name="created_by" not-null="true" />
-        </many-to-one>
         <property name="categoryName" type="java.lang.String">
             <column name="category_name" length="45" not-null="true" />
         </property>
         <property name="categoryDesc" type="java.lang.String">
             <column name="category_desc" length="100" />
         </property>
+        <property name="price" type="java.lang.Integer">
+            <column name="price" length="10" not-null="true" />
+        </property>
+        <many-to-one name="customerDetailsByCreatedBy" class="com.c4networks.vrms.vo.CustomerDetails" fetch="select">
+            <column name="created_by" not-null="true" />
+        </many-to-one>
         <property name="createdDate" type="java.util.Date">
             <column name="created_date" length="0" not-null="true" />
         </property>
+        <many-to-one name="customerDetailsByLastModifiedBy" class="com.c4networks.vrms.vo.CustomerDetails" fetch="select">
+            <column name="last_modified_by" not-null="true" />
+        </many-to-one>
         <property name="lastModifiedDate" type="java.util.Date">
             <column name="last_modified_date" length="0" not-null="true" />
         </property>
         <property name="status" type="java.lang.String">
             <column name="status" length="10" not-null="true" />
         </property>
-        <property name="price" type="java.lang.Integer">
-            <column name="price" length="10" not-null="true" />
-        </property>
-        <set name="movieses" inverse="true">
-            <key>
-                <column name="category_id" not-null="true" />
-            </key>
-            <one-to-many class="com.c4networks.vrms.vo.Movies" />
-        </set>
     </class>
 </hibernate-mapping>

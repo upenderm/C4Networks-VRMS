@@ -21,7 +21,8 @@ import com.c4networks.vrms.vo.Movies;
 
 @Service
 public class MoviesServiceImpl implements MoviesService {
-
+	private static final Logger logger = Logger.getLogger(MoviesServiceImpl.class.getName());
+	
 	@Autowired
 	private MoviesDAO moviesDAO;
 
@@ -31,10 +32,8 @@ public class MoviesServiceImpl implements MoviesService {
 	@Autowired
 	private CustomerDetailsDAO customerDetailsDAO;
 
-	private static final Logger logger = Logger.getLogger(CustomerDetailsServiceImpl.class.getName());
-
 	public List<Movies> getMoviesList() {
-		logger.info("in getMoviesList() of MoviesService");
+		logger.info("in getMoviesList() of MoviesServiceImpl");
 		List<Movies> moviesList = new ArrayList<>();
 		try {
 			moviesList = moviesDAO.findAll();

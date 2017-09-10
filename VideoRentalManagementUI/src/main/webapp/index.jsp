@@ -11,7 +11,7 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 <body>
 	<s:form theme="simple" action="customerAction_viewCustomerList.action">
 	
-		<table class="bigTable">
+		<table class="smallTable">
 			<tr>
 				<td class="keyClass"><s:submit cssClass="submitClass" value="View Customer List"></s:submit></td>
 				<td class="valueClass"><s:submit cssClass="submitClass" value="Add Customer" action="customerAction_defineCustomer"></s:submit></td>

@@ -10,15 +10,15 @@
             <column name="rental_details_id" />
             <generator class="increment" />
         </id>
-        <many-to-one name="movies" class="com.c4networks.vrms.vo.Movies" fetch="select">
-            <column name="movie_id" not-null="true" />
-        </many-to-one>
-        <many-to-one name="customerDetails" class="com.c4networks.vrms.vo.CustomerDetails" fetch="select">
-            <column name="customer_id" not-null="true" />
-        </many-to-one>
         <property name="rentalId" type="java.lang.String">
             <column name="rental_id" length="10" not-null="true" />
         </property>
+        <many-to-one name="customerDetails" class="com.c4networks.vrms.vo.CustomerDetails" fetch="select">
+            <column name="customer_id" not-null="true" />
+        </many-to-one>
+        <many-to-one name="movies" class="com.c4networks.vrms.vo.Movies" fetch="select">
+            <column name="movie_id" not-null="true" />
+        </many-to-one>
         <property name="rentalDate" type="java.util.Date">
             <column name="rental_date" length="0" not-null="true" />
         </property>
@@ -38,7 +38,7 @@
             <column name="late_charges" not-null="true" />
         </property>
         <property name="rentalStatus" type="java.lang.String">
-            <column name="rental_status" length="10" not-null="true" />
+            <column name="status" length="10" not-null="true" />
         </property>
         <property name="amount" type="java.lang.Integer">
             <column name="amount" />
