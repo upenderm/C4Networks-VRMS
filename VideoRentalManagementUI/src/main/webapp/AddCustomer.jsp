@@ -31,7 +31,7 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 		<tr class="headerRow"><td colspan="2">&nbsp;</td></tr>
 		<tr>
 			<td width="30%">First Name</td>
-			<td><s:textfield name="firstName" cssClass="selwidth"></s:textfield></td>
+			<td><s:textfield name="firstName" cssClass="selwidth" required="true"></s:textfield></td>
 		</tr>
 		<tr>
 			<td>Last Name</td>
@@ -39,7 +39,7 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 		</tr>
 		<tr>
 			<td>Email</td>
-			<td><s:textfield name="email" cssClass="selwidth"></s:textfield></td>
+			<td><s:textfield name="email" cssClass="selwidth" required="true"></s:textfield></td>
 		</tr>
 		<tr>
 			<td>Address</td>

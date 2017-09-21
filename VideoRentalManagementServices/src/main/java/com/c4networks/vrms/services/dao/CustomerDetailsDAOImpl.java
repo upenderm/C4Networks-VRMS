@@ -60,7 +60,7 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		log.debug("getting CustomerDetails instance with id: " + id);
 		try {
 			CustomerDetails instance = (CustomerDetails) getSession().get(
-					"com.vrm.hibernate.CustomerDetails", id);
+					"com.c4networks.vrms.vo.CustomerDetails", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -72,7 +72,7 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		log.debug("finding CustomerDetails instance by example");
 		try {
 			List<CustomerDetails> results = getSession().createCriteria(
-					"com.vrm.hibernate.CustomerDetails").add(
+					"com.c4networks.vrms.vo.CustomerDetails").add(
 					Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

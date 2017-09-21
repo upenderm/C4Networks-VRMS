@@ -1,5 +1,6 @@
 package com.c4networks.vrms.ui.action;
 
+import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -50,9 +51,21 @@ public class CustomerAction extends ActionSupport {
 	}
 
 	public String addCustomer() {
-		String RESULT = SUCCESS;
 		logger.info("In addCustomer() of CustomerAction");
+		String RESULT = SUCCESS;
+		try{
 		CustomerDetails bean = new CustomerDetails();
+		bean.setFirstName(firstName);
+		bean.setLastName(lastName);
+		bean.setAddress(address);
+		bean.setEmail(email);
+		bean.setMobile(mobile);
+		bean.setPhone(phone);
+		bean.setStatus("ACTIVE");
+		bean.setCreatedBy(1);
+		bean.setCreatedDate(new Date());
+		bean.setLastModifiedBy(1);
+		bean.setLastModifiedDate(new Date());
 		Integer result = VideoRentalManagementClient.getInstance().addCustomer(bean);
 		if (result == 1) {
 			this.addActionMessage("User creation successfull !..");
@@ -60,6 +73,10 @@ public class CustomerAction extends ActionSupport {
 		} else {
 			this.addActionError("User creation failed...");
 			RESULT = DEFINECUSTOMER;
+		}
+		}catch (Exception e){
+			logger.info("CustomerAction.addCustomer::An exception occured while adding a customer");
+			logger.error(e);
 		}
 		return RESULT;
 	}

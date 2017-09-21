@@ -10,23 +10,23 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 </head>
 <body>
 	<s:form theme="simple" action="customerAction_viewCustomerList.action">
-	
-		<table class="smallTable">
+		<div id="landingPageHeadDiv">Video Rental Management</div>
+		<br/>
+		<table class="bigTable" border="1">
 			<tr>
-				<td class="keyClass"><s:submit cssClass="submitClass" value="View Customer List"></s:submit></td>
-				<td class="valueClass"><s:submit cssClass="submitClass" value="Add Customer" action="customerAction_defineCustomer"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="View Customer List"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="Add Customer" action="customerAction_defineCustomer"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="View Categories" action="categoriesAction_viewCategories"></s:submit></td>
 			</tr>
-			
-			<tr><td colspan="2"><s:submit cssClass="submitClassExt" value="View Categories" action="categoriesAction_viewCategories"></s:submit></td></tr>
 			<tr>
-				<td><s:submit cssClass="submitClass" value="View Movies" action="moviesAction_viewMoviesList"></s:submit></td>
-				<td><s:submit cssClass="submitClass" value="Add Movie" action="moviesAction_defineMovie"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="View Movies" action="moviesAction_viewMoviesList"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="Add Movie" action="moviesAction_defineMovie"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="View Active Rentals" action="rentalAction_viewActiveRentals"></s:submit></td>
 			</tr>
-			<tr><td colspan="2"><s:submit cssClass="submitClassExt" value="View Active Rentals" action="rentalAction_viewActiveRentals"></s:submit></td></tr>
-			<tr><td colspan="2"><s:submit cssClass="submitClassExt" value="View All Rentals" action="rentalAction_viewRentals"></s:submit></td></tr>
 			<tr>
-				<td><s:submit cssClass="submitClass" value="Make a Rental" action="rentalAction_defineRental"></s:submit></td>
-				<td><s:submit cssClass="submitClass" value="Close a Rental" action="rentalAction_closeRentalPage"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="View All Rentals" action="rentalAction_viewRentals"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="Make a Rental" action="rentalAction_defineRental"></s:submit></td>
+				<td align="center"><s:submit cssClass="submitClass" value="Close a Rental" action="rentalAction_closeRentalPage"></s:submit></td>
 			</tr>
 		</table>
 		<img alt="" src="images/Home.png" />

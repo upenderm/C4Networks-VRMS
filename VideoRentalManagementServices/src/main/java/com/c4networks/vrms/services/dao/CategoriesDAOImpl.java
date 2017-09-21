@@ -15,7 +15,7 @@ import com.c4networks.vrms.vo.Categories;
 /**
  * Data access object (DAO) for domain model class Categories.
  * 
- * @see com.vrm.hibernate.Categories
+ * @see com.c4networks.vrms.vo.Categories
  * @author MyEclipse Persistence Tools
  */
 
@@ -54,7 +54,7 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 		log.debug("getting Categories instance with id: " + id);
 		try {
 			Categories instance = (Categories) getSession().get(
-					"com.vrm.hibernate.Categories", id);
+					"com.c4networks.vrms.vo.Categories", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -67,7 +67,7 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 		try {
 			
 			List<Categories> results = getSession().createCriteria(
-					"com.vrm.hibernate.Categories").add(
+					"com.c4networks.vrms.vo.Categories").add(
 					Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

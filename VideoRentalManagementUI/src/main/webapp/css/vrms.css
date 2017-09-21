@@ -3,7 +3,7 @@ body{
 	background-color : #FBFBEF;
 }
 table{
-	background-color: #cccccc;
+	background-color: #abebc6;
 	border-style: solid;
 	border-color: #990000;
 	
@@ -34,10 +34,12 @@ h2 {
 	margin: auto;
 }
 .bigTable{
-	width: 90%;
+	width: 65%;
 	border-radius:10px;
 	font-size: 11px;
-	margin: auto;
+	/*margin: auto;*/
+	margin-top: 200px;
+	margin-left: 300px;
 }
 .keyClass{
 	font-weight: bold;
@@ -47,9 +49,10 @@ h2 {
 	
 }
 .submitClass{
-	height: 40px;
-	width: 150px;
+	height: 150px;
+	width: 250px;
 	font-weight: bold;
+	color: #d35400;
 }
 .submitClassExt{
 	height: 50px;
@@ -84,4 +87,13 @@ h2 {
 }
 .selwidth {
 	width: 200px;
+}
+#landingPageHeadDiv {
+	width: 90%;
+	background-color: #366386;
+	height: 150px;
+	position: absolute;
+	padding-bottom: 75px;
+	text-align: center;
+	vertical-align: middle;
 }

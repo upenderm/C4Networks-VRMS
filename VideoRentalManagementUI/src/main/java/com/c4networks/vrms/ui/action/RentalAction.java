@@ -79,9 +79,10 @@ public class RentalAction extends ActionSupport {
 		String RESULT = SUCCESS;
 		logger.info("In addCustomer() of CustomerAction");
 		RentalDetails bean = new RentalDetails();
-		
-		Integer result = VideoRentalManagementClient.getInstance().addRental(bean);
-		
+
+		Integer result = VideoRentalManagementClient.getInstance().addRental(bean, this.getCustomerName(),
+				this.getMovieName(), this.getExpectedReturnDate());
+
 		if (result == 1) {
 			this.addActionMessage("Rental creation successfull !..");
 			RESULT = ADDRENTAL;
@@ -91,10 +92,10 @@ public class RentalAction extends ActionSupport {
 		}
 		return RESULT;
 	}
-	
-	public String getAvailableCopies(){
+
+	public String getAvailableCopies() {
 		logger.info("In getAvailableCopies() of RentalAction");
-		
+
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html");
@@ -105,8 +106,9 @@ public class RentalAction extends ActionSupport {
 			e.printStackTrace();
 		}
 
-		Integer result = VideoRentalManagementClient.getInstance().getAvailableMovieCopiesById(Integer.parseInt(request.getParameter("movieId")));
-		
+		Integer result = VideoRentalManagementClient.getInstance()
+				.getAvailableMovieCopiesById(Integer.parseInt(request.getParameter("movieId")));
+
 		out.write(result.toString());
 
 		return null;
@@ -122,7 +124,7 @@ public class RentalAction extends ActionSupport {
 
 		return SUCCESS;
 	}
-	
+
 	public String viewRentals() {
 		logger.info("In viewRentals of RentalAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -150,8 +152,8 @@ public class RentalAction extends ActionSupport {
 		return DEFINECLOSE;
 	}
 
-	public String viewCustomerBonus(){
-		logger.info("In viewCustomerBonus() of RentalAction"); 
+	public String viewCustomerBonus() {
+		logger.info("In viewCustomerBonus() of RentalAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
 		response.setContentType("text/html");
@@ -162,12 +164,14 @@ public class RentalAction extends ActionSupport {
 			e.printStackTrace();
 		}
 
-		Integer result = VideoRentalManagementClient.getInstance().viewBonusByCustomerById(Integer.parseInt(request.getParameter("customerId")));
+		Integer result = VideoRentalManagementClient.getInstance()
+				.viewBonusByCustomerById(Integer.parseInt(request.getParameter("customerId")));
 		logger.info("bonus points :" + result);
 		out.write(result.toString());
-		
+
 		return null;
 	}
+
 	public String viewRentalsByCustomer() {
 		logger.info("In viewRentalsByCustomer() of RentalAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -183,7 +187,7 @@ public class RentalAction extends ActionSupport {
 	public String closeRental() {
 		logger.info("In closeRental() of RentalAction");
 		RentalDetails bean = new RentalDetails();
-		Integer result = VideoRentalManagementClient.getInstance().closeRental(bean);
+		Integer result = VideoRentalManagementClient.getInstance().closeRental(bean, this.getBonusCheck());
 		logger.info("Update status is :" + result);
 		if (result == 1) {
 			this.addActionMessage("Rental closed.");
@@ -197,7 +201,7 @@ public class RentalAction extends ActionSupport {
 		logger.info("In rentalFinalize() of RentalAction");
 		finalData = VideoRentalManagementClient.getInstance().rentalFinalize(rentalEditId);
 		logger.info("Update status is :" + finalData);
-		
+
 		return RENTALFINALIZE;
 	}
 

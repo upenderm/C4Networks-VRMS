@@ -9,6 +9,7 @@ import org.springframework.stereotype.Service;
 
 import com.c4networks.vrms.services.dao.CategoriesDAO;
 import com.c4networks.vrms.vo.Categories;
+import com.c4networks.vrms.vo.CustomerDetails;
 
 @Service
 public class CategoriesDetailsServiceImpl implements CategoriesDetailsService {
@@ -27,6 +28,19 @@ public class CategoriesDetailsServiceImpl implements CategoriesDetailsService {
 			e.printStackTrace();
 		}
 		return categoriesList;
+	}
+
+	@Override
+	public Categories getCategoriesById(Integer catId) {
+		logger.info("CustomerDetailsServiceImpl.getCustomerById");
+		Categories categories = new Categories();
+		try {
+			categories = categoriesDAO.findById(catId);
+			logger.info("categories is ::" + categories);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return categories;
 	}
 
 }

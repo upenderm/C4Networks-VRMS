@@ -1,5 +1,6 @@
 package com.c4networks.vrms.ui.action;
 
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -47,7 +48,19 @@ public class MoviesAction extends ActionSupport {
 		String RESULT = SUCCESS;
 		logger.info("In addMovie() of MoviesAction");
 		Movies bean = new Movies();
-		Integer result = VideoRentalManagementClient.getInstance().addMovie(bean);
+		bean.setMovieName(this.getMovieName().trim());
+		bean.setMovieDesc(this.getMovieDesc().trim());
+		bean.setCopies(this.getCopies());
+//		CategoriesDAO categoriesDAO = new CategoriesDAO();
+//		Categories categories = categoriesDAO.findById(action.getCategories());
+//		bean.setCategories(categories);
+//		CustomerDetailsDAO customerDetailsDAO = new CustomerDetailsDAO();
+//		CustomerDetails customerDetails = customerDetailsDAO.findById(1);
+//		bean.setCustomerDetailsByCreatedBy(customerDetails);
+//		bean.setCreatedDate(new Date());
+//		bean.setCustomerDetailsByLastModifiedBy(customerDetails);
+//		bean.setLastModifiedDate(new Date());
+		Integer result = VideoRentalManagementClient.getInstance().addMovie(bean, getCategories());
 		if (result == 1){
 			this.addActionMessage("Movie creation successfull !..");
 			RESULT = ADDMOVIE;

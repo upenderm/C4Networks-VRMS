@@ -8,7 +8,7 @@ public interface MoviesService {
 
 	public List<Movies> getMoviesList();
 
-	public Integer addMovie(Movies movie);
+	public Integer addMovie(Movies movie, Integer categoryId);
 
 	public Integer getAvailableMovieCopiesById(Integer movieId);
 }

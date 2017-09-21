@@ -19,6 +19,10 @@
 
   <xs:element name="addMoviesResponse" type="tns:addMoviesResponse"/>
 
+  <xs:element name="addRental" type="tns:addRental"/>
+
+  <xs:element name="addRentalResponse" type="tns:addRentalResponse"/>
+
   <xs:element name="closeRental" type="tns:closeRental"/>
 
   <xs:element name="closeRentalResponse" type="tns:closeRentalResponse"/>
@@ -26,6 +30,14 @@
   <xs:element name="getAllCustomers" type="tns:getAllCustomers"/>
 
   <xs:element name="getAllCustomersResponse" type="tns:getAllCustomersResponse"/>
+
+  <xs:element name="getCategoriesDetailsById" type="tns:getCategoriesDetailsById"/>
+
+  <xs:element name="getCategoriesDetailsByIdResponse" type="tns:getCategoriesDetailsByIdResponse"/>
+
+  <xs:element name="getCustomerDetailsById" type="tns:getCustomerDetailsById"/>
+
+  <xs:element name="getCustomerDetailsByIdResponse" type="tns:getCustomerDetailsByIdResponse"/>
 
   <xs:element name="getRentalsByCustomerId" type="tns:getRentalsByCustomerId"/>
 
@@ -63,6 +75,21 @@
 
 
 
+  <xs:complexType name="addRental">
+    <xs:sequence>
+      <xs:element name="arg0" type="ns1:RentalDetails" minOccurs="0"/>
+      <xs:element name="arg1" type="xs:int" minOccurs="0"/>
+      <xs:element name="arg2" type="xs:int" minOccurs="0"/>
+      <xs:element name="arg3" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addRentalResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="viewAllMovies">
     <xs:sequence/>
   </xs:complexType>
@@ -70,6 +97,18 @@
   <xs:complexType name="viewAllMoviesResponse">
     <xs:sequence>
       <xs:element name="return" type="ns1:Movies" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCategoriesDetailsById">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCategoriesDetailsByIdResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:Categories" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -90,6 +129,51 @@
   </xs:complexType>
 
   <xs:complexType name="viewActiveRentalsResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCustomerDetailsById">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCustomerDetailsByIdResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:CustomerDetails" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addMovies">
+    <xs:sequence>
+      <xs:element name="arg0" type="ns1:Movies" minOccurs="0"/>
+      <xs:element name="arg1" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addMoviesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllCategories">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllCategoriesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:Categories" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllRentals">
+    <xs:sequence/>
+  </xs:complexType>
+
+  <xs:complexType name="viewAllRentalsResponse">
     <xs:sequence>
       <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
@@ -138,38 +222,6 @@
   <xs:complexType name="rentalFinalizeResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:string" nillable="true" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="addMovies">
-    <xs:sequence>
-      <xs:element name="arg0" type="ns1:Movies" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="addMoviesResponse">
-    <xs:sequence>
-      <xs:element name="return" type="xs:int" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="viewAllCategories">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="viewAllCategoriesResponse">
-    <xs:sequence>
-      <xs:element name="return" type="ns1:Categories" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="viewAllRentals">
-    <xs:sequence/>
-  </xs:complexType>
-
-  <xs:complexType name="viewAllRentalsResponse">
-    <xs:sequence>
-      <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 

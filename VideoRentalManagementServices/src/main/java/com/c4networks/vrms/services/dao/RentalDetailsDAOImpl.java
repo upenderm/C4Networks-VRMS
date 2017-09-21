@@ -56,7 +56,7 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 		log.debug("getting RentalDetails instance with id: " + id);
 		try {
 			RentalDetails instance = (RentalDetails) getSession().get(
-					"com.vrm.hibernate.RentalDetails", id);
+					"com.c4networks.vrms.vo.RentalDetails", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -68,7 +68,7 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 		log.debug("finding RentalDetails instance by example");
 		try {
 			List results = getSession().createCriteria(
-					"com.vrm.hibernate.RentalDetails").add(
+					"com.c4networks.vrms.vo.RentalDetails").add(
 					Example.create(instance)).list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

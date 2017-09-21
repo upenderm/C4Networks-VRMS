@@ -52,7 +52,7 @@ public class MoviesDAOImpl extends BaseHibernateDAO implements MoviesDAO{
 		log.debug("getting Movies instance with id: " + id);
 		try {
 			Movies instance = (Movies) getSession().get(
-					"com.vrm.hibernate.Movies", id);
+					"com.c4networks.vrms.vo.Movies", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -64,7 +64,7 @@ public class MoviesDAOImpl extends BaseHibernateDAO implements MoviesDAO{
 		log.debug("finding Movies instance by example");
 		try {
 			List results = getSession().createCriteria(
-					"com.vrm.hibernate.Movies").add(Example.create(instance))
+					"com.c4networks.vrms.vo.Movies").add(Example.create(instance))
 					.list();
 			log.debug("find by example successful, result size: "
 					+ results.size());

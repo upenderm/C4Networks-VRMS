@@ -79,7 +79,7 @@ public class VideoRentalManagementClient {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
 			moviesList = port.viewAllMovies();
 			System.out.println("moviesList size returned from webservice is :" + moviesList.size());
-			for(Movies m : moviesList){
+			for (Movies m : moviesList) {
 				System.out.println(m.getMovieName());
 				System.out.println(m.getCategories());
 				System.out.println(m.getCategories().getPrice());
@@ -95,14 +95,13 @@ public class VideoRentalManagementClient {
 		return moviesList;
 	}
 
-	public Integer addRental(RentalDetails bean) {
+	public Integer addRental(RentalDetails bean, Integer customerId, Integer movieId, String expectedReturnDate) {
 		Integer result = 0;
 		System.out.println("In addRental method of Facade client");
-		List<RentalDetails> rentalList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			rentalList = port.viewActiveRentals();
-			System.out.println("rentalList size returned from webservice is :" + rentalList.size());
+			result = port.addRental(bean, customerId, movieId, expectedReturnDate);
+			System.out.println("Add a Rental, result is :" + result);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -110,9 +109,14 @@ public class VideoRentalManagementClient {
 	}
 
 	public Integer getAvailableMovieCopiesById(int parseInt) {
-		// TODO Auto-generated method stub
-		return null;
-	}
+		System.out.println("VideoRentalManaementUI.getAvailableMovieCopiesById");
+		Integer result = 0;
+		try {
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;	}
 
 	public List<RentalDetails> getActiveRentalsList() {
 		System.out.println("In getActiveRentalsList method of Facade client");
@@ -145,33 +149,77 @@ public class VideoRentalManagementClient {
 	}
 
 	public List<CustomerDetails> getCustomers() {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("VideoRentalManaementUI.getCustomers");
+		List<CustomerDetails> customerList = new ArrayList<>();
+		try {
+
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return customerList;
 	}
 
-	public Integer viewBonusByCustomerById(int parseInt) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer viewBonusByCustomerById(Integer customerId) {
+		System.out.println("VideoRentalManaementUI.viewBonusByCustomerById");
+		Integer result = 0;
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			result = port.viewBonusByCustomerById(customerId);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
 	}
 
-	public List<RentalDetails> getRentalsByCustomerId(int parseInt) {
-		// TODO Auto-generated method stub
-		return null;
+	public List<RentalDetails> getRentalsByCustomerId(Integer customerId) {
+		System.out.println("VideoRentalManaementUI.getRentalsByCustomerId");
+		List<RentalDetails> rentalList = new ArrayList<>();
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			rentalList = port.getRentalsByCustomerId(customerId);
+			System.out.println("rentalList size returned from webservice is :" + rentalList.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return rentalList;
+
 	}
 
-	public Integer closeRental(RentalDetails bean) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer closeRental(RentalDetails bean, Boolean bonusCheck) {
+		System.out.println("VideoRentalManaementUI.closeRental");
+		Integer result = 0;
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			result = port.closeRental(bean, bonusCheck);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
+
 	}
 
 	public String[] rentalFinalize(Integer rentalEditId) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("VideoRentalManaementUI.rentalFinalize");
+		String[] result = null;
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+//			result = port.rentalFinalize(rentalEditId);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
 	}
 
-	public Integer addMovie(Movies bean) {
-		// TODO Auto-generated method stub
-		return null;
+	public Integer addMovie(Movies movie, Integer categoryId) {
+		System.out.println("VideoRentalManaementUI.addMovie");
+		Integer result = 0;
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			result = port.addMovies(movie, categoryId);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
 	}
 
 	public List<Categories> getCategories() {
@@ -190,13 +238,28 @@ public class VideoRentalManagementClient {
 	}
 
 	public Integer addCustomer(CustomerDetails customerDetails) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("VideoRentalManagementClient.addCustomer");
+		Integer result = 0;
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			result = port.addCustomer(customerDetails);
+			System.out.println("result is :" + result);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	public List<RentalDetails> viewRentalHistoryByCustomerId(Integer customerId) {
-		// TODO Auto-generated method stub
-		return null;
+		System.out.println("VIdeoRentalManagementClient.viewRentalHistoryByCustomerId");
+		List<RentalDetails> rentalsList = new ArrayList<>();
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			rentalsList = port.viewRentalHistoryByCustomerId(customerId);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return rentalsList;
 	}
 
 }

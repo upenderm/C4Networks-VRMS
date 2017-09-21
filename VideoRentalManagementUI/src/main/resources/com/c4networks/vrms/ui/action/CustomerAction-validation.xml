@@ -56,11 +56,6 @@
 			<param name="expression"><![CDATA[([0-9]*)]]></param>
 			<message>Mobile is not valid</message>
 		</field-validator>
-		<field-validator type="stringlength">
-	        <param name="minLength">10</param>
-	        <param name="maxLength">10</param>
-	        <message>Your mobile number should be ${minLength} characters</message>
-    	</field-validator>
 	</field>
 
 </validators>

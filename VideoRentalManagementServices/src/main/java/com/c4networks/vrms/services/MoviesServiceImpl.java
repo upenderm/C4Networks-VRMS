@@ -44,7 +44,7 @@ public class MoviesServiceImpl implements MoviesService {
 		return moviesList;
 	}
 
-	public Integer addMovie(Movies movie) {
+	public Integer addMovie(Movies movie, Integer categoryId) {
 		Session session = null;
 		Transaction transaction = null;
 		Integer result = 0;
@@ -56,14 +56,14 @@ public class MoviesServiceImpl implements MoviesService {
 			bean.setMovieName(movie.getMovieName().trim());
 			bean.setMovieDesc(movie.getMovieDesc().trim());
 			bean.setCopies(movie.getCopies());
-			Categories categories = categoriesDAO.findById(movie.getCategories().getCategoryId());
+			Categories categories = categoriesDAO.findById(categoryId);
 			bean.setCategories(categories);
 			CustomerDetails customerDetails = customerDetailsDAO.findById(1);
 			bean.setCustomerDetailsByCreatedBy(customerDetails);
 			bean.setCreatedDate(new Date());
 			bean.setCustomerDetailsByLastModifiedBy(customerDetails);
 			bean.setLastModifiedDate(new Date());
-
+			bean.setStatus("ACTIVE");
 			moviesDAO.save(bean);
 			transaction.commit();
 			if (transaction.wasCommitted()) {

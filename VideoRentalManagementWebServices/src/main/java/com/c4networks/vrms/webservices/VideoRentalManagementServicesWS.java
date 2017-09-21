@@ -86,11 +86,11 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public Integer addMovies(Movies movie) {
+	public Integer addMovies(Movies movie, Integer categoryId) {
 		Integer result = 0;
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			result = moviesService.addMovie(movie);
+			result = moviesService.addMovie(movie, categoryId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -107,6 +107,18 @@ public class VideoRentalManagementServicesWS {
 			e.printStackTrace();
 		}
 		return categoriesList;
+	}
+	
+	@WebMethod
+	public Integer addRental(RentalDetails rentalDetails, Integer customerId, Integer movieId, String expectedReturnDate) {
+		Integer result = 0;
+		try {
+			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+			result = customerDetailsService.addRental(rentalDetails, customerId, movieId, expectedReturnDate);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
 	}
 
 	@WebMethod
@@ -192,5 +204,29 @@ public class VideoRentalManagementServicesWS {
 		}
 		return result;
 	}
+	
+	@WebMethod
+	public CustomerDetails getCustomerDetailsById(Integer custId){
+		CustomerDetails cdls = null;
+		try{
+			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+			cdls = customerDetailsService.getCustomerById(custId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return cdls;
+	}
 
+	@WebMethod
+	public Categories getCategoriesDetailsById(Integer catId){
+		Categories cdls = null;
+		try{
+			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+			cdls = categoriesDetailsService.getCategoriesById(catId);
+		}catch(Exception e){
+			e.printStackTrace();
+		}
+		return cdls;
+	}
+	
 }
