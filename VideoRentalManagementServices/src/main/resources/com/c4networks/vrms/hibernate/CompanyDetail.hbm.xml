@@ -1,0 +1,89 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping>
+    <class name="com.c4networks.vrms.vo.CompanyDetail" schema="VRMS" table="COMPANY_DETAILS">
+        <id name="companyId" type="java.lang.String">
+            <column length="10" name="COMPANY_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="companyName" type="java.lang.String">
+            <column length="20" name="COMPANY_NAME" not-null="true"/>
+        </property>
+        <property name="companyDesc" type="java.lang.String">
+            <column length="100" name="COMPANY_DESC"/>
+        </property>
+        <property name="registeredNum" type="java.lang.String">
+            <column length="10" name="REGISTERED_NUM"/>
+        </property>
+        <property name="phone" type="java.lang.String">
+            <column length="10" name="PHONE"/>
+        </property>
+        <property name="addressLine1" type="java.lang.String">
+            <column length="10" name="ADDRESS_LINE1"/>
+        </property>
+        <property name="addressLine2" type="java.lang.String">
+            <column length="10" name="ADDRESS_LINE2"/>
+        </property>
+        <property name="city" type="java.lang.String">
+            <column length="10" name="CITY"/>
+        </property>
+        <property name="state" type="java.lang.String">
+            <column length="1" name="STATE"/>
+        </property>
+        <property name="country" type="java.lang.String">
+            <column length="10" name="COUNTRY"/>
+        </property>
+        <property name="zipcode" type="java.lang.String">
+            <column length="6" name="ZIPCODE"/>
+        </property>
+        <property name="createdBy" type="java.lang.String">
+            <column length="20" name="CREATED_BY"/>
+        </property>
+        <property name="createdDate" type="date">
+            <column length="7" name="CREATED_DATE"/>
+        </property>
+        <property name="lastModifiedBy" type="java.lang.String">
+            <column length="20" name="LAST_MODIFIED_BY"/>
+        </property>
+        <property name="lastModifiedDate" type="date">
+            <column length="7" name="LAST_MODIFIED_DATE"/>
+        </property>
+        <property name="companyLogo" type="blob">
+            <column name="COMPANY_LOGO"/>
+        </property>
+        <property name="companyImage" type="blob">
+            <column name="COMPANY_IMAGE"/>
+        </property>
+<!--         <set fetch="select" name="rentalDetailses" table="RENTAL_DETAILS">
+            <key on-delete="noaction">
+                <column length="10" name="COMPANY_CODE" not-null="true"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.RentalDetail" />
+        </set>
+        <set fetch="select" name="userDetailses" table="USER_DETAILS">
+            <key on-delete="noaction">
+                <column length="10" name="COMPANY_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.UserDetails" />
+        </set>
+        <set fetch="select" name="categorieses" table="CATEGORIES">
+            <key on-delete="noaction">
+                <column length="10" name="COMPANY_ID"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.Category" />
+        </set>
+        <set fetch="select" name="customerDetailses" table="CUSTOMER_DETAILS">
+            <key on-delete="noaction">
+                <column length="10" name="COMPANY_ID"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.CustomerDetail" />
+        </set>
+        <set fetch="select" name="movieDetailses" table="MOVIE_DETAILS">
+            <key on-delete="noaction">
+                <column length="10" name="COMPANY_ID"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.MovieDetail" />
+        </set>
+ -->    </class>
+</hibernate-mapping>

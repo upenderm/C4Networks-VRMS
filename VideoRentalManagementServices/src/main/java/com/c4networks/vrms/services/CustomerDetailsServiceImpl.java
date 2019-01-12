@@ -10,34 +10,41 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.c4networks.vrms.services.dao.CustomerBonusDAOImpl;
 import com.c4networks.vrms.services.dao.CustomerDetailsDAOImpl;
-import com.c4networks.vrms.services.dao.MoviesDAOImpl;
+import com.c4networks.vrms.services.dao.MovieDetailsDAOImpl;
 import com.c4networks.vrms.services.dao.RentalDetailsDAOImpl;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
+import com.c4networks.vrms.services.util.AlphaNumerciRandomGenerator;
 import com.c4networks.vrms.services.util.DateFormatter;
+import com.c4networks.vrms.vo.CustomerBonus;
 import com.c4networks.vrms.vo.CustomerDetails;
-import com.c4networks.vrms.vo.Movies;
+import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.UserDetails;
 
 @Component
 public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 	@Autowired
 	private CustomerDetailsDAOImpl customerDetailsDAO;
-	
+
 	@Autowired
 	private RentalDetailsDAOImpl rentalDetailsDAO;
-	
+
 	@Autowired
-	private MoviesDAOImpl movieDetailsDAO;
+	private CustomerBonusDAOImpl CustomerBonusDAO;
+
+	@Autowired
+	private MovieDetailsDAOImpl movieDetailsDAO;
 
 	private static final Logger logger = Logger.getLogger(CustomerDetailsServiceImpl.class.getName());
 
-	public List<CustomerDetails> getCustomers() {
+	public List<CustomerDetails> getCustomers(String agentCode, String companyId) {
 		logger.info("In getCustomers() of CustomerDetailsService");
 		List<CustomerDetails> customerList = new ArrayList<>();
 		try {
-			customerList = customerDetailsDAO.findAll();
+			customerList = customerDetailsDAO.findByProperty("userId", agentCode, "companyId", companyId);
 			logger.info("Customer List size :" + customerList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -45,7 +52,8 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 		return customerList;
 	}
 
-	public Integer addCustomer(CustomerDetails custDtls) {
+	@Override
+	public Integer addCustomer(CustomerDetails custDtls, UserDetails userDetails) {
 		Session session = null;
 		Transaction transaction = null;
 		Integer result = 0;
@@ -55,7 +63,7 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 			CustomerDetails bean = new CustomerDetails();
 
-			String vrmsReference = "VRMS";
+			/*String vrmsReference = "VRMS";
 			List<String> maxVrmsReference = customerDetailsDAO.getMaxVrmsReference();
 			logger.info("Size-------" + maxVrmsReference.size());
 			if (maxVrmsReference.size() > 0) {
@@ -70,24 +78,29 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 						vrmsReference += "0" + max;
 					else
 						vrmsReference += max;
-					bean.setVrmsId(vrmsReference);
+					bean.setcVrmsId(vrmsReference);
 				} else
 					bean.setVrmsId("VRMS001");
-			}
+			}*/
 
+			bean.setCustomerId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForCustomerID());
 			bean.setFirstName(custDtls.getFirstName());
 			bean.setLastName(custDtls.getLastName());
 			bean.setEmail(custDtls.getEmail());
-			bean.setAddress(custDtls.getAddress());
+			bean.setAddressLine1(custDtls.getAddressLine1());
+			bean.setAddressLine2(custDtls.getAddressLine2());
+			bean.setAddressLine3(custDtls.getAddressLine3());
 			bean.setPhone(custDtls.getPhone());
 			bean.setMobile(custDtls.getMobile());
-			bean.setStatus("ACTIVE");
-			bean.setCreatedBy(1);
+			bean.setCreatedBy(userDetails);
 			bean.setCreatedDate(new Date());
-			bean.setLastModifiedBy(1);
+			bean.setLastModifiedBy(userDetails);
 			bean.setLastModifiedDate(new Date());
+			bean.setSex(custDtls.getSex());
+			bean.setAgentCode(userDetails);
+			bean.setCompanyDetails(userDetails.getCompanyDetails());
 
-			customerDetailsDAO.save(bean);
+			customerDetailsDAO.saveCustomerDetail(bean);
 			transaction.commit();
 			if (transaction.wasCommitted()) {
 				result = 1;
@@ -101,11 +114,11 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	}
 
 	@Override
-	public CustomerDetails getCustomerById(Integer customerId) {
+	public CustomerDetails getCustomerById(String customerId) {
 		logger.info("CustomerDetailsServiceImpl.getCustomerById");
 		CustomerDetails customer = new CustomerDetails();
 		try {
-			customer = customerDetailsDAO.findById(customerId);
+			customer = customerDetailsDAO.findByCustomerId(customerId);
 			logger.info("customer is ::" + customer);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -113,8 +126,9 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 		return customer;
 	}
 
-	@Override
-	public Integer addRental(RentalDetails rentalDetails, Integer customerId, Integer movieId, String expectedReturnDate) {
+	/*@Override
+	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails,
+			String movieId, String expectedReturnDate) {
 		Session session = null;
 		Transaction transaction = null;
 		Integer result = 0;
@@ -122,13 +136,16 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			session = HibernateSessionFactory.getSession();
 			transaction = session.beginTransaction();
 
-			RentalDetails bean = new RentalDetails();
+			RentalDetails rentalBean = new RentalDetails();
+			CustomerBonus bonus = new CustomerBonus();
 
-			CustomerDetails customerDetails = customerDetailsDAO.findById(customerId);
-			bean.setCustomerDetails(customerDetails);
+			CustomerDetails customerDetails = customerDetailsDAO.findByCustomerId(customerId);
+			rentalBean.setCustomerDetails(customerDetails);
 
-			Movies movies = movieDetailsDAO.findById(movieId);
-			bean.setMovies(movies);
+			MovieDetails movies = movieDetailsDAO.findByMovieId(movieId);
+			rentalBean.setMovieDetails(movies);
+			rentalBean.setCompanyDetails(userDetails.getCompanyDetails());
+			rentalBean.setAgentCode(userDetails);
 
 			String rentalReference = "RNT";
 			List<String> maxRentalReference = rentalDetailsDAO.getMaxRentalReference();
@@ -149,22 +166,29 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 				} else
 					bean.setRentalId("RNT001");
 			}
-			bean.setRentalDate(new Date());
-			bean.setExpectedReturnDate(DateFormatter.convertStringToDate(expectedReturnDate));
 
-			if (movies.getCategories().getCategoryId() == 1) {
-				bean.setBonusPoints(2);
-			} else {
-				bean.setBonusPoints(1);
-			}
-			bean.setBonusStatus("ACTIVE");
-			bean.setRentalStatus("OPEN");
-			bean.setLateCharges(0);
+			rentalBean.setRentalId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForRentalID());
+			rentalBean.setRentalDate(new Date());
+			rentalBean.setExpectedReturnDate(DateFormatter.convertStringToDate(expectedReturnDate));
 
-			rentalDetailsDAO.save(bean);
+			rentalBean.setStatus("OPEN");
+			//			bean.setLateCharges(0);
 
-			movies.setCopies(movies.getCopies() - 1);
-			movieDetailsDAO.save(movies);
+			bonus.setCustomerId(customerDetails);
+			bonus.setBonusPoints(movies.getCategories().getBonus());
+			bonus.setBonusVersion(1);
+			bonus.setCreatedBy(userDetails.getUserId());
+			bonus.setCreatedDate(new Date());
+			bonus.setLastModifiedBy(userDetails.getUserId());
+			bonus.setLastModifiedDate(new Date());
+
+			movies.setAvailableCopies(movies.getAvailableCopies() - 1);
+			movies.setLastModifiedBy(userDetails);
+			movies.setLastModifiedDate(new Date());
+
+			CustomerBonusDAO.saveCustomerBonus(bonus);
+			movieDetailsDAO.saveMovieDetail(movies);
+			rentalDetailsDAO.saveRentalDetails(rentalBean);
 
 			transaction.commit();
 			if (transaction.wasCommitted()) {
@@ -177,5 +201,5 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 		return result;
 	}
-
+*/
 }

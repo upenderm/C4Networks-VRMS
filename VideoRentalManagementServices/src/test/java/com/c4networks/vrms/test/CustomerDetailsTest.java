@@ -20,7 +20,7 @@ public class CustomerDetailsTest {
 			System.out.println(str);
 		}
 		CustomerDetailsService cds = new CustomerDetailsServiceImpl();
-		System.out.println(cds.getCustomers().size());
+		System.out.println(cds.getCustomers("","").size());
 //		cdi.findAll();
 		}catch(Exception e){
 			e.printStackTrace();

@@ -1,0 +1,60 @@
+<!DOCTYPE tiles-definitions PUBLIC
+    "-//Apache Software Foundation//DTD Tiles Configuration 2.0//EN"
+    "http://tiles.apache.org/dtds/tiles-config_2_0.dtd">
+    
+<tiles-definitions>
+
+   	<definition name = "baseLayout" template="/layout/BaseLayout.jsp">
+      <!-- <put-attribute name = "title"  value = "Template"/> -->
+	  	<put-attribute name = "header" value = "/layout/Header.jsp"/>
+      	<put-attribute name = "menu" value = "/layout/Menu.jsp"/>
+      	<put-attribute name = "leftBanner"   value = "/layout/LeftBanner.jsp"/>
+	  	<put-attribute name = "rightBanner"   value = "/layout/RightBanner.jsp"/>
+      	<put-attribute name = "footer"   value = "/layout/Footer.jsp"/>
+   	</definition>
+
+   	<definition name = "customerList" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/CustomerList.jsp"/>      
+   	</definition>
+
+   	<definition name = "addCustomer" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/AddCustomer.jsp"/>      
+   	</definition>
+
+   	<definition name = "viewHistory" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/ViewHistory.jsp"/>      
+   	</definition>
+  
+   	<definition name = "categoriesList" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/CategoriesList.jsp"/>      
+   	</definition>
+
+	<definition name = "moviesList" extends = "baseLayout">
+    	<put-attribute name = "body"   value = "/bodycontent/MoviesList.jsp"/>      
+   	</definition>
+
+	<definition name = "addMovie" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/AddMovie.jsp"/>      
+   	</definition>
+
+   	<definition name = "rentalsList" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/RentalsList.jsp"/>      
+   	</definition>
+
+   	<definition name = "rentalDefine" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/RentalDefine.jsp"/>      
+   	</definition>
+
+   	<definition name = "rentalClose" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/RentalClose.jsp"/>      
+   	</definition>
+   	
+   <!-- <definition name = "rentalchildpage">
+      	<put-attribute name = "body"   value = "/bodycontent/RentalCloseCustDetails.jsp"/>      
+   	</definition>  -->	
+   	
+   	<definition name = "rentalfinalize" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/RentalFinalize.jsp"/>      
+   	</definition>
+
+</tiles-definitions>

@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class name="com.c4networks.vrms.vo.CustomerBonus" schema="VRMS" table="CUSTOMER_BONUS">
+		<id name="bonusId" type="java.lang.String"> 
+			<column length="12"	name="BONUS_ID"/> 
+			<generator class="assigned"/> 
+		</id> 
+        <many-to-one class="com.c4networks.vrms.vo.CustomerDetails" fetch="select" insert="true" name="customerDetails"  unique="false" update="true">
+            <column length="12" name="CUSTOMER_ID" not-null="true"/>
+        </many-to-one>
+        <property name="bonusPoints" type="java.lang.Integer">
+        	<column name="BONUS_POINTS" precision="22" scale="0"/>
+        </property>
+	<property name="bonusVersion" type="java.lang.Integer">
+		<column name="BONUS_VERSION" precision="22" scale="0" />
+	</property>
+	<many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="createdBy" unique="false" update="true">
+		<column length="20" name="CREATED_BY" />
+	</many-to-one>
+	<property name="createdDate" type="date">
+		<column length="7" name="CREATED_DATE" />
+	</property>
+	<many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="lastModifiedBy" unique="false" update="true">
+		<column length="20" name="LAST_MODIFIED_BY" />
+	</many-to-one>
+	<property name="lastModifiedDate" type="date">
+		<column length="7" name="LAST_MODIFIED_DATE" />
+	</property>
+    </class>
+</hibernate-mapping>

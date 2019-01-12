@@ -4,55 +4,71 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+import org.apache.commons.collections.ListUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.c4networks.vrms.services.dao.CustomerBonusDAO;
+import com.c4networks.vrms.services.dao.CustomerBonusDAOImpl;
 import com.c4networks.vrms.services.dao.CustomerDetailsDAO;
-import com.c4networks.vrms.services.dao.MoviesDAO;
+import com.c4networks.vrms.services.dao.MovieDetailsDAO;
 import com.c4networks.vrms.services.dao.RentalDetailsDAO;
 import com.c4networks.vrms.services.dao.RentalDetailsDAOImpl;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
+import com.c4networks.vrms.services.util.AlphaNumerciRandomGenerator;
 import com.c4networks.vrms.services.util.DateFormatter;
+import com.c4networks.vrms.vo.CustomerBonus;
 import com.c4networks.vrms.vo.CustomerDetails;
-import com.c4networks.vrms.vo.Movies;
+import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.RentalFinalData;
+import com.c4networks.vrms.vo.UserDetails;
 
 @Service
-public class RentalServiceImpl implements RentalService{
+public class RentalServiceImpl implements RentalService {
 
 	private static final Logger logger = Logger.getLogger(RentalServiceImpl.class.getName());
 
 	@Autowired
 	private RentalDetailsDAO rentalDetailsDAO;
-	
+
 	@Autowired
-	private MoviesDAO moviesDAO;
+	private MovieDetailsDAO movieDetailsDAO;
 
 	@Autowired
 	private CustomerDetailsDAO customerDetailsDAO;
-	
-	public List<RentalDetails> getActiveRentalsList() {
+
+	@Autowired
+	private CustomerBonusDAOImpl customerBonusDAO;
+
+	@Override
+	public List<RentalDetails> getActiveRentalsList(String agentCode, String companyId) {
 		logger.info("In getActiveRentalsList() of RentalService");
 		List<RentalDetails> rentalsList;
-		rentalsList = rentalDetailsDAO.findByProperty("rentalStatus", "ACTIVE");
+		rentalsList = rentalDetailsDAO.findByProperty("agentCode.userId", agentCode, "companyDetails.companyId",
+				companyId, "status", "OPEN");
 		logger.info("Rental List size :" + rentalsList.size());
 
 		return rentalsList;
 	}
 
-	public List<RentalDetails> getRentalsList() {
+	@Override
+	public List<RentalDetails> getAllRentalsList(String agentCode, String companyId) {
 		logger.info("In getRentalsList() of RentalService");
 		List<RentalDetails> rentalsList;
-		rentalsList = rentalDetailsDAO.findAll();
+		rentalsList = rentalDetailsDAO.findByProperty("agentCode.userId", agentCode, "companyDetails.companyId",
+				companyId);
 		logger.info("Rental List size :" + rentalsList.size());
 
 		return rentalsList;
 	}
 
-	public Integer addRental(RentalDetails rentalDtls) {
+	@Override
+	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails, String movieId,
+			String expectedReturnDate) {
 		Session session = null;
 		Transaction transaction = null;
 		Integer result = 0;
@@ -60,15 +76,22 @@ public class RentalServiceImpl implements RentalService{
 			session = HibernateSessionFactory.getSession();
 			transaction = session.beginTransaction();
 
-			RentalDetails bean = new RentalDetails();
+			RentalDetails rentalBean = new RentalDetails();
 
-			CustomerDetails customerDetails = customerDetailsDAO.findById(rentalDtls.getCustomerDetails().getCustomerId());
-			bean.setCustomerDetails(customerDetails);
+			rentalBean.setRentalId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForRentalID());
 
-			Movies movies = moviesDAO.findById(rentalDtls.getMovies().getMovieId());
-			bean.setMovies(movies);
+			CustomerDetails customerDetails = customerDetailsDAO.findByCustomerId(customerId);
+			rentalBean.setCustomerDetails(customerDetails);
 
-			String rentalReference = "RNT";
+			rentalBean.setAgentCode(userDetails);
+			rentalBean.setCompanyCode(userDetails.getCompanyDetails().getCompanyId());
+
+			MovieDetails movies = movieDetailsDAO.findByMovieId(movieId);
+			rentalBean.setMovieDetails(movies);
+			rentalBean.setCompanyDetails(userDetails.getCompanyDetails());
+			rentalBean.setAgentCode(userDetails);
+
+			/*String rentalReference = "RNT";
 			List<String> maxRentalReference = rentalDetailsDAO.getMaxRentalReference();
 			logger.info("Size-------" + maxRentalReference.size());
 			if (maxRentalReference.size() > 0) {
@@ -86,23 +109,34 @@ public class RentalServiceImpl implements RentalService{
 					bean.setRentalId(rentalReference);
 				} else
 					bean.setRentalId("RNT001");
-			}
-			bean.setRentalDate(new Date());
-			bean.setExpectedReturnDate(rentalDtls.getExpectedReturnDate());
+			}*/
 
-			if (movies.getCategories().getCategoryId() == 1) {
-				bean.setBonusPoints(2);
-			} else {
-				bean.setBonusPoints(1);
-			}
-			bean.setBonusStatus("ACTIVE");
-			bean.setRentalStatus("OPEN");
-			bean.setLateCharges(0);
+			rentalBean.setRentalDate(new Date());
+			rentalBean.setExpectedReturnDate(DateFormatter.convertStringToDate(expectedReturnDate));
+			rentalBean.setActualReturnDate(null);
+			rentalBean.setCharges(movies.getCategories().getActivePrice());
+			rentalBean.setLateCharges(0);
+			rentalBean.setEffectiveCharges(0);
+			rentalBean.setStatus("OPEN");
+			rentalBean.setComments(rentalDetails.getComments());
 
-			rentalDetailsDAO.save(bean);
+			CustomerBonus bonus = new CustomerBonus();
+			bonus.setBonusId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForBonusID());
+			bonus.setCustomerDetails(customerDetails);
+			bonus.setBonusPoints(movies.getCategories().getBonus());
+			bonus.setBonusVersion(1);
+			bonus.setCreatedBy(userDetails);
+			bonus.setCreatedDate(new Date());
+			bonus.setLastModifiedBy(userDetails);
+			bonus.setLastModifiedDate(new Date());
 
-			movies.setCopies(movies.getCopies() - 1);
-			moviesDAO.save(movies);
+			movies.setAvailableCopies(movies.getAvailableCopies() - 1);
+			movies.setLastModifiedBy(userDetails);
+			movies.setLastModifiedDate(new Date());
+
+			customerBonusDAO.saveCustomerBonus(bonus);
+			movieDetailsDAO.saveMovieDetail(movies);
+			rentalDetailsDAO.saveRentalDetails(rentalBean);
 
 			transaction.commit();
 			if (transaction.wasCommitted()) {
@@ -116,8 +150,9 @@ public class RentalServiceImpl implements RentalService{
 		return result;
 	}
 
-	public Integer closeRental(RentalDetails rentalDetails, boolean bonusCheck) {
-		logger.info("rental id received is :" + rentalDetails.getRentalDetailsId());
+	@Override
+	public Integer closeRental(RentalFinalData finalData, boolean bonusCheck) {
+		logger.info("rental id received is :" + finalData.getRentalId());
 
 		Session session = null;
 		Transaction transaction = null;
@@ -127,23 +162,25 @@ public class RentalServiceImpl implements RentalService{
 			transaction = session.beginTransaction();
 
 			RentalDetailsDAOImpl dao = new RentalDetailsDAOImpl();
+			CustomerBonusDAO bonusDao = new CustomerBonusDAOImpl();
 
-			RentalDetails bean = dao.findById(rentalDetails.getRentalDetailsId());
+			RentalDetails bean = dao.findByRentalId(finalData.getRentalId());
 
-			bean.setRentalStatus("CLOSE");
+			bean.setStatus("CLOSE");
 			bean.setActualReturnDate(new Date());
 
-			bean.setComments(rentalDetails.getComments());
-			bean.setAmount(rentalDetails.getAmount());
+			bean.setComments(finalData.getComments());
+			bean.setEffectiveCharges(finalData.getBilledAmount()
+					+ (finalData.getLateCharges() != null ? finalData.getLateCharges() : 0));
 
 			session.update(bean);
 
 			logger.info("bonus check from rentalDetails is :" + bonusCheck);
 			if (bonusCheck) {
-				List<RentalDetails> list = dao.findByProperty("customerDetails.customerId", bean.getCustomerDetails().getCustomerId(), "bonusStatus", "ACTIVE");
-				for (RentalDetails rd : list) {
-					rd.setBonusStatus("INACTIVE");
-					session.update(rd);
+				List<CustomerBonus> list = bonusDao.findByProperty("customerDetails.customerId", bean.getCustomerDetails().getCustomerId(), "bonusVersion", 1);
+				for (CustomerBonus cb : list) {
+					cb.setBonusVersion(0);
+					session.update(cb);
 				}
 			}
 
@@ -158,12 +195,13 @@ public class RentalServiceImpl implements RentalService{
 		return result;
 	}
 
-	public List<RentalDetails> getRentalsByCustomerId(Integer customerId) {
+	@Override
+	public List<RentalDetails> getRentalsByCustomerId(String customerId) {
 		List<RentalDetails> list = new ArrayList<RentalDetails>();
-		logger.info("Received customer id is :"+customerId);
+		logger.info("Received customer id is :" + customerId);
 		try {
 			RentalDetailsDAOImpl rentalDetailsDAO = new RentalDetailsDAOImpl();
-			list = rentalDetailsDAO.findByProperty("customerDetails.customerId", customerId, "rentalStatus", "OPEN");
+			list = rentalDetailsDAO.findByProperty("customerDetails.customerId", customerId, "status", "OPEN");
 			logger.info("rental details list size:" + list.size());
 		} catch (Exception e) {
 			logger.error(e);
@@ -171,34 +209,33 @@ public class RentalServiceImpl implements RentalService{
 		return list;
 	}
 
-	public String[] rentalFinalize(Integer rentalEditId) {
+	@Override
+	public RentalFinalData rentalFinalize(String rentalEditId) {
 
-		String[] finalData = new String[6];
+		RentalFinalData finalData = new RentalFinalData();
 		try {
 			RentalDetailsDAOImpl rentalDetailsDAO = new RentalDetailsDAOImpl();
-			RentalDetails rd = rentalDetailsDAO.findById(rentalEditId);
+			RentalDetails rd = rentalDetailsDAO.findByRentalId(rentalEditId);
 
 			Date rntdDate = rd.getRentalDate();
 			Date currDate = new Date();
-//			int diff = currDate.compareTo(rntdDate);
+			//			int diff = currDate.compareTo(rntdDate);
 			int diff = (int) DateFormatter.getNoofDays(currDate, rntdDate);
 			logger.info("difference in dates is :" + diff);
 
-			Integer price = rd.getMovies().getCategories().getPrice();
-			finalData[0] = price.toString();
+			Integer price = rd.getMovieDetails().getCategories().getActivePrice();
+			finalData.setActualPrice(price);
 			Integer total = price * diff;
-			finalData[1] = total.toString();
+			finalData.setTotalPrice(total);
+			finalData.setLateCharges(0);
 			if (diff > 1) {
 				diff = diff - 1;
 				total = price * diff;
-				finalData[2] = total.toString();
+				finalData.setTotalPrice(total);
 			}
-			finalData[3] = rd.getCustomerDetails().getFirstName();
-			finalData[4] = rd.getMovies().getMovieName();
-			finalData[5] = rd.getCustomerDetails().getCustomerId().toString();
-			logger.info("Calculated charges per day are :" + finalData[0]);
-			logger.info("Calculated charges total are :" + finalData[1]);
-			logger.info("Calculated late charges are :" + finalData[2]);
+			finalData.setCustomerName(rd.getCustomerDetails().getFirstName());
+			finalData.setMovieName(rd.getMovieDetails().getMovieName());
+			finalData.setCustomerId(rd.getCustomerDetails().getCustomerId().toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -206,21 +243,29 @@ public class RentalServiceImpl implements RentalService{
 		return finalData;
 	}
 
-	public Integer viewBonusByCustomerById(Integer customerId) {
+	@Override
+	public Integer viewBonusByCustomerById(String customerId) {
 		Integer bonus = 0;
-		RentalDetailsDAOImpl dao = new RentalDetailsDAOImpl();
-		List<RentalDetails> list = dao.findByProperty("customerDetails.customerId", customerId, "bonusStatus", "ACTIVE");
-		for (RentalDetails rd : list) {
-			bonus = bonus + rd.getBonusPoints();
+		List<CustomerBonus> list = customerBonusDAO.findByProperty("customerDetails.customerId", customerId,
+				"bonusVersion", 1);
+		if (list.size() == 0) {
+			bonus = list.get(0).getBonusPoints();
+		} else {
+			int counter = 0;
+			for (CustomerBonus cbean : list) {
+				counter = counter + cbean.getBonusPoints();
+			}
+			bonus = counter;
 		}
 		return bonus;
 	}
 
-	public List<RentalDetails> viewRentalHistoryByCustomerId(Integer customerId) {
-		logger.info("customer id is :"+customerId);
+	@Override
+	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String agentCode, String companyCode) {
+		logger.info("customer id is :" + customerId);
 		RentalDetailsDAOImpl dao = new RentalDetailsDAOImpl();
-		List<RentalDetails> list = dao.findByProperty("customerDetails.customerId", customerId, "rentalStatus", "CLOSE");
-		logger.info("history list size is :"+list.size());
+		List<RentalDetails> list = dao.findByProperty("customerId", customerId, "agentCode", "companyCode");
+		logger.info("history list size is :" + list.size());
 		return list;
 	}
 

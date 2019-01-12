@@ -12,6 +12,7 @@ import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.c4networks.vrms.vo.CustomerDetails;
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.UserDetails;
 import com.c4networks.vrms.wsclient.VideoRentalManagementClient;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -29,15 +30,20 @@ public class CustomerAction extends ActionSupport {
 	private String address;
 	private String phone;
 	private String mobile;
-	private Integer customerId;
+	private String customerId;
+	private String selectItemToHighlight;
 
 	@SkipValidation
 	public String viewCustomerList() {
 		logger.info("In viewCustomerList() of CustomerAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
+		System.out.println("***************"+session.getAttribute("userDetails"));
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+		System.out.println("userDetails in session is :"+userDetails);
 		System.out.println(VideoRentalManagementClient.getInstance());
-		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance().getAllCustomers();
+		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance()
+				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + customersList.size());
 		session.setAttribute("customersList", customersList);
 		return SUCCESS;
@@ -52,29 +58,33 @@ public class CustomerAction extends ActionSupport {
 
 	public String addCustomer() {
 		logger.info("In addCustomer() of CustomerAction");
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 		String RESULT = SUCCESS;
-		try{
-		CustomerDetails bean = new CustomerDetails();
-		bean.setFirstName(firstName);
-		bean.setLastName(lastName);
-		bean.setAddress(address);
-		bean.setEmail(email);
-		bean.setMobile(mobile);
-		bean.setPhone(phone);
-		bean.setStatus("ACTIVE");
-		bean.setCreatedBy(1);
-		bean.setCreatedDate(new Date());
-		bean.setLastModifiedBy(1);
-		bean.setLastModifiedDate(new Date());
-		Integer result = VideoRentalManagementClient.getInstance().addCustomer(bean);
-		if (result == 1) {
-			this.addActionMessage("User creation successfull !..");
-			RESULT = ADDCUSTOMER;
-		} else {
-			this.addActionError("User creation failed...");
-			RESULT = DEFINECUSTOMER;
-		}
-		}catch (Exception e){
+		try {
+			CustomerDetails bean = new CustomerDetails();
+			bean.setFirstName(firstName);
+			bean.setLastName(lastName);
+			bean.setAddressLine1(address);
+			bean.setAddressLine2(address);
+			bean.setAddressLine3(address);
+			bean.setEmail(email);
+			bean.setMobile(mobile);
+			bean.setPhone(phone);
+			bean.setCreatedBy(userDetails);
+			bean.setCreatedDate(new Date());
+			bean.setLastModifiedBy(userDetails);
+			bean.setLastModifiedDate(new Date());
+			Integer result = VideoRentalManagementClient.getInstance().addCustomer(bean, userDetails);
+			if (result == 1) {
+				this.addActionMessage("User creation successfull !..");
+				RESULT = ADDCUSTOMER;
+			} else {
+				this.addActionError("User creation failed...");
+				RESULT = DEFINECUSTOMER;
+			}
+		} catch (Exception e) {
 			logger.info("CustomerAction.addCustomer::An exception occured while adding a customer");
 			logger.error(e);
 		}
@@ -86,7 +96,9 @@ public class CustomerAction extends ActionSupport {
 		logger.info("In viewRentalHistory() of CustomerAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		List<RentalDetails> rentalHistoryList = VideoRentalManagementClient.getInstance().viewRentalHistoryByCustomerId(customerId);
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+		List<RentalDetails> rentalHistoryList = VideoRentalManagementClient.getInstance().viewRentalHistoryByCustomerId(
+				customerId, userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		session.setAttribute("rentalHistoryList", rentalHistoryList);
 		return HISTORY;
 	}
@@ -139,12 +151,26 @@ public class CustomerAction extends ActionSupport {
 		this.mobile = mobile;
 	}
 
-	public Integer getCustomerId() {
+	public String getCustomerId() {
 		return customerId;
 	}
 
-	public void setCustomerId(Integer customerId) {
+	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
+	}
+
+	/**
+	 * @return the selectItemToHighlight
+	 */
+	public String getSelectItemToHighlight() {
+		return selectItemToHighlight;
+	}
+
+	/**
+	 * @param selectItemToHighlight the selectItemToHighlight to set
+	 */
+	public void setSelectItemToHighlight(String selectItemToHighlight) {
+		this.selectItemToHighlight = selectItemToHighlight;
 	}
 
 }

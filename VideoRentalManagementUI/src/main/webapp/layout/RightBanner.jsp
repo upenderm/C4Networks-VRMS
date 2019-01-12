@@ -1,0 +1,1 @@
+<div class="col rightBanner" style="background-image: url('images/vb2.jpg')">&nbsp;</div>

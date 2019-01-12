@@ -4,17 +4,23 @@ import java.util.List;
 
 import com.c4networks.vrms.vo.CustomerDetails;
 
+/**
+ * 
+ * @author M Upender
+ *
+ */
+
 public interface CustomerDetailsDAO {
 
-	public void save(CustomerDetails transientInstance);
+	public void saveCustomerDetail(CustomerDetails transientInstance);
 
-	public void delete(CustomerDetails persistentInstance);
+	public void deleteCustomerDetail(CustomerDetails persistentInstance);
 
-	public CustomerDetails findById(java.lang.Integer id);
-
-	public List<CustomerDetails> findByExample(CustomerDetails instance);
+	public CustomerDetails findByCustomerId(String id);
 
 	public List<CustomerDetails> findByProperty(String propertyName, Object value);
+	
+	public List<CustomerDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2);
 
 	public List<CustomerDetails> findAll();
 

@@ -8,23 +8,29 @@
 
 	<session-factory>
 		
-		<property name="connection.username">videorentalstore</property>
+		<property name="connection.username">VRMS</property>
 <!-- 	<property name="connection.url">jdbc:mysql://127.0.0.1:3306/videorentalstore</property>	 -->
-		<property name="connection.url">jdbc:oracle:thin:@DESKTOP-BSGR9C9:1521/XE</property>
+		<property name="connection.url">jdbc:oracle:thin:@CHINNI-LT-D5567:1521/XE</property>
 <!-- 	<property name="dialect">org.hibernate.dialect.MySQLDialect</property>	 -->
 		<property name="hibernate.dialect">org.hibernate.dialect.Oracle10gDialect</property>
 		<property name="myeclipse.connection.profile">VideoRentalManagement</property>
-		<property name="connection.password">chinni</property>
+		<property name="connection.password">VRMS</property>
 <!-- 	<property name="connection.driver_class">com.mysql.jdbc.Driver</property>	 -->
 		<property name="connection.driver_class">oracle.jdbc.OracleDriver</property>
 		<property name="show_sql">false</property>
 		<property name="hibernate.cache.use_query_cache">false</property>
 		<property name="hibernate.cache.use_second_level_cache">false</property>
 		<property name="hibernate.connection.isolation">2</property> <!-- Adding this property gives always the latest data from DB -->
-		<mapping resource="com/c4networks/vrms/hibernate/Movies.hbm.xml" />
-		<mapping resource="com/c4networks/vrms/hibernate/RentalDetails.hbm.xml" />
+		
 		<mapping resource="com/c4networks/vrms/hibernate/Categories.hbm.xml" />
+		<mapping resource="com/c4networks/vrms/hibernate/CompanyDetail.hbm.xml" />
+		<mapping resource="com/c4networks/vrms/hibernate/CustomerBonus.hbm.xml" />
 		<mapping resource="com/c4networks/vrms/hibernate/CustomerDetails.hbm.xml" />
+		<mapping resource="com/c4networks/vrms/hibernate/MovieDetails.hbm.xml" />
+		<mapping resource="com/c4networks/vrms/hibernate/RentalDetails.hbm.xml" />
+		<mapping resource="com/c4networks/vrms/hibernate/RoleDetail.hbm.xml" />
+		<mapping resource="com/c4networks/vrms/hibernate/UserDetails.hbm.xml" />
+		<mapping resource="com/c4networks/vrms/hibernate/UserSecurity.hbm.xml" />
 
 	</session-factory>
 

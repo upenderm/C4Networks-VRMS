@@ -39,12 +39,12 @@ public class C4NetworksSOAPHandlerClient implements SOAPHandler<SOAPMessageConte
 	public boolean handleMessage(SOAPMessageContext context) {
 		System.out.println("C4NetworksSOAPHandlerClient.handleMessage");
 		Boolean isRequest = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
-		if (isRequest) {
+		if (!isRequest) {
 			try {
 				SOAPMessage soapMsg = context.getMessage();
 				SOAPEnvelope soapEnv = soapMsg.getSOAPPart().getEnvelope();
 				SOAPHeader soapHeader = soapEnv.getHeader();
-//				this.printFormattedXML(soapMsg);
+				this.printFormattedXML(soapMsg);
 
 			} catch (SOAPException e) {
 				System.err.println(e);
@@ -77,7 +77,7 @@ public class C4NetworksSOAPHandlerClient implements SOAPHandler<SOAPMessageConte
 		transformer.setOutputProperty(OutputKeys.INDENT, "yes");
 		transformer.transform(xmlInput, xmlOutput);
 		String xmlString = xmlOutput.getWriter().toString();
-
+		System.out.println("Outgoing Request");
 		System.out.println(xmlString);
 	}
 

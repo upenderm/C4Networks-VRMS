@@ -4,36 +4,33 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.LockMode;
 import org.hibernate.Query;
-import org.hibernate.criterion.Example;
 import org.springframework.stereotype.Repository;
 
 import com.c4networks.vrms.services.hibernate.BaseHibernateDAO;
 import com.c4networks.vrms.vo.RentalDetails;
 
 /**
- * Data access object (DAO) for domain model class RentalDetails.
  * 
- * @see com.vrm.hibernate.RentalDetails
- * @author MyEclipse Persistence Tools
+ * @author M Upender
+ *
  */
 
 @Repository
-public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDetailsDAO{
+public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDetailsDAO {
 	private static final Log log = LogFactory.getLog(RentalDetailsDAOImpl.class);
 	// property constants
 	public static final String RENTAL_ID = "rentalId";
-	public static final String BONUS_POINTS = "bonusPoints";
-	public static final String BONUS_STATUS = "bonusStatus";
-	public static final String LATE_CHARGES = "lateCharges";
-	public static final String RENTAL_STATUS = "rentalStatus";
-	public static final String COMMENTS = "comments";
+	public static final String CUSTOMER_ID = "customerId";
+	public static final String AGENT_CODE = "agentCode";
+	public static final String COMPANY_ID = "companyId";
+	public static final String STATUS = "status";
+	public static final String MOVIE_ID = "movieId";
 
-	public void save(RentalDetails transientInstance) {
+	public void saveRentalDetails(RentalDetails rentalDetails) {
 		log.debug("saving RentalDetails instance");
 		try {
-			getSession().save(transientInstance);
+			getSession().save(rentalDetails);
 			log.debug("save successful");
 		} catch (RuntimeException re) {
 			log.error("save failed", re);
@@ -41,10 +38,10 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 		}
 	}
 
-	public void delete(RentalDetails persistentInstance) {
+	public void deleteRentalDetails(RentalDetails rentalDetails) {
 		log.debug("deleting RentalDetails instance");
 		try {
-			getSession().delete(persistentInstance);
+			getSession().delete(rentalDetails);
 			log.debug("delete successful");
 		} catch (RuntimeException re) {
 			log.error("delete failed", re);
@@ -52,11 +49,10 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 		}
 	}
 
-	public RentalDetails findById(java.lang.Integer id) {
-		log.debug("getting RentalDetails instance with id: " + id);
+	public RentalDetails findByRentalId(String rentalId) {
+		log.debug("getting RentalDetails instance with id: " + rentalId);
 		try {
-			RentalDetails instance = (RentalDetails) getSession().get(
-					"com.c4networks.vrms.vo.RentalDetails", id);
+			RentalDetails instance = (RentalDetails) getSession().get("com.c4networks.vrms.vo.RentalDetails", rentalId);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -64,27 +60,11 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 		}
 	}
 
-	public List findByExample(RentalDetails instance) {
-		log.debug("finding RentalDetails instance by example");
-		try {
-			List results = getSession().createCriteria(
-					"com.c4networks.vrms.vo.RentalDetails").add(
-					Example.create(instance)).list();
-			log.debug("find by example successful, result size: "
-					+ results.size());
-			return results;
-		} catch (RuntimeException re) {
-			log.error("find by example failed", re);
-			throw re;
-		}
-	}
-
+	@SuppressWarnings("unchecked")
 	public List<RentalDetails> findByProperty(String propertyName, Object value) {
-		log.debug("finding RentalDetails instance with property: "
-				+ propertyName + ", value: " + value);
+		log.debug("finding RentalDetails instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from RentalDetails as model where model."
-					+ propertyName + "= ?";
+			String queryString = "from RentalDetails as model where model." + propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -93,13 +73,13 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 			throw re;
 		}
 	}
-	
+
+	@SuppressWarnings("unchecked")
 	public List<RentalDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2) {
-		log.debug("finding RentalDetails instance with property: "
-				+ propertyName + ", value: " + value);
+		log.debug("finding RentalDetails instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from RentalDetails as model where model."
-					+ propertyName + "= ? and model." + propertyName2 + "= ?";
+			String queryString = "from RentalDetails as model where model." + propertyName + "= ? and model."
+					+ propertyName2 + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			queryObject.setParameter(1, value2);
@@ -110,30 +90,49 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 		}
 	}
 
-	public List findByVrsId(Object rentalId) {
+	@SuppressWarnings("unchecked")
+	public List<RentalDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2,
+			String propertyName3, Object value3) {
+		log.debug("finding RentalDetails instance with property: " + propertyName + ", value: " + value);
+		try {
+			String queryString = "from RentalDetails as model where model." + propertyName + "= ? and model."
+					+ propertyName2 + "= ? and model." + propertyName3 + "= ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			queryObject.setParameter(1, value2);
+			queryObject.setParameter(2, value3);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	public List<RentalDetails> findByRentalId(Object rentalId) {
 		return findByProperty(RENTAL_ID, rentalId);
 	}
 
-	public List findByBonusPoints(Object bonusPoints) {
-		return findByProperty(BONUS_POINTS, bonusPoints);
+	public List<RentalDetails> findByCustomerId(Object customerId) {
+		return findByProperty(CUSTOMER_ID, customerId);
 	}
 
-	public List findByBonusStatus(Object bonusStatus) {
-		return findByProperty(BONUS_STATUS, bonusStatus);
+	public List<RentalDetails> findByAgentCode(Object agentCode) {
+		return findByProperty(AGENT_CODE, agentCode);
 	}
 
-	public List findByLateCharges(Object lateCharges) {
-		return findByProperty(LATE_CHARGES, lateCharges);
-	}
-	
-	public List findByRentalStatus(Object rentalStatus) {
-		return findByProperty(RENTAL_STATUS, rentalStatus);
-	}
-	
-	public List findByComments(Object comments) {
-		return findByProperty(COMMENTS, comments);
+	public List<RentalDetails> findByCompanyId(Object CompanyId) {
+		return findByProperty(COMPANY_ID, CompanyId);
 	}
 
+	public List<RentalDetails> findByRentalStatus(Object rentalStatus) {
+		return findByProperty(STATUS, rentalStatus);
+	}
+
+	public List<RentalDetails> findByMovieId(Object movieId) {
+		return findByProperty(MOVIE_ID, movieId);
+	}
+
+	@SuppressWarnings("unchecked")
 	public List<RentalDetails> findAll() {
 		log.debug("finding all RentalDetails instances");
 		try {
@@ -149,8 +148,7 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 	public RentalDetails merge(RentalDetails detachedInstance) {
 		log.debug("merging RentalDetails instance");
 		try {
-			RentalDetails result = (RentalDetails) getSession().merge(
-					detachedInstance);
+			RentalDetails result = (RentalDetails) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -159,28 +157,7 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 		}
 	}
 
-	public void attachDirty(RentalDetails instance) {
-		log.debug("attaching dirty RentalDetails instance");
-		try {
-			getSession().saveOrUpdate(instance);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-
-	public void attachClean(RentalDetails instance) {
-		log.debug("attaching clean RentalDetails instance");
-		try {
-			getSession().lock(instance, LockMode.NONE);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-	
+	@SuppressWarnings("unchecked")
 	public List<String> getMaxRentalReference() {
 		log.debug("finding RentalDetails instance");
 		try {
@@ -192,5 +169,5 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 			throw re;
 		}
 	}
-	
+
 }

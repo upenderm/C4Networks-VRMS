@@ -11,32 +11,29 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.c4networks.vrms.services.dao.CategoriesDAO;
-import com.c4networks.vrms.services.dao.CustomerDetailsDAO;
-import com.c4networks.vrms.services.dao.MoviesDAO;
-import com.c4networks.vrms.services.dao.MoviesDAOImpl;
+import com.c4networks.vrms.services.dao.MovieDetailsDAO;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
+import com.c4networks.vrms.services.util.AlphaNumerciRandomGenerator;
 import com.c4networks.vrms.vo.Categories;
-import com.c4networks.vrms.vo.CustomerDetails;
-import com.c4networks.vrms.vo.Movies;
+import com.c4networks.vrms.vo.MovieDetails;
+import com.c4networks.vrms.vo.UserDetails;
 
 @Service
 public class MoviesServiceImpl implements MoviesService {
 	private static final Logger logger = Logger.getLogger(MoviesServiceImpl.class.getName());
-	
+
 	@Autowired
-	private MoviesDAO moviesDAO;
+	private MovieDetailsDAO moviesDAO;
 
 	@Autowired
 	private CategoriesDAO categoriesDAO;
 
-	@Autowired
-	private CustomerDetailsDAO customerDetailsDAO;
-
-	public List<Movies> getMoviesList() {
+	@Override
+	public List<MovieDetails> getMoviesList(String agentCode, String companyId) {
 		logger.info("in getMoviesList() of MoviesServiceImpl");
-		List<Movies> moviesList = new ArrayList<>();
+		List<MovieDetails> moviesList = new ArrayList<>();
 		try {
-			moviesList = moviesDAO.findAll();
+			moviesList = moviesDAO.findByProperty("agentCode.userId", agentCode, "companyDetails.companyId", companyId);
 			logger.info("Movies List size :" + moviesList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -44,7 +41,8 @@ public class MoviesServiceImpl implements MoviesService {
 		return moviesList;
 	}
 
-	public Integer addMovie(Movies movie, Integer categoryId) {
+	@Override
+	public Integer addMovie(MovieDetails movie, String categoryId, UserDetails userDetails) {
 		Session session = null;
 		Transaction transaction = null;
 		Integer result = 0;
@@ -52,19 +50,22 @@ public class MoviesServiceImpl implements MoviesService {
 			session = HibernateSessionFactory.getSession();
 			transaction = session.beginTransaction();
 
-			Movies bean = new Movies();
+			MovieDetails bean = new MovieDetails();
+			bean.setMovieId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForMovieID());
 			bean.setMovieName(movie.getMovieName().trim());
 			bean.setMovieDesc(movie.getMovieDesc().trim());
-			bean.setCopies(movie.getCopies());
-			Categories categories = categoriesDAO.findById(categoryId);
-			bean.setCategories(categories);
-			CustomerDetails customerDetails = customerDetailsDAO.findById(1);
-			bean.setCustomerDetailsByCreatedBy(customerDetails);
+			bean.setAgentCode(userDetails);
+			bean.setCompanyDetails(userDetails.getCompanyDetails());
+			bean.setCreatedBy(userDetails);
 			bean.setCreatedDate(new Date());
-			bean.setCustomerDetailsByLastModifiedBy(customerDetails);
+			bean.setLastModifiedBy(userDetails);
 			bean.setLastModifiedDate(new Date());
 			bean.setStatus("ACTIVE");
-			moviesDAO.save(bean);
+			bean.setTotalCopies(movie.getTotalCopies());
+			bean.setAvailableCopies(movie.getAvailableCopies());
+			Categories categories = categoriesDAO.findByCategoryId(categoryId);
+			bean.setCategories(categories);
+			moviesDAO.saveMovieDetail(bean);
 			transaction.commit();
 			if (transaction.wasCommitted()) {
 				result = 1;
@@ -76,11 +77,12 @@ public class MoviesServiceImpl implements MoviesService {
 		return result;
 	}
 
-	public Integer getAvailableMovieCopiesById(Integer movieId) {
+	@Override
+	public Integer getAvailableMovieCopiesById(String movieId, String userId, String companyId) {
 		Integer result = 0;
 		try {
-			Movies bean = moviesDAO.findById(movieId);
-			result = bean.getCopies();
+			List<MovieDetails> bean = moviesDAO.findByProperty("movieId", movieId, "agentCode.userId", userId, "companyDetails.companyId", companyId);
+			result = (bean.get(0)==null)?0:bean.get(0).getAvailableCopies();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

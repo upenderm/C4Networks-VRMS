@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class name="com.c4networks.vrms.vo.UserDetails" schema="VRMS" table="USER_DETAILS">
+        <id name="userId" type="java.lang.String">
+            <column length="20" name="USER_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="userName" type="java.lang.String" unique="false">
+            <column length="50" name="USERNAME" not-null="true"/>
+        </property>
+        <property name="email" type="java.lang.String" unique="false">
+            <column length="50" name="EMAIL" not-null="true"/>
+        </property>
+        <property name="firstName" type="java.lang.String" unique="false">
+            <column length="20" name="FIRST_NAME" not-null="true"/>
+        </property>
+        <property name="lastName" type="java.lang.String" unique="false">
+            <column length="20" name="LAST_NAME"/>
+        </property>
+        <property name="sex" type="java.lang.String" unique="false">
+            <column length="1" name="SEX"/>
+        </property>
+        <property name="mobile" type="java.lang.String" unique="false">
+            <column length="10" name="MOBILE" not-null="true"/>
+        </property>
+        <property name="mobile2" type="java.lang.String" unique="false">
+            <column length="10" name="MOBILE2"/>
+        </property>
+        <property name="phone" type="java.lang.String" unique="false">
+            <column length="15" name="PHONE"/>
+        </property>
+        <property name="city" type="java.lang.String" unique="false">
+            <column length="20" name="CITY"/>
+        </property>
+        <property name="state" type="java.lang.String" unique="false">
+            <column length="20" name="STATE"/>
+        </property>
+        <property name="country" type="java.lang.String" unique="false">
+            <column length="20" name="COUNTRY"/>
+        </property>
+        <property name="zipcode" type="java.lang.String" unique="false">
+            <column length="6" name="ZIPCODE"/>
+        </property>
+        <property name="addressLine1" type="java.lang.String" unique="false">
+            <column length="20" name="ADDRESS_LINE1"/>
+        </property>
+        <property name="addressLine2" type="java.lang.String" unique="false">
+            <column length="20" name="ADDRESS_LINE2"/>
+        </property>
+        <property name="addressLine3" type="java.lang.String" unique="false">
+            <column length="20" name="ADDRESS_LINE3"/>
+        </property>
+        <property name="createdBy" type="java.lang.String" unique="false">
+            <column length="20" name="CREATED_BY" not-null="true"/>
+        </property>
+        <property name="createdDate" type="date" unique="false">
+            <column length="7" name="CREATED_DATE" not-null="true"/>
+        </property>
+        <property name="lastModifiedBy" type="java.lang.String" unique="false">
+            <column length="20" name="LAST_MODIFIED_BY" not-null="true"/>
+        </property>
+        <property name="lastModifiedDate" type="date" unique="false">
+            <column length="7" name="LAST_MODIFIED_DATE" not-null="true"/>
+        </property>
+        <property name="picture" type="blob" unique="false">
+            <column name="PICTURE"/>
+        </property>
+        <property name="status" type="java.lang.String" unique="false">
+            <column length="8" name="STATUS" not-null="true"/>
+        </property>
+        <many-to-one class="com.c4networks.vrms.vo.RoleDetail" fetch="select" insert="true" name="roleId"  unique="false" update="true">
+            <column length="8" name="ROLE_ID" not-null="true"/>
+        </many-to-one>
+        <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">
+            <column length="10" name="COMPANY_ID" not-null="true"/>
+        </many-to-one>
+        <property name="aadhaar" type="java.lang.String" unique="false">
+            <column length="12" name="AADHAAR"/>
+        </property>
+        <!-- 
+                <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">
+            <column length="10" name="COMPANY_ID" not-null="true"/>
+        </many-to-one>
+        
+        <set fetch="select" name="roleDetailsesForCreatedBy" table="ROLE_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="CREATED_BY" not-null="true"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.RoleDetail" />
+        </set>
+        <set fetch="select" name="categoriesesForAgentCode" table="CATEGORIES">
+            <key on-delete="noaction">
+                <column length="20" name="AGENT_CODE"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.Category" />
+        </set>
+        <set fetch="select" name="rentalDetailses" table="RENTAL_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="AGENT_CODE" not-null="true"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.RentalDetail" />
+        </set>
+        <set fetch="select" name="roleDetailsesForLastModifiedBy" table="ROLE_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="LAST_MODIFIED_BY"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.RoleDetail" />
+        </set>
+        <set fetch="select" name="categoriesesForLastModifiedBy" table="CATEGORIES">
+            <key on-delete="noaction">
+                <column length="20" name="LAST_MODIFIED_BY"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.Category" />
+        </set>
+        <set fetch="select" name="customerDetailsesForLastModifiedBy" table="CUSTOMER_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="LAST_MODIFIED_BY"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.CustomerDetail" />
+        </set>
+        <set fetch="select" name="categoriesesForCreatedBy" table="CATEGORIES">
+            <key on-delete="noaction">
+                <column length="20" name="CREATED_BY"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.Category" />
+        </set>
+        <set fetch="select" name="customerDetailsesForCreatedBy" table="CUSTOMER_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="CREATED_BY"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.CustomerDetail" />
+        </set>
+        <set fetch="select" name="customerDetailsesForAgentCode" table="CUSTOMER_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="AGENT_CODE"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.CustomerDetail" />
+        </set>
+        <set fetch="select" name="movieDetailsesForCreatedBy" table="MOVIE_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="CREATED_BY"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.MovieDetail" />
+        </set>
+        <set fetch="select" name="movieDetailsesForAgentCode" table="MOVIE_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="AGENT_CODE"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.MovieDetail" />
+        </set>
+        <set fetch="select" name="movieDetailsesForLastModifiedBy" table="MOVIE_DETAILS">
+            <key on-delete="noaction">
+                <column length="20" name="LAST_MODIFIED_BY"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.MovieDetail" />
+        </set>
+         -->
+    </class>
+</hibernate-mapping>

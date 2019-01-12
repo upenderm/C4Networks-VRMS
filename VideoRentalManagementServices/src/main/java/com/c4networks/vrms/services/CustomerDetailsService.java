@@ -4,15 +4,16 @@ import java.util.List;
 
 import com.c4networks.vrms.vo.CustomerDetails;
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.UserDetails;
 
 public interface CustomerDetailsService {
 
-	public List<CustomerDetails> getCustomers();
+	public List<CustomerDetails> getCustomers(String agentCode, String companyId);
 
-	public Integer addCustomer(CustomerDetails custDtls);
+	public Integer addCustomer(CustomerDetails custDtls, UserDetails userDetails);
 	
-	public CustomerDetails getCustomerById(Integer customerId);
+	public CustomerDetails getCustomerById(String customerId);
 
-	public Integer addRental(RentalDetails rentalDetails, Integer customerId, Integer movieId, String expectedReturnDate);
+//	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails, String movieId, String expectedReturnDate);
 
 }

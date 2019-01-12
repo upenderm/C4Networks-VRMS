@@ -1,6 +1,5 @@
 package com.c4networks.vrms.ui.action;
 
-import java.util.Date;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -13,7 +12,8 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.c4networks.vrms.vo.Categories;
-import com.c4networks.vrms.vo.Movies;
+import com.c4networks.vrms.vo.MovieDetails;
+import com.c4networks.vrms.vo.UserDetails;
 import com.c4networks.vrms.wsclient.VideoRentalManagementClient;
 import com.opensymphony.xwork2.ActionSupport;
 
@@ -26,65 +26,72 @@ public class MoviesAction extends ActionSupport {
 	private static final Logger logger = Logger.getLogger(MoviesAction.class.getName());
 	private final String ADDMOVIE = "addmovie";
 	private final String DEFINEMOVIE = "definemovie";
-	
+
 	private String movieName;
 	private String movieDesc;
-	private Integer categories;
+	private String categoryId;
 	private Integer copies;
-	
-	public String viewMoviesList(){
+
+	public String viewMoviesList() {
 		logger.info("In viewMoviesList() of MoviesAction");
-		
+
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		List<Movies> moviesList = VideoRentalManagementClient.getInstance().getMoviesList();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+		List<MovieDetails> moviesList = VideoRentalManagementClient.getInstance().getMoviesList(userDetails.getUserId(),
+				userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + moviesList.size());
 		session.setAttribute("moviesList", moviesList);
-		
+
 		return SUCCESS;
 	}
-	
-	public String addMovie(){
+
+	public String addMovie() {
 		String RESULT = SUCCESS;
 		logger.info("In addMovie() of MoviesAction");
-		Movies bean = new Movies();
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+		MovieDetails bean = new MovieDetails();
 		bean.setMovieName(this.getMovieName().trim());
 		bean.setMovieDesc(this.getMovieDesc().trim());
-		bean.setCopies(this.getCopies());
-//		CategoriesDAO categoriesDAO = new CategoriesDAO();
-//		Categories categories = categoriesDAO.findById(action.getCategories());
-//		bean.setCategories(categories);
-//		CustomerDetailsDAO customerDetailsDAO = new CustomerDetailsDAO();
-//		CustomerDetails customerDetails = customerDetailsDAO.findById(1);
-//		bean.setCustomerDetailsByCreatedBy(customerDetails);
-//		bean.setCreatedDate(new Date());
-//		bean.setCustomerDetailsByLastModifiedBy(customerDetails);
-//		bean.setLastModifiedDate(new Date());
-		Integer result = VideoRentalManagementClient.getInstance().addMovie(bean, getCategories());
-		if (result == 1){
+		bean.setAvailableCopies(this.getCopies());
+		//		CategoriesDAO categoriesDAO = new CategoriesDAO();
+		//		Categories categories = categoriesDAO.findById(action.getCategories());
+		//		bean.setCategories(categories);
+		//		CustomerDetailsDAO customerDetailsDAO = new CustomerDetailsDAO();
+		//		CustomerDetails customerDetails = customerDetailsDAO.findById(1);
+		//		bean.setCustomerDetailsByCreatedBy(customerDetails);
+		//		bean.setCreatedDate(new Date());
+		//		bean.setCustomerDetailsByLastModifiedBy(customerDetails);
+		//		bean.setLastModifiedDate(new Date());
+		Integer result = VideoRentalManagementClient.getInstance().addMovie(bean, categoryId, userDetails);
+		if (result == 1) {
 			this.addActionMessage("Movie creation successfull !..");
 			RESULT = ADDMOVIE;
-		}else{
+		} else {
 			this.addActionError("Movie creation failed...");
 			RESULT = DEFINEMOVIE;
 		}
 		return RESULT;
-		
+
 	}
-	
-	public String defineMovie(){
+
+	public String defineMovie() {
 		logger.info("In defineMovie() of MoviesAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		Map<Integer, String> categoriesMap = new HashMap<Integer, String>();
-		List<Categories> categoriesList = VideoRentalManagementClient.getInstance().getCategories();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+		Map<String, String> categoriesMap = new HashMap<>();
+		List<Categories> categoriesList = VideoRentalManagementClient.getInstance()
+				.getAllCategoriesForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		Iterator<Categories> iter = categoriesList.iterator();
-		while(iter.hasNext()){
+		while (iter.hasNext()) {
 			Categories bean = iter.next();
 			categoriesMap.put(bean.getCategoryId(), bean.getCategoryName());
 		}
 		session.setAttribute("categoriesMap", categoriesMap);
-		
+
 		return DEFINEMOVIE;
 	}
 
@@ -104,20 +111,27 @@ public class MoviesAction extends ActionSupport {
 		this.movieDesc = movieDesc;
 	}
 
-	public Integer getCategories() {
-		return categories;
-	}
-
-	public void setCategories(Integer categories) {
-		this.categories = categories;
-	}
-
 	public Integer getCopies() {
 		return copies;
 	}
 
 	public void setCopies(Integer copies) {
 		this.copies = copies;
+	}
+
+	/**
+	 * @return the categoryId
+	 */
+	public String getCategoryId() {
+		return categoryId;
+	}
+
+	/**
+	 * @param categoryId
+	 *            the categoryId to set
+	 */
+	public void setCategoryId(String categoryId) {
+		this.categoryId = categoryId;
 	}
 
 }

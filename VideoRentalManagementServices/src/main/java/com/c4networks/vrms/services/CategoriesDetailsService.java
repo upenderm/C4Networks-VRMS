@@ -6,8 +6,8 @@ import com.c4networks.vrms.vo.Categories;
 
 public interface CategoriesDetailsService {
 
-	public List<Categories> getCategories();
+	public List<Categories> getAllCategoriesForUser(String agentCode, String companyId);
 	
-	public Categories getCategoriesById(Integer catId);
+	public Categories getCategoriesById(String categoryId);
 	
 }

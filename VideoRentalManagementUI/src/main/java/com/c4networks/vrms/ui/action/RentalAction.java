@@ -16,9 +16,12 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.c4networks.vrms.vo.CustomerDetails;
-import com.c4networks.vrms.vo.Movies;
+import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.RentalFinalData;
+import com.c4networks.vrms.vo.UserDetails;
 import com.c4networks.vrms.wsclient.VideoRentalManagementClient;
+import com.opensymphony.xwork2.ActionContext;
 import com.opensymphony.xwork2.ActionSupport;
 
 public class RentalAction extends ActionSupport {
@@ -34,13 +37,12 @@ public class RentalAction extends ActionSupport {
 	private final String ADDRENTAL = "addrental";
 	private final String RENTALFINALIZE = "rentalfinalize";
 
-	private Integer movieName;
-	private Integer customerName;
+	private String movieId;
+	private String customerId;
 	private String expectedReturnDate;
-	private Integer rentalEditId;
+	private String rentalEditId;
 	private String comments;
-	private Integer amount;
-	private String[] finalData;
+	private Integer billedAmount;
 	private Boolean bonusCheck;
 
 	public String defineRental() {
@@ -48,23 +50,26 @@ public class RentalAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 
-		Map<Integer, String> customerMap = new HashMap<Integer, String>();
-		Map<Integer, String> moviesMap = new HashMap<Integer, String>();
+		Map<String, String> customerMap = new HashMap<>();
+		Map<String, String> moviesMap = new HashMap<>();
 
-		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance().getAllCustomers();
+		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance()
+				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("customer list size :" + customersList.size());
-		List<Movies> moviesList = VideoRentalManagementClient.getInstance().getMoviesList();
+		List<MovieDetails> moviesList = VideoRentalManagementClient.getInstance().getMoviesList(userDetails.getUserId(),
+				userDetails.getCompanyDetails().getCompanyId());
 		logger.info("movies list size :" + moviesList.size());
 
 		Iterator<CustomerDetails> customerIter = customersList.iterator();
 		while (customerIter.hasNext()) {
 			CustomerDetails bean = customerIter.next();
-			customerMap.put(bean.getCustomerId(), bean.getVrmsId() + " - " + bean.getFirstName());
+			customerMap.put(bean.getCustomerId(), bean.getFirstName() + " - " + bean.getFirstName());
 		}
-		Iterator<Movies> moviesIter = moviesList.iterator();
+		Iterator<MovieDetails> moviesIter = moviesList.iterator();
 		while (moviesIter.hasNext()) {
-			Movies bean = moviesIter.next();
+			MovieDetails bean = moviesIter.next();
 			moviesMap.put(bean.getMovieId(), bean.getMovieName());
 		}
 
@@ -78,10 +83,14 @@ public class RentalAction extends ActionSupport {
 		logger.info("In addRental of RentalAction");
 		String RESULT = SUCCESS;
 		logger.info("In addCustomer() of CustomerAction");
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+
 		RentalDetails bean = new RentalDetails();
 
-		Integer result = VideoRentalManagementClient.getInstance().addRental(bean, this.getCustomerName(),
-				this.getMovieName(), this.getExpectedReturnDate());
+		Integer result = VideoRentalManagementClient.getInstance().addRental(bean, this.getCustomerId(), userDetails,
+				this.getMovieId(), this.getExpectedReturnDate());
 
 		if (result == 1) {
 			this.addActionMessage("Rental creation successfull !..");
@@ -98,6 +107,7 @@ public class RentalAction extends ActionSupport {
 
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
+		HttpSession session = request.getSession();
 		response.setContentType("text/html");
 		PrintWriter out = null;
 		try {
@@ -105,9 +115,8 @@ public class RentalAction extends ActionSupport {
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-
-		Integer result = VideoRentalManagementClient.getInstance()
-				.getAvailableMovieCopiesById(Integer.parseInt(request.getParameter("movieId")));
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+		Integer result = VideoRentalManagementClient.getInstance().getAvailableMovieCopiesById(request.getParameter("movieId"), userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 
 		out.write(result.toString());
 
@@ -118,18 +127,24 @@ public class RentalAction extends ActionSupport {
 		logger.info("In viewActiveRentals of RentalAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		List<RentalDetails> rentalsActiveList = VideoRentalManagementClient.getInstance().getActiveRentalsList();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+
+		List<RentalDetails> rentalsActiveList = VideoRentalManagementClient.getInstance()
+				.getActiveRentalsList(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + rentalsActiveList.size());
 		session.setAttribute("rentalsList", rentalsActiveList);
 
 		return SUCCESS;
 	}
 
-	public String viewRentals() {
+	public String viewAllRentals() {
 		logger.info("In viewRentals of RentalAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		List<RentalDetails> rentalsList = VideoRentalManagementClient.getInstance().getRentalsList();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+
+		List<RentalDetails> rentalsList = VideoRentalManagementClient.getInstance()
+				.getAllRentalsList(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + rentalsList.size());
 		session.setAttribute("rentalsList", rentalsList);
 
@@ -140,13 +155,16 @@ public class RentalAction extends ActionSupport {
 		logger.info("In closeRentalPage() of RentalAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		Map<Integer, String> customerMap = new HashMap<Integer, String>();
-		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance().getAllCustomers();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+
+		Map<String, String> customerMap = new HashMap<>();
+		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance()
+				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("customer list size :" + customersList.size());
 		Iterator<CustomerDetails> customerIter = customersList.iterator();
 		while (customerIter.hasNext()) {
 			CustomerDetails bean = customerIter.next();
-			customerMap.put(bean.getCustomerId(), bean.getVrmsId() + " - " + bean.getFirstName());
+			customerMap.put(bean.getCustomerId(), bean.getLastName() + " - " + bean.getFirstName());
 		}
 		session.setAttribute("customerMap", customerMap);
 		return DEFINECLOSE;
@@ -165,7 +183,7 @@ public class RentalAction extends ActionSupport {
 		}
 
 		Integer result = VideoRentalManagementClient.getInstance()
-				.viewBonusByCustomerById(Integer.parseInt(request.getParameter("customerId")));
+				.viewBonusByCustomerById(request.getParameter("customerId"));
 		logger.info("bonus points :" + result);
 		out.write(result.toString());
 
@@ -177,8 +195,8 @@ public class RentalAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
 		String str = request.getParameter("customerId");
-		List<RentalDetails> list = new ArrayList<RentalDetails>();
-		list = VideoRentalManagementClient.getInstance().getRentalsByCustomerId(Integer.parseInt(str));
+		List<RentalDetails> list = new ArrayList<>();
+		list = VideoRentalManagementClient.getInstance().getRentalsByCustomerId(str);
 		session.setAttribute("specificCustomerRentals", list);
 		return RENTALCHILDPAGE;
 
@@ -186,8 +204,11 @@ public class RentalAction extends ActionSupport {
 
 	public String closeRental() {
 		logger.info("In closeRental() of RentalAction");
-		RentalDetails bean = new RentalDetails();
-		Integer result = VideoRentalManagementClient.getInstance().closeRental(bean, this.getBonusCheck());
+		RentalFinalData finalData = new RentalFinalData();
+		finalData.setRentalId(this.rentalEditId);
+		finalData.setComments(this.comments);
+		finalData.setBilledAmount(this.billedAmount);
+		Integer result = VideoRentalManagementClient.getInstance().closeRental(finalData, this.getBonusCheck());
 		logger.info("Update status is :" + result);
 		if (result == 1) {
 			this.addActionMessage("Rental closed.");
@@ -199,26 +220,10 @@ public class RentalAction extends ActionSupport {
 
 	public String rentalFinalize() {
 		logger.info("In rentalFinalize() of RentalAction");
-		finalData = VideoRentalManagementClient.getInstance().rentalFinalize(rentalEditId);
+		RentalFinalData finalData = VideoRentalManagementClient.getInstance().rentalFinalize(rentalEditId);
 		logger.info("Update status is :" + finalData);
-
+		ActionContext.getContext().getValueStack().push(finalData);
 		return RENTALFINALIZE;
-	}
-
-	public Integer getMovieName() {
-		return movieName;
-	}
-
-	public void setMovieName(Integer movieName) {
-		this.movieName = movieName;
-	}
-
-	public Integer getCustomerName() {
-		return customerName;
-	}
-
-	public void setCustomerName(Integer customerName) {
-		this.customerName = customerName;
 	}
 
 	public String getExpectedReturnDate() {
@@ -229,11 +234,11 @@ public class RentalAction extends ActionSupport {
 		this.expectedReturnDate = expectedReturnDate;
 	}
 
-	public Integer getRentalEditId() {
+	public String getRentalEditId() {
 		return rentalEditId;
 	}
 
-	public void setRentalEditId(Integer rentalEditId) {
+	public void setRentalEditId(String rentalEditId) {
 		this.rentalEditId = rentalEditId;
 	}
 
@@ -245,20 +250,12 @@ public class RentalAction extends ActionSupport {
 		this.comments = comments;
 	}
 
-	public Integer getAmount() {
-		return amount;
+	public Integer getBilledAmount() {
+		return billedAmount;
 	}
 
-	public void setAmount(Integer amount) {
-		this.amount = amount;
-	}
-
-	public String[] getFinalData() {
-		return finalData;
-	}
-
-	public void setFinalData(String[] finalData) {
-		this.finalData = finalData;
+	public void setBilledAmount(Integer billedAmount) {
+		this.billedAmount = billedAmount;
 	}
 
 	public Boolean getBonusCheck() {
@@ -267,6 +264,36 @@ public class RentalAction extends ActionSupport {
 
 	public void setBonusCheck(Boolean bonusCheck) {
 		this.bonusCheck = bonusCheck;
+	}
+
+	/**
+	 * @return the movieId
+	 */
+	public String getMovieId() {
+		return movieId;
+	}
+
+	/**
+	 * @param movieId
+	 *            the movieId to set
+	 */
+	public void setMovieId(String movieId) {
+		this.movieId = movieId;
+	}
+
+	/**
+	 * @return the customerId
+	 */
+	public String getCustomerId() {
+		return customerId;
+	}
+
+	/**
+	 * @param customerId
+	 *            the customerId to set
+	 */
+	public void setCustomerId(String customerId) {
+		this.customerId = customerId;
 	}
 
 }

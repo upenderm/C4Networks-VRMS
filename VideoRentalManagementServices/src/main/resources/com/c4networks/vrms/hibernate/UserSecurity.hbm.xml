@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class name="com.c4networks.vrms.vo.UserSecurity" schema="VRMS" table="USER_SECURITY">
+        <id name="username" type="java.lang.String">
+            <column length="50" name="USERNAME"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="password" type="java.lang.String" unique="false">
+            <column length="20" name="PASSWORD" not-null="true"/>
+        </property>
+        <property name="status" type="java.lang.String" unique="false">
+            <column length="10" name="STATUS" not-null="true"/>
+        </property>
+        <property name="createdBy" type="java.lang.Integer" unique="false">
+            <column name="CREATED_BY" not-null="true" precision="20" scale="0"/>
+        </property>
+        <property name="createdDate" type="date" unique="false">
+            <column length="7" name="CREATED_DATE" not-null="true"/>
+        </property>
+        <property name="lastModifiedBy" type="java.lang.Integer" unique="false">
+            <column name="LAST_MODIFIED_BY" not-null="true" precision="20" scale="0"/>
+        </property>
+        <property name="lastModifiedDate" type="date" unique="false">
+            <column length="7" name="LAST_MODIFIED_DATE" not-null="true"/>
+        </property>
+        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="userDetails"  unique="false" update="true">
+            <column length="20" name="USER_ID" not-null="true"/>
+        </many-to-one>
+    </class>
+</hibernate-mapping>

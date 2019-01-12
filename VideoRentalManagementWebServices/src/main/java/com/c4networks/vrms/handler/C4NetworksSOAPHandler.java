@@ -40,19 +40,23 @@ public class C4NetworksSOAPHandler implements SOAPHandler<SOAPMessageContext> {
 		System.out.println("C4NetworksSOAPHandler.handleMessage");
 		Boolean isRequest = (Boolean) context.get(MessageContext.MESSAGE_OUTBOUND_PROPERTY);
 		if (isRequest) {
-			try {
-				SOAPMessage soapMsg = context.getMessage();
-				SOAPEnvelope soapEnv = soapMsg.getSOAPPart().getEnvelope();
-				SOAPHeader soapHeader = soapEnv.getHeader();
-				this.printFormattedXML(soapMsg);
+			System.out.println("Outgoing Response\n");
+		} else {
+			System.out.println("Incoming Request\n");
+		}
+		try {
+			SOAPMessage soapMsg = context.getMessage();
+			SOAPEnvelope soapEnv = soapMsg.getSOAPPart().getEnvelope();
+			SOAPHeader soapHeader = soapEnv.getHeader();
 
-			} catch (SOAPException e) {
-				System.err.println(e);
-			} catch (IOException e) {
-				System.err.println(e);
-			} catch (Exception e) {
-				System.err.println(e);
-			}
+			this.printFormattedXML(soapMsg);
+
+		} catch (SOAPException e) {
+			System.err.println(e);
+		} catch (IOException e) {
+			System.err.println(e);
+		} catch (Exception e) {
+			System.err.println(e);
 		}
 		return true;
 	}
@@ -78,7 +82,7 @@ public class C4NetworksSOAPHandler implements SOAPHandler<SOAPMessageContext> {
 		transformer.transform(xmlInput, xmlOutput);
 		String xmlString = xmlOutput.getWriter().toString();
 
-		System.out.println(xmlString);
+//		System.out.println(xmlString);
 	}
 
 }

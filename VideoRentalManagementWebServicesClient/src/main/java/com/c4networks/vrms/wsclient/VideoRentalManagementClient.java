@@ -7,12 +7,13 @@ import java.util.List;
 
 import javax.jws.HandlerChain;
 import javax.xml.namespace.QName;
-import javax.xml.ws.WebServiceFeature;
 
 import com.c4networks.vrms.vo.Categories;
 import com.c4networks.vrms.vo.CustomerDetails;
-import com.c4networks.vrms.vo.Movies;
+import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.RentalFinalData;
+import com.c4networks.vrms.vo.UserDetails;
 import com.c4networks.vrms.webservices.VideoRentalManagementServices;
 import com.c4networks.vrms.webservices.VideoRentalManagementServicesManager;
 
@@ -59,12 +60,12 @@ public class VideoRentalManagementClient {
 		return vrmsClient;
 	}
 
-	public List<CustomerDetails> getAllCustomers() {
+	public List<CustomerDetails> getCustomersListForUser(String userId, String companyId) {
 		System.out.println("In getAllCustomers method of Facade client");
 		List<CustomerDetails> customersList = new ArrayList<CustomerDetails>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			customersList = port.getAllCustomers();
+			customersList = port.getCustomersListForUser(userId, companyId);
 			System.out.println("customers list size returned from webservice is :" + customersList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -72,20 +73,19 @@ public class VideoRentalManagementClient {
 		return customersList;
 	}
 
-	public List<Movies> getMoviesList() {
+	public List<MovieDetails> getMoviesList(String userId, String companyId) {
 		System.out.println("In getMoviesList method of Facade client");
-		List<Movies> moviesList = new ArrayList<>();
+		List<MovieDetails> moviesList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			moviesList = port.viewAllMovies();
+			moviesList = port.viewAllMoviesForUser(userId, companyId);
 			System.out.println("moviesList size returned from webservice is :" + moviesList.size());
-			for (Movies m : moviesList) {
+			for (MovieDetails m : moviesList) {
 				System.out.println(m.getMovieName());
 				System.out.println(m.getCategories());
-				System.out.println(m.getCategories().getPrice());
+				System.out.println(m.getCategories().getActivePrice());
 				System.out.println(m.getCategories().getCategoryName());
-				System.out.println(m.getCustomerDetailsByCreatedBy());
-				System.out.println(m.getCustomerDetailsByCreatedBy().getCustomerId());
+				System.out.println(m.getCreatedBy());
 			}
 			System.out.println("Hello client");
 		} catch (Exception e) {
@@ -95,12 +95,13 @@ public class VideoRentalManagementClient {
 		return moviesList;
 	}
 
-	public Integer addRental(RentalDetails bean, Integer customerId, Integer movieId, String expectedReturnDate) {
+	public Integer addRental(RentalDetails bean, String customerId, UserDetails userDetails, String movieId,
+			String expectedReturnDate) {
 		Integer result = 0;
 		System.out.println("In addRental method of Facade client");
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			result = port.addRental(bean, customerId, movieId, expectedReturnDate);
+			result = port.addRental(bean, customerId, userDetails, movieId, expectedReturnDate);
 			System.out.println("Add a Rental, result is :" + result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -108,22 +109,12 @@ public class VideoRentalManagementClient {
 		return result;
 	}
 
-	public Integer getAvailableMovieCopiesById(int parseInt) {
-		System.out.println("VideoRentalManaementUI.getAvailableMovieCopiesById");
-		Integer result = 0;
-		try {
-
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return result;	}
-
-	public List<RentalDetails> getActiveRentalsList() {
+	public List<RentalDetails> getActiveRentalsList(String userId, String companyId) {
 		System.out.println("In getActiveRentalsList method of Facade client");
 		List<RentalDetails> rentalList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			rentalList = port.viewActiveRentals();
+			rentalList = port.viewActiveRentalsForAgent(userId, companyId);
 			System.out.println("rentalList size returned from webservice is :" + rentalList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -133,12 +124,12 @@ public class VideoRentalManagementClient {
 
 	}
 
-	public List<RentalDetails> getRentalsList() {
+	public List<RentalDetails> getAllRentalsList(String userId, String companyId) {
 		System.out.println("In getActiveRentalsList method of Facade client");
 		List<RentalDetails> rentalList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			rentalList = port.viewAllRentals();
+			rentalList = port.viewAllRentalsForAgent(userId, companyId);
 			System.out.println("rentalList size returned from webservice is :" + rentalList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -148,18 +139,7 @@ public class VideoRentalManagementClient {
 
 	}
 
-	public List<CustomerDetails> getCustomers() {
-		System.out.println("VideoRentalManaementUI.getCustomers");
-		List<CustomerDetails> customerList = new ArrayList<>();
-		try {
-
-		} catch (Exception e) {
-			e.getMessage();
-		}
-		return customerList;
-	}
-
-	public Integer viewBonusByCustomerById(Integer customerId) {
+	public Integer viewBonusByCustomerById(String customerId) {
 		System.out.println("VideoRentalManaementUI.viewBonusByCustomerById");
 		Integer result = 0;
 		try {
@@ -171,7 +151,7 @@ public class VideoRentalManagementClient {
 		return result;
 	}
 
-	public List<RentalDetails> getRentalsByCustomerId(Integer customerId) {
+	public List<RentalDetails> getRentalsByCustomerId(String customerId) {
 		System.out.println("VideoRentalManaementUI.getRentalsByCustomerId");
 		List<RentalDetails> rentalList = new ArrayList<>();
 		try {
@@ -185,7 +165,7 @@ public class VideoRentalManagementClient {
 
 	}
 
-	public Integer closeRental(RentalDetails bean, Boolean bonusCheck) {
+	public Integer closeRental(RentalFinalData bean, Boolean bonusCheck) {
 		System.out.println("VideoRentalManaementUI.closeRental");
 		Integer result = 0;
 		try {
@@ -198,36 +178,36 @@ public class VideoRentalManagementClient {
 
 	}
 
-	public String[] rentalFinalize(Integer rentalEditId) {
+	public RentalFinalData rentalFinalize(String rentalId) {
 		System.out.println("VideoRentalManaementUI.rentalFinalize");
-		String[] result = null;
+		RentalFinalData result = null;
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-//			result = port.rentalFinalize(rentalEditId);
+			result = port.rentalFinalize(rentalId);
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		return result;
 	}
 
-	public Integer addMovie(Movies movie, Integer categoryId) {
+	public Integer addMovie(MovieDetails movie, String categoryId, UserDetails userDetails) {
 		System.out.println("VideoRentalManaementUI.addMovie");
 		Integer result = 0;
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			result = port.addMovies(movie, categoryId);
+			result = port.addMovies(movie, categoryId, userDetails);
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		return result;
 	}
 
-	public List<Categories> getCategories() {
+	public List<Categories> getAllCategoriesForUser(String userId, String companyId) {
 		System.out.println("In getActiveRentalsList method of Facade client");
 		List<Categories> categoryList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			categoryList = port.viewAllCategories();
+			categoryList = port.viewAllMovieCategoriesForUser(userId, companyId);
 			System.out.println("categoryList size returned from webservice is :" + categoryList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -237,12 +217,12 @@ public class VideoRentalManagementClient {
 
 	}
 
-	public Integer addCustomer(CustomerDetails customerDetails) {
+	public Integer addCustomer(CustomerDetails customerDetails, UserDetails userDtls) {
 		System.out.println("VideoRentalManagementClient.addCustomer");
 		Integer result = 0;
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			result = port.addCustomer(customerDetails);
+			result = port.addCustomerForUser(customerDetails, userDtls);
 			System.out.println("result is :" + result);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -250,16 +230,40 @@ public class VideoRentalManagementClient {
 		return result;
 	}
 
-	public List<RentalDetails> viewRentalHistoryByCustomerId(Integer customerId) {
+	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String userId, String companyId) {
 		System.out.println("VIdeoRentalManagementClient.viewRentalHistoryByCustomerId");
 		List<RentalDetails> rentalsList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			rentalsList = port.viewRentalHistoryByCustomerId(customerId);
+			rentalsList = port.viewRentalHistoryByCustomerId(customerId, userId, companyId);
 		} catch (Exception e) {
 			e.getMessage();
 		}
 		return rentalsList;
+	}
+
+	public UserDetails getLoggedInUserDetails(String userId) {
+		System.out.println("VIdeoRentalManagementClient.getLoggedInUserDetails");
+		UserDetails userDetails = null;
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			userDetails = port.getUserDetailsById(userId);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return userDetails;
+	}
+
+	public Integer getAvailableMovieCopiesById(String movieId, String userId, String companyId) {
+		System.out.println("VideoRentalManaementUI.getAvailableMovieCopiesById");
+		Integer result = 0;
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			result = port.getAvailableMovieCopies(movieId, userId, companyId);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
 	}
 
 }

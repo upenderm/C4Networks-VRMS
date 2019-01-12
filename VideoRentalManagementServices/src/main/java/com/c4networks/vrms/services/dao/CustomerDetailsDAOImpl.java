@@ -4,37 +4,34 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.LockMode;
 import org.hibernate.Query;
-import org.hibernate.criterion.Example;
 import org.springframework.stereotype.Repository;
 
 import com.c4networks.vrms.services.hibernate.BaseHibernateDAO;
 import com.c4networks.vrms.vo.CustomerDetails;
 
 /**
- * Data access object (DAO) for domain model class CustomerDetails.
  * 
- * @see com.vrm.hibernate.CustomerDetails
- * @author MyEclipse Persistence Tools
+ * @author M Upender
+ *
  */
 
 @Repository
 public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements CustomerDetailsDAO {
 	private static final Log log = LogFactory.getLog(CustomerDetailsDAOImpl.class);
 	// property constants
-	public static final String VRMSID = "vrmsId";
+	public static final String CUSTOMERID = "customerId";
 	public static final String FIRST_NAME = "firstName";
 	public static final String LAST_NAME = "lastName";
 	public static final String EMAIL = "email";
-	public static final String ADDRESS = "address";
 	public static final String PHONE = "phone";
 	public static final String MOBILE = "mobile";
 	public static final String CREATED_BY = "createdBy";
 	public static final String LAST_MODIFIED_BY = "lastModifiedBy";
 	public static final String STATUS = "status";
+	public static final String AADHAAR = "aadhaar";
 
-	public void save(CustomerDetails transientInstance) {
+	public void saveCustomerDetail(CustomerDetails transientInstance) {
 		log.debug("saving CustomerDetails instance");
 		try {
 			getSession().save(transientInstance);
@@ -45,7 +42,7 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public void delete(CustomerDetails persistentInstance) {
+	public void deleteCustomerDetail(CustomerDetails persistentInstance) {
 		log.debug("deleting CustomerDetails instance");
 		try {
 			getSession().delete(persistentInstance);
@@ -56,11 +53,10 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public CustomerDetails findById(java.lang.Integer id) {
+	public CustomerDetails findByCustomerId(String id) {
 		log.debug("getting CustomerDetails instance with id: " + id);
 		try {
-			CustomerDetails instance = (CustomerDetails) getSession().get(
-					"com.c4networks.vrms.vo.CustomerDetails", id);
+			CustomerDetails instance = (CustomerDetails) getSession().get("com.c4networks.vrms.vo.CustomerDetails", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -68,27 +64,11 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public List<CustomerDetails> findByExample(CustomerDetails instance) {
-		log.debug("finding CustomerDetails instance by example");
-		try {
-			List<CustomerDetails> results = getSession().createCriteria(
-					"com.c4networks.vrms.vo.CustomerDetails").add(
-					Example.create(instance)).list();
-			log.debug("find by example successful, result size: "
-					+ results.size());
-			return results;
-		} catch (RuntimeException re) {
-			log.error("find by example failed", re);
-			throw re;
-		}
-	}
-
+	@SuppressWarnings("unchecked")
 	public List<CustomerDetails> findByProperty(String propertyName, Object value) {
-		log.debug("finding CustomerDetails instance with property: "
-				+ propertyName + ", value: " + value);
+		log.debug("finding CustomerDetails instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from CustomerDetails as model where model."
-					+ propertyName + "= ?";
+			String queryString = "from CustomerDetails as model where model." + propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -98,10 +78,22 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public List<CustomerDetails> findByVrmsId(Object vrmsId) {
-		return findByProperty(VRMSID, vrmsId);
+	@SuppressWarnings("unchecked")
+	public List<CustomerDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2) {
+		log.debug("finding CustomerDetails instance with property: " + propertyName + ", value: " + value);
+		try {
+			String queryString = "from CustomerDetails as model where model.agentCode." + propertyName + "= ? and model.companyDetails."
+					+ propertyName2 + "= ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			queryObject.setParameter(1, value2);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
 	}
-	
+
 	public List<CustomerDetails> findByFirstName(Object firstName) {
 		return findByProperty(FIRST_NAME, firstName);
 	}
@@ -114,8 +106,8 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		return findByProperty(EMAIL, email);
 	}
 
-	public List<CustomerDetails> findByAddress(Object address) {
-		return findByProperty(ADDRESS, address);
+	public List<CustomerDetails> findByAadhaar(Object aadhaar) {
+		return findByProperty(AADHAAR, aadhaar);
 	}
 
 	public List<CustomerDetails> findByPhone(Object phone) {
@@ -138,6 +130,7 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		return findByProperty(STATUS, status);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<CustomerDetails> findAll() {
 		log.debug("finding all CustomerDetails instances");
 		try {
@@ -153,8 +146,7 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 	public CustomerDetails merge(CustomerDetails detachedInstance) {
 		log.debug("merging CustomerDetails instance");
 		try {
-			CustomerDetails result = (CustomerDetails) getSession().merge(
-					detachedInstance);
+			CustomerDetails result = (CustomerDetails) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -163,32 +155,11 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public void attachDirty(CustomerDetails instance) {
-		log.debug("attaching dirty CustomerDetails instance");
-		try {
-			getSession().saveOrUpdate(instance);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-
-	public void attachClean(CustomerDetails instance) {
-		log.debug("attaching clean CustomerDetails instance");
-		try {
-			getSession().lock(instance, LockMode.NONE);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-	
+	@SuppressWarnings("unchecked")
 	public List<String> getMaxVrmsReference() {
 		log.debug("finding CustomerDetails instance");
 		try {
-			String queryString = "select max(vrmsId)from CustomerDetails customerDetails";
+			String queryString = "select max(Id)from CustomerDetails customerDetails";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {

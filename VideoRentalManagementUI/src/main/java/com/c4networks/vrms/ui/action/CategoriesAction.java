@@ -9,25 +9,28 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
 import com.c4networks.vrms.vo.Categories;
+import com.c4networks.vrms.vo.UserDetails;
 import com.c4networks.vrms.wsclient.VideoRentalManagementClient;
 import com.opensymphony.xwork2.ActionSupport;
 
-public class CategoriesAction extends ActionSupport{
+public class CategoriesAction extends ActionSupport {
 
 	/**
 	 * 
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(CategoriesAction.class.getName());
-	
-	public String execute(){
+
+	public String execute() {
 		logger.info("In execute() of CategoriesAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		List<Categories> categoriesList = VideoRentalManagementClient.getInstance().getCategories();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+		List<Categories> categoriesList = VideoRentalManagementClient.getInstance()
+				.getAllCategoriesForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + categoriesList.size());
 		session.setAttribute("categoriesList", categoriesList);
-		
+
 		return SUCCESS;
 	}
 

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
+    <class name="com.c4networks.vrms.vo.MovieDetails" schema="VRMS" table="MOVIE_DETAILS">
+        <id name="movieId" type="java.lang.String">
+            <column length="10" name="MOVIE_ID"/>
+            <generator class="assigned"/>
+        </id>
+        <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">
+            <column length="10" name="COMPANY_ID"/>
+        </many-to-one>
+        <many-to-one class="com.c4networks.vrms.vo.Categories" fetch="select" insert="true" name="categories"  unique="false" update="true">
+            <column length="10" name="CATEGORY_ID"/>
+        </many-to-one>
+        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="createdBy"  unique="false" update="true">
+            <column length="20" name="CREATED_BY"/>
+        </many-to-one>
+        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="agentCode"  unique="false" update="true">
+            <column length="20" name="AGENT_CODE"/>
+        </many-to-one>
+        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="lastModifiedBy"  unique="false" update="true">
+            <column length="20" name="LAST_MODIFIED_BY"/>
+        </many-to-one>
+        <property name="movieName" type="java.lang.String" unique="false">
+            <column length="20" name="MOVIE_NAME"/>
+        </property>
+        <property name="movieDesc" type="java.lang.String" unique="false">
+            <column length="100" name="MOVIE_DESC"/>
+        </property>
+        <property name="createdDate" type="date" unique="false">
+            <column length="7" name="CREATED_DATE"/>
+        </property>
+        <property name="lastModifiedDate" type="date" unique="false">
+            <column length="7" name="LAST_MODIFIED_DATE"/>
+        </property>
+        <property name="status" type="java.lang.String" unique="false">
+            <column length="8" name="STATUS"/>
+        </property>
+        <property name="totalCopies" type="java.lang.Integer" unique="false">
+            <column name="TOTAL_COPIES" precision="22" scale="0"/>
+        </property>
+        <property name="availableCopies" type="java.lang.Integer" unique="false">
+            <column name="AVAILABLE_COPIES" precision="22" scale="0"/>
+        </property>
+        <property name="picture" type="blob" unique="false">
+            <column name="PICTURE"/>
+        </property>
+        <!-- <set fetch="select" name="rentalDetailses" table="RENTAL_DETAILS">
+            <key on-delete="noaction">
+                <column length="10" name="MOVIE_ID" not-null="true"/>
+            </key>
+            <one-to-many class="com.c4networks.vrms.vo.RentalDetails" />
+        </set> -->
+    </class>
+</hibernate-mapping>

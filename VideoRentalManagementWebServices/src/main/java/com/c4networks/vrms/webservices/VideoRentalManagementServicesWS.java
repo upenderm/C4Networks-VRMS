@@ -15,18 +15,19 @@ import com.c4networks.vrms.services.CategoriesDetailsService;
 import com.c4networks.vrms.services.CustomerDetailsService;
 import com.c4networks.vrms.services.MoviesService;
 import com.c4networks.vrms.services.RentalService;
+import com.c4networks.vrms.services.UserDetailsService;
 import com.c4networks.vrms.vo.Categories;
 import com.c4networks.vrms.vo.CustomerDetails;
-import com.c4networks.vrms.vo.Movies;
+import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.RentalFinalData;
+import com.c4networks.vrms.vo.UserDetails;
 
 @HandlerChain(file = "handler-chain.xml")
 @WebService(name = "VideoRentalManagementServicesManager", serviceName = "VideoRentalManagementServices", portName = "VideoRentalManagementServicesPort")
-@XmlSeeAlso({RentalDetails.class,Movies.class,CustomerDetails.class,Categories.class})
+@XmlSeeAlso({ RentalDetails.class, MovieDetails.class, CustomerDetails.class, Categories.class, RentalFinalData.class })
 public class VideoRentalManagementServicesWS {
 
-	
-	
 	@Autowired
 	private CustomerDetailsService customerDetailsService;
 
@@ -39,12 +40,15 @@ public class VideoRentalManagementServicesWS {
 	@Autowired
 	private RentalService rentalService;
 
+	@Autowired
+	private UserDetailsService usrDtlsService;
+
 	@WebMethod
-	public List<CustomerDetails> getAllCustomers() {
+	public List<CustomerDetails> getCustomersListForUser(String agentCode, String companyId) {
 		List<CustomerDetails> custDtlsList = new ArrayList<>();
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			custDtlsList = customerDetailsService.getCustomers();
+			custDtlsList = customerDetailsService.getCustomers(agentCode, companyId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -52,11 +56,11 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public Integer addCustomer(CustomerDetails customerDetails) {
+	public Integer addCustomerForUser(CustomerDetails custDtls, UserDetails userDetails) {
 		Integer result = 0;
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			result = customerDetailsService.addCustomer(customerDetails);
+			result = customerDetailsService.addCustomer(custDtls, userDetails);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -64,18 +68,17 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public List<Movies> viewAllMovies() {
-		List<Movies> moviesList = new ArrayList<>();
+	public List<MovieDetails> viewAllMoviesForUser(String agentCode, String companyId) {
+		List<MovieDetails> moviesList = new ArrayList<>();
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			moviesList = moviesService.getMoviesList();
-			for(Movies m : moviesList){
+			moviesList = moviesService.getMoviesList(agentCode, companyId);
+			for (MovieDetails m : moviesList) {
 				System.out.println(m.getMovieName());
 				System.out.println(m.getCategories());
-				System.out.println(m.getCategories().getPrice());
+				System.out.println(m.getCategories().getActivePrice());
 				System.out.println(m.getCategories().getCategoryName());
-				System.out.println(m.getCustomerDetailsByCreatedBy());
-				System.out.println(m.getCustomerDetailsByCreatedBy().getCustomerId());
+				System.out.println(m.getCreatedBy());
 			}
 			System.out.println("Hello");
 
@@ -86,11 +89,11 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public Integer addMovies(Movies movie, Integer categoryId) {
+	public Integer addMovies(MovieDetails movie, String categoryId, UserDetails userDetails) {
 		Integer result = 0;
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			result = moviesService.addMovie(movie, categoryId);
+			result = moviesService.addMovie(movie, categoryId, userDetails);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -98,23 +101,24 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public List<Categories> viewAllCategories() {
+	public List<Categories> viewAllMovieCategoriesForUser(String agentCode, String companyId) {
 		List<Categories> categoriesList = new ArrayList<>();
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			categoriesList = categoriesDetailsService.getCategories();
+			categoriesList = categoriesDetailsService.getAllCategoriesForUser(agentCode, companyId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return categoriesList;
 	}
-	
+
 	@WebMethod
-	public Integer addRental(RentalDetails rentalDetails, Integer customerId, Integer movieId, String expectedReturnDate) {
+	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails, String movieId,
+			String expectedReturnDate) {
 		Integer result = 0;
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			result = customerDetailsService.addRental(rentalDetails, customerId, movieId, expectedReturnDate);
+			result = rentalService.addRental(rentalDetails, customerId, userDetails, movieId, expectedReturnDate);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -122,11 +126,11 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public List<RentalDetails> viewActiveRentals() {
+	public List<RentalDetails> viewActiveRentalsForAgent(String agentCode, String companyId) {
 		List<RentalDetails> activeRentalsList = new ArrayList<>();
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			activeRentalsList = rentalService.getActiveRentalsList();
+			activeRentalsList = rentalService.getActiveRentalsList(agentCode, companyId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -134,11 +138,11 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public List<RentalDetails> viewAllRentals() {
+	public List<RentalDetails> viewAllRentalsForAgent(String agentCode, String companyId) {
 		List<RentalDetails> allRentalList = new ArrayList<>();
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			allRentalList = rentalService.getRentalsList();
+			allRentalList = rentalService.getAllRentalsList(agentCode, companyId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -146,7 +150,7 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public List<RentalDetails> getRentalsByCustomerId(Integer customerId) {
+	public List<RentalDetails> getRentalsByCustomerId(String customerId) {
 		List<RentalDetails> allRentalList = new ArrayList<>();
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
@@ -158,11 +162,11 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public List<RentalDetails> viewRentalHistoryByCustomerId(Integer customerId) {
+	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String agentCode, String companyId) {
 		List<RentalDetails> rentalHistoryList = new ArrayList<>();
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			rentalHistoryList = rentalService.viewRentalHistoryByCustomerId(customerId);
+			rentalHistoryList = rentalService.viewRentalHistoryByCustomerId(customerId, agentCode, companyId);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -170,11 +174,11 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public Integer closeRental(RentalDetails rentalDetails, boolean bonusCheck) {
+	public Integer closeRental(RentalFinalData finalData, boolean bonusCheck) {
 		Integer result = 0;
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
-			result = rentalService.closeRental(rentalDetails, bonusCheck);
+			result = rentalService.closeRental(finalData, bonusCheck);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -182,8 +186,8 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public String[] rentalFinalize(Integer rentalId) {
-		String[] result = null;
+	public RentalFinalData rentalFinalize(String rentalId) {
+		RentalFinalData result = null;
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 			result = rentalService.rentalFinalize(rentalId);
@@ -194,7 +198,7 @@ public class VideoRentalManagementServicesWS {
 	}
 
 	@WebMethod
-	public Integer viewBonusByCustomerById(Integer customerId) {
+	public Integer viewBonusByCustomerById(String customerId) {
 		Integer result = 0;
 		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
@@ -204,29 +208,54 @@ public class VideoRentalManagementServicesWS {
 		}
 		return result;
 	}
-	
+
 	@WebMethod
-	public CustomerDetails getCustomerDetailsById(Integer custId){
+	public Integer getAvailableMovieCopies(String movieId, String userId, String companyId) {
+		Integer result = 0;
+		try {
+			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+			result = moviesService.getAvailableMovieCopiesById(movieId, userId, companyId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return result;
+	}
+
+	@WebMethod
+	public CustomerDetails getCustomerDetailsById(String custId) {
 		CustomerDetails cdls = null;
-		try{
+		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 			cdls = customerDetailsService.getCustomerById(custId);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return cdls;
 	}
 
 	@WebMethod
-	public Categories getCategoriesDetailsById(Integer catId){
+	public UserDetails getUserDetailsById(String userId) {
+		System.out.println("UserId is :" + userId);
+		UserDetails userDetails = null;
+		try {
+			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
+			userDetails = usrDtlsService.getLoggedInUserDetailsByUserName(userId);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return userDetails;
+	}
+
+	@WebMethod
+	public Categories getCategoriesDetailsById(String catId) {
 		Categories cdls = null;
-		try{
+		try {
 			SpringBeanAutowiringSupport.processInjectionBasedOnCurrentContext(this);
 			cdls = categoriesDetailsService.getCategoriesById(catId);
-		}catch(Exception e){
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return cdls;
 	}
-	
+
 }

@@ -9,7 +9,6 @@ import org.springframework.stereotype.Service;
 
 import com.c4networks.vrms.services.dao.CategoriesDAO;
 import com.c4networks.vrms.vo.Categories;
-import com.c4networks.vrms.vo.CustomerDetails;
 
 @Service
 public class CategoriesDetailsServiceImpl implements CategoriesDetailsService {
@@ -18,11 +17,11 @@ public class CategoriesDetailsServiceImpl implements CategoriesDetailsService {
 	@Autowired
 	private CategoriesDAO categoriesDAO;
 
-	public List<Categories> getCategories() {
+	public List<Categories> getAllCategoriesForUser(String agentCode, String companyId) {
 		logger.info("in getCategories() of CategoriesDetailsService");
 		List<Categories> categoriesList = new ArrayList<>();
 		try {
-			categoriesList = categoriesDAO.findAll();
+			categoriesList = categoriesDAO.findByProperty("agentCode.userId", agentCode, "companyDetails.companyId", companyId);
 			logger.info("Categories list size :" + categoriesList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -31,11 +30,11 @@ public class CategoriesDetailsServiceImpl implements CategoriesDetailsService {
 	}
 
 	@Override
-	public Categories getCategoriesById(Integer catId) {
+	public Categories getCategoriesById(String categoryId) {
 		logger.info("CustomerDetailsServiceImpl.getCustomerById");
 		Categories categories = new Categories();
 		try {
-			categories = categoriesDAO.findById(catId);
+			categories = categoriesDAO.findByCategoryId(categoryId);
 			logger.info("categories is ::" + categories);
 		} catch (Exception e) {
 			e.printStackTrace();

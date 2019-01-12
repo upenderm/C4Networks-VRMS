@@ -4,19 +4,16 @@ import java.util.List;
 
 import org.apache.commons.logging.Log;
 import org.apache.commons.logging.LogFactory;
-import org.hibernate.LockMode;
 import org.hibernate.Query;
-import org.hibernate.criterion.Example;
 import org.springframework.stereotype.Repository;
 
 import com.c4networks.vrms.services.hibernate.BaseHibernateDAO;
 import com.c4networks.vrms.vo.Categories;
 
 /**
- * Data access object (DAO) for domain model class Categories.
  * 
- * @see com.c4networks.vrms.vo.Categories
- * @author MyEclipse Persistence Tools
+ * @author M Upender
+ *
  */
 
 @Repository
@@ -28,7 +25,7 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 	public static final String STATUS = "status";
 	public static final String PRICE = "price";
 
-	public void save(Categories transientInstance) {
+	public void saveCategory(Categories transientInstance) {
 		log.debug("saving Categories instance");
 		try {
 			getSession().save(transientInstance);
@@ -39,7 +36,7 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 		}
 	}
 
-	public void delete(Categories persistentInstance) {
+	public void deleteCategory(Categories persistentInstance) {
 		log.debug("deleting Categories instance");
 		try {
 			getSession().delete(persistentInstance);
@@ -50,11 +47,10 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 		}
 	}
 
-	public Categories findById(java.lang.Integer id) {
-		log.debug("getting Categories instance with id: " + id);
+	public Categories findByCategoryId(String categoryId) {
+		log.debug("getting Categories instance with id: " + categoryId);
 		try {
-			Categories instance = (Categories) getSession().get(
-					"com.c4networks.vrms.vo.Categories", id);
+			Categories instance = (Categories) getSession().get("com.c4networks.vrms.vo.Categories", categoryId);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -62,28 +58,11 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 		}
 	}
 
-	public List<Categories> findByExample(Categories instance) {
-		log.debug("finding Categories instance by example");
+	@SuppressWarnings("unchecked")
+	public List<Categories> findByProperty(String propertyName, String value) {
+		log.debug("finding Categories instance with property: " + propertyName + ", value: " + value);
 		try {
-			
-			List<Categories> results = getSession().createCriteria(
-					"com.c4networks.vrms.vo.Categories").add(
-					Example.create(instance)).list();
-			log.debug("find by example successful, result size: "
-					+ results.size());
-			return results;
-		} catch (RuntimeException re) {
-			log.error("find by example failed", re);
-			throw re;
-		}
-	}
-
-	public List<Categories> findByProperty(String propertyName, Object value) {
-		log.debug("finding Categories instance with property: " + propertyName
-				+ ", value: " + value);
-		try {
-			String queryString = "from Categories as model where model."
-					+ propertyName + "= ?";
+			String queryString = "from Categories as model where model." + propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -93,22 +72,57 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 		}
 	}
 
-	public List<Categories> findByCategoryName(Object categoryName) {
+	@SuppressWarnings("unchecked")
+	public List<Categories> findByProperty(String propertyName, String value, String propertyName2, String value2) {
+		log.debug("finding Categories instance with property: " + propertyName + ", value: " + value);
+		try {
+			String queryString = "from Categories as model where model." + propertyName + "= ? and model." + propertyName2
+					+ "= ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			queryObject.setParameter(1, value2);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	@SuppressWarnings("unchecked")
+	public List<Categories> findByProperty(String propertyName, String value, String propertyName2, String value2,
+			String propertyName3, String value3) {
+		log.debug("finding Categories instance with property: " + propertyName + ", value: " + value);
+		try {
+			String queryString = "from Categories as model where model." + propertyName + "= ? and model." + propertyName2
+					+ "= ? and model." + "= ?";
+			Query queryObject = getSession().createQuery(queryString);
+			queryObject.setParameter(0, value);
+			queryObject.setParameter(1, value2);
+			queryObject.setParameter(2, value3);
+			return queryObject.list();
+		} catch (RuntimeException re) {
+			log.error("find by property name failed", re);
+			throw re;
+		}
+	}
+
+	public List<Categories> findByCategoryName(String categoryName) {
 		return findByProperty(CATEGORY_NAME, categoryName);
 	}
 
-	public List<Categories> findByCategoryDesc(Object categoryDesc) {
+	public List<Categories> findByCategoryDesc(String categoryDesc) {
 		return findByProperty(CATEGORY_DESC, categoryDesc);
 	}
 
-	public List<Categories> findByStatus(Object status) {
+	public List<Categories> findByStatus(String status) {
 		return findByProperty(STATUS, status);
 	}
-	
-	public List<Categories> findByPrice(Object price) {
+
+	public List<Categories> findByPrice(String price) {
 		return findByProperty(PRICE, price);
 	}
 
+	@SuppressWarnings("unchecked")
 	public List<Categories> findAll() {
 		log.debug("finding all Categories instances");
 		try {
@@ -124,8 +138,7 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 	public Categories merge(Categories detachedInstance) {
 		log.debug("merging Categories instance");
 		try {
-			Categories result = (Categories) getSession().merge(
-					detachedInstance);
+			Categories result = (Categories) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -134,25 +147,4 @@ public class CategoriesDAOImpl extends BaseHibernateDAO implements CategoriesDAO
 		}
 	}
 
-	public void attachDirty(Categories instance) {
-		log.debug("attaching dirty Categories instance");
-		try {
-			getSession().saveOrUpdate(instance);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
-
-	public void attachClean(Categories instance) {
-		log.debug("attaching clean Categories instance");
-		try {
-			getSession().lock(instance, LockMode.NONE);
-			log.debug("attach successful");
-		} catch (RuntimeException re) {
-			log.error("attach failed", re);
-			throw re;
-		}
-	}
 }

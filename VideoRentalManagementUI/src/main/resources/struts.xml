@@ -3,45 +3,77 @@
 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
 "http://struts.apache.org/dtds/struts-2.0.dtd ">
 <struts>
-	
-	
-	<package name="default" extends="struts-default">
-	
+
+	<include file="struts-default.xml"/>
+	<package name="default" extends="struts-default,tiles-default">
+
+		<!-- 
+		All package definitions which require tiles support must either,
+		1) Extend the tiles-default package along with "struts-default"
+			<package name="default" extends="struts-default,tiles-default">
+		OR
+		2) Must register the [Tiles Result] type definition
+			<result-types>
+  				<result-type name="tiles" class="org.apache.struts2.views.tiles.TilesResult"/>
+			</result-types>
+		 -->
+		 <interceptors>
+		 	<interceptor name="menuSelector" class="com.c4networks.vrms.interceptors.SelectedMenuInterceptor" />
+		 </interceptors>
 		<default-interceptor-ref name="defaultStack" />
-		
-		<action name="customerAction_*" class="com.c4networks.vrms.ui.action.CustomerAction" method="{1}">
+	
+		<!-- 
+		<global-results>
+			<result name="securityerror">/securityerror.jsp</result>
+			<result name="error">/HTTP500.html</result>
+		</global-results>
+
+		<global-exception-mappings>
+			<exception-mapping
+				exception="org.apache.struts.register.exceptions.SecurityBreachException"
+				result="securityerror" />
+			<exception-mapping exception="java.lang.Exception"
+				result="error" />
+		</global-exception-mappings>
+ 		-->
+ 	
+		<action name="customerAction_*" class="com.c4networks.vrms.ui.action.CustomerAction"
+			method="{1}">
 			<interceptor-ref name="defaultStack" />
 			<interceptor-ref name="store">
-      			<param name="operationMode">STORE</param>
-      			<param name="operationMode">RETRIEVE</param>
-   			</interceptor-ref>
-			<result name="success">/CustomerList.jsp</result>
-			<result name="input">/AddCustomer.jsp</result>
+				<param name="operationMode">STORE</param>
+				<param name="operationMode">RETRIEVE</param>
+			</interceptor-ref>
+			<!-- <interceptor-ref name="menuSelector" />	 -->
+			<result name="success" type="tiles">customerList</result>
+			<result name="input" type="tiles">addCustomer</result>
 			<result name="addcustomer" type="redirect">customerAction_viewCustomerList.action</result>
-			<result name="definecustomer">/AddCustomer.jsp</result>
-			<result name="history">/ViewHistory.jsp</result>
-		</action>
-		
-		<action name="categoriesAction_viewCategories" class="com.c4networks.vrms.ui.action.CategoriesAction">
-			<result name="success">/CategoriesList.jsp</result>
-		</action>
-		
-		<action name="moviesAction_*" class="com.c4networks.vrms.ui.action.MoviesAction" method="{1}">
-			<result name="success">/MoviesList.jsp</result>
-			<result name="input">/index.jsp</result>
-			<result name="addmovie" type="redirect">moviesAction_viewMoviesList.action</result>
-			<result name="definemovie">/AddMovie.jsp</result>
+			<result name="definecustomer" type="tiles">addCustomer</result>
+			<result name="history" type="tiles">viewHistory</result>
 		</action>
 
-		<action name="rentalAction_*" class="com.c4networks.vrms.ui.action.RentalAction" method="{1}">
-			<result name="success">/RentalsList.jsp</result>
-			<result name="input">/index.jsp</result>
-			<result name="definerental">/RentalDefine.jsp</result>
-			<result name="defineclose">/RentalClose.jsp</result>
-			<result name="rentalchildpage">/RentalCloseCustDetails.jsp</result>
-			<result name="addrental" type="redirect">rentalAction_viewActiveRentals.action</result>
-			<result name="rentalfinalize">/RentalFinalize.jsp</result>
+		<action name="categoriesAction_viewCategories" class="com.c4networks.vrms.ui.action.CategoriesAction">
+			<result name="success" type="tiles">categoriesList</result>
 		</action>
-		
+
+		<action name="moviesAction_*" class="com.c4networks.vrms.ui.action.MoviesAction"
+			method="{1}">
+			<result name="success" type="tiles">moviesList</result>
+			<result name="input" type="tiles">addMovie</result>
+			<result name="addmovie" type="redirect">moviesAction_viewMoviesList.action</result>
+			<result name="definemovie" type="tiles">addMovie</result>
+		</action>
+
+		<action name="rentalAction_*" class="com.c4networks.vrms.ui.action.RentalAction"
+			method="{1}">
+			<result name="success" type="tiles">rentalsList</result>
+			<result name="input" type="tiles">rentalDefine</result>
+			<result name="definerental" type="tiles">rentalDefine</result>
+			<result name="defineclose" type="tiles">rentalClose</result>
+			<result name="rentalchildpage">/bodycontent/RentalCloseCustDetails.jsp</result>
+			<result name="addrental" type="redirect">rentalAction_viewActiveRentals.action</result>
+			<result name="rentalfinalize" type="tiles">rentalfinalize</result>
+		</action>
+
 	</package>
 </struts>

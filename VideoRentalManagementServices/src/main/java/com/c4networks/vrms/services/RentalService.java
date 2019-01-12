@@ -3,23 +3,26 @@ package com.c4networks.vrms.services;
 import java.util.List;
 
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.RentalFinalData;
+import com.c4networks.vrms.vo.UserDetails;
 
 public interface RentalService {
 
-	public List<RentalDetails> getActiveRentalsList();
+	public List<RentalDetails> getActiveRentalsList(String agentCode, String companyId);
 
-	public List<RentalDetails> getRentalsList();
+	public List<RentalDetails> getAllRentalsList(String agentCode, String companyId);
 
-	public Integer addRental(RentalDetails rentalDtls);
+	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails,
+			String movieId, String expectedReturnDate);
 
-	public Integer closeRental(RentalDetails rentalDetails, boolean bonusCheck);
+	public Integer closeRental(RentalFinalData finalData, boolean bonusCheck);
 
-	public List<RentalDetails> getRentalsByCustomerId(Integer customerId);
+	public List<RentalDetails> getRentalsByCustomerId(String customerId);
 
-	public String[] rentalFinalize(Integer rentalEditId);
+	public RentalFinalData rentalFinalize(String rentalEditId);
 
-	public Integer viewBonusByCustomerById(Integer customerId);
+	public Integer viewBonusByCustomerById(String customerId);
 
-	public List<RentalDetails> viewRentalHistoryByCustomerId(Integer customerId);
+	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String agentCode, String companyCode);
 
 }
