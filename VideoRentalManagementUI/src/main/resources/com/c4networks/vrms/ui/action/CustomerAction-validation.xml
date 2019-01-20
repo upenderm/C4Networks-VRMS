@@ -35,9 +35,12 @@
 	</field>
 	
 	<field name="address">
+		<field-validator type="requiredstring">
+			<message>Address is required</message>
+		</field-validator>
 		<field-validator type="regex">
 			<param name="expression"><![CDATA[([a-zA-Z0-9&-:\s]*)]]></param>
-			<message>Last Name is invalid</message>
+			<message>Address is invalid</message>
 		</field-validator>
 	</field>
 	

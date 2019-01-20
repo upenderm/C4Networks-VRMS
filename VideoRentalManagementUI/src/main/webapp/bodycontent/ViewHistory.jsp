@@ -10,48 +10,47 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 <title>VRMS</title>
 </head>
 <body>
+	<div class="col bodyContainer">
 	<s:actionmessage/>
 	<br />
 	<s:form theme="simple" id="viewHistoryForm" name="viewHistoryForm">
 		<h2>Customer Rental History</h2>
-		<table border="2" class="bigTable">
+		<table border="0" class="bigTable">
 			<tr class="headerRow">
-				<td>VRMSID</td>
-				<td>Customer Name</td>
-				<td>Movie</td>
-				<td>Category</td>
-				<td>Rental Id</td>
-				<td>Rented Date</td>
-				<td>Return Date</td>
-				<td>Bonus</td>
-				<td>Bonus status</td>
-				<td>Late charges</td>
-				<td>Rent Status</td>
-				<td>Amount</td>
+				<th>VRMSID</th>
+				<th>Customer Name</th>
+				<th>Movie</th>
+				<th>Category</th>
+				<th>Rental Id</th>
+				<th>Rented Date</th>
+				<th>Return Date</th>
+				<th>Bonus</th>
+				<th>Rent Status</th>
+				<th>Late charges</th>
+				<th>Amount</th>
 			</tr>
 			<s:if test="#session.rentalHistoryList.size()>0">
 			<s:iterator value="#session.rentalHistoryList">
 			<tr>
-				<td><s:property value="customerDetails.vrmsId" /></td>
+				<td><s:property value="customerDetails.customerId" /></td>
 				<td><s:property value="customerDetails.firstName" /></td>
-				<td><s:property value="movies.movieName" /></td>
-				<td><s:property value="movies.categories.categoryName" /></td>
+				<td><s:property value="movieDetails.movieName" /></td>
+				<td><s:property value="movieDetails.categories.categoryName" /></td>
 				<td><s:property value="rentalId" /></td>
 				<td><s:date name="rentalDate"  format="dd/MM/yyyy"/></td>
 				<td><s:date name="actualReturnDate"  format="dd/MM/yyyy"/></td>
-				<td><s:property value="bonusPoints" /></td>
-				<td><s:property value="bonusStatus" /></td>
+				<td><s:property value="movieDetails.categories.bonus" /></td>
+				<td><s:property value="status" /></td>
 				<td><s:property value="lateCharges" /></td>
-				<td><s:property value="rentalStatus" /></td>
-				<td><s:property value="amount" /></td>
+				<td><s:property value="charges" /></td>
 			</tr>		
 			</s:iterator>
 			</s:if>	
+			<s:else>
+				<tr><td colspan="11" style="text-align:center">Results not found</td></tr>
+			</s:else>
 		</table>
 	</s:form>
-	<br><br>
-	<div class="homeImg">
-		<a href="index.jsp"><img alt="" src="images/Home.png"></a>
 	</div>
 </body>
 </html>

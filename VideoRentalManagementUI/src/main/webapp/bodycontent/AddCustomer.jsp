@@ -30,11 +30,11 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 	<table class="midTable" border="0">
 		
 		<tr>
-			<td>First Name</td>
+			<td>First Name<span style="color:red">&nbsp;*</span></td>
 			<td><s:textfield name="firstName" cssClass="selwidth" required="true"></s:textfield></td>
 		</tr>
 		<tr>
-			<td>Last Name</td>
+			<td>Last Name<span style="color:red">&nbsp;*</span></td>
 			<td><s:textfield name="lastName" cssClass="selwidth"></s:textfield></td>
 		</tr>
 		<tr>
@@ -42,16 +42,16 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 			<td><s:textfield name="email" cssClass="selwidth" required="true"></s:textfield></td>
 		</tr>
 		<tr>
-			<td>Address</td>
-			<td><s:textfield name="address" cssClass="selwidth"></s:textfield></td>
+			<td>Address<span style="color:red">&nbsp;*</span></td>
+			<td><s:textfield name="address" cssClass="selwidth" required="true"></s:textfield></td>
 		</tr>
 		<tr>
 			<td>Phone</td>
 			<td><s:textfield name="phone" cssClass="selwidth"></s:textfield></td>
 		</tr>
 		<tr>
-			<td>Mobile</td>
-			<td><s:textfield name="mobile" cssClass="selwidth"></s:textfield></td>
+			<td>Mobile<span style="color:red">&nbsp;*</span></td>
+			<td><s:textfield name="mobile" cssClass="selwidth" maxlength="10"></s:textfield></td>
 		</tr>
 		<tr>
 			<td><s:reset value="Reset" cssClass="submitClass" /></td>

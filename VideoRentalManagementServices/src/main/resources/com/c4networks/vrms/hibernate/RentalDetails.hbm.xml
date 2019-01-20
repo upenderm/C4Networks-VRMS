@@ -9,14 +9,14 @@
         <many-to-one class="com.c4networks.vrms.vo.CustomerDetails" fetch="select" insert="true" name="customerDetails"  unique="false" update="true">
             <column length="12" name="CUSTOMER_ID" not-null="true"/>
         </many-to-one>
+        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="agentCode"  unique="false" update="true">
+            <column length="20" name="AGENT_CODE" not-null="true"/>
+        </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">
             <column length="10" name="COMPANY_CODE" not-null="true"/>
         </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.MovieDetails" fetch="select" insert="true" name="movieDetails"  unique="false" update="true">
             <column length="10" name="MOVIE_ID" not-null="true"/>
-        </many-to-one>
-        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="agentCode"  unique="false" update="true">
-            <column length="20" name="AGENT_CODE" not-null="true"/>
         </many-to-one>
         <property name="rentalDate" type="date" unique="false">
             <column length="7" name="RENTAL_DATE" not-null="true"/>

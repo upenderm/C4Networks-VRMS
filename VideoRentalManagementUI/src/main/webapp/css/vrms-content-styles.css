@@ -79,3 +79,13 @@ fieldset {
   border-radius: 5px;  
   -webkit-border-radius: 5px; //edit :D
 }
+
+.errorMsg {
+	margin-bottom: 15px;
+	color: red;
+	background : #FFFCC8;
+	border:1px solid #FF8000;
+	width: 75%;
+	font-size: small;
+	border-radius:10px;
+}

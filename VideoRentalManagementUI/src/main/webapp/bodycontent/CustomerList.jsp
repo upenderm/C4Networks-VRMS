@@ -55,7 +55,7 @@ function viewCustomerRentalHistory(customerId){
 								<td><s:property value="mobile" /></td>
 								<td><s:property value="addressLine1" /></td>
 								<td><s:property value="addressLine2" /></td>
-								<td><a href="javascript:void(0)" onclick="viewCustomerRentalHistory(${customerId})">View</a></td>
+								<td><a href="javascript:void(0)" onclick="viewCustomerRentalHistory('${customerId}')">View</a></td>
 							</tr>
 						</s:iterator>
 					</s:if>

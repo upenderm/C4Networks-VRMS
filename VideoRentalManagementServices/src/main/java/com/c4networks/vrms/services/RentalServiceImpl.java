@@ -264,7 +264,7 @@ public class RentalServiceImpl implements RentalService {
 	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String agentCode, String companyCode) {
 		logger.info("customer id is :" + customerId);
 		RentalDetailsDAOImpl dao = new RentalDetailsDAOImpl();
-		List<RentalDetails> list = dao.findByProperty("customerId", customerId, "agentCode", "companyCode");
+		List<RentalDetails> list = dao.findByProperty("customerDetails.customerId", customerId, "agentCode.userId", agentCode, "companyDetails.companyId", companyCode);
 		logger.info("history list size is :" + list.size());
 		return list;
 	}

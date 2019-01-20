@@ -10,6 +10,7 @@ import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
+import org.apache.struts2.interceptor.validation.SkipValidation;
 
 import com.c4networks.vrms.vo.Categories;
 import com.c4networks.vrms.vo.MovieDetails;
@@ -30,8 +31,9 @@ public class MoviesAction extends ActionSupport {
 	private String movieName;
 	private String movieDesc;
 	private String categoryId;
-	private Integer copies;
+	private Integer availableCopies;
 
+	@SkipValidation
 	public String viewMoviesList() {
 		logger.info("In viewMoviesList() of MoviesAction");
 
@@ -55,7 +57,7 @@ public class MoviesAction extends ActionSupport {
 		MovieDetails bean = new MovieDetails();
 		bean.setMovieName(this.getMovieName().trim());
 		bean.setMovieDesc(this.getMovieDesc().trim());
-		bean.setAvailableCopies(this.getCopies());
+		bean.setAvailableCopies(this.getAvailableCopies());
 		//		CategoriesDAO categoriesDAO = new CategoriesDAO();
 		//		Categories categories = categoriesDAO.findById(action.getCategories());
 		//		bean.setCategories(categories);
@@ -77,6 +79,7 @@ public class MoviesAction extends ActionSupport {
 
 	}
 
+	@SkipValidation
 	public String defineMovie() {
 		logger.info("In defineMovie() of MoviesAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -111,12 +114,12 @@ public class MoviesAction extends ActionSupport {
 		this.movieDesc = movieDesc;
 	}
 
-	public Integer getCopies() {
-		return copies;
+	public Integer getAvailableCopies() {
+		return availableCopies;
 	}
 
-	public void setCopies(Integer copies) {
-		this.copies = copies;
+	public void setAvailableCopies(Integer availableCopies) {
+		this.availableCopies = availableCopies;
 	}
 
 	/**

@@ -15,9 +15,18 @@
 	<div class="col bodyContainer">
 		<br />
 		<s:form action="moviesAction_addMovie.action" theme="simple">
-			<s:actionmessage />
-			<s:actionerror />
 			<h2>Add Movie</h2>
+			<s:if test="hasActionMessages()">
+	<div class="successMsg">
+		<s:actionmessage/>
+	</div>
+	</s:if>
+	<s:if test="hasFieldErrors()|| hasActionErrors()">
+	<div class="errorMsg">
+		<s:fielderror />
+		<s:actionerror/>
+	</div>
+	</s:if>
 			<table class="midTable" border="0">
 				
 				<tr>
@@ -34,7 +43,7 @@
 				</tr>
 				<tr>
 					<td>No. of Copies</td>
-					<td><s:textfield name="copies" cssClass="selwidth"></s:textfield></td>
+					<td><s:textfield name="availableCopies" cssClass="selwidth"></s:textfield></td>
 				</tr>
 				<tr>
 					<td><s:reset value="Reset" cssClass="submitClass" /></td>
