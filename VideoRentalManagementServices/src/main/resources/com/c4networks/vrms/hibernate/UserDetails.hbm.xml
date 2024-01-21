@@ -1,19 +1,22 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
-<hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class name="com.c4networks.vrms.vo.UserDetails" schema="VRMS" table="USER_DETAILS">
-        <id name="userId" type="java.lang.String">
-            <column length="20" name="USER_ID"/>
-            <generator class="assigned"/>
+<hibernate-mapping>
+    <class name="com.c4networks.vrms.vo.UserDetails" schema="ADMIN" table="VRMS_USER_DETAILS">
+        <id name="userOID" type="java.lang.String">
+            <column length="16" name="C4_USER_OID"/>
+            <!-- <generator class="assigned"/> -->
         </id>
         <property name="userName" type="java.lang.String" unique="false">
-            <column length="50" name="USERNAME" not-null="true"/>
+            <column length="30" name="USERNAME" not-null="true"/>
         </property>
         <property name="email" type="java.lang.String" unique="false">
-            <column length="50" name="EMAIL" not-null="true"/>
+            <column length="30" name="EMAIL" not-null="true"/>
         </property>
         <property name="firstName" type="java.lang.String" unique="false">
             <column length="20" name="FIRST_NAME" not-null="true"/>
+        </property>
+        <property name="middleName" type="java.lang.String" unique="false">
+            <column length="20" name="MIDDLE_NAME" not-null="true"/>
         </property>
         <property name="lastName" type="java.lang.String" unique="false">
             <column length="20" name="LAST_NAME"/>
@@ -28,7 +31,7 @@
             <column length="10" name="MOBILE2"/>
         </property>
         <property name="phone" type="java.lang.String" unique="false">
-            <column length="15" name="PHONE"/>
+            <column length="10" name="PHONE"/>
         </property>
         <property name="city" type="java.lang.String" unique="false">
             <column length="20" name="CITY"/>
@@ -43,25 +46,25 @@
             <column length="6" name="ZIPCODE"/>
         </property>
         <property name="addressLine1" type="java.lang.String" unique="false">
-            <column length="20" name="ADDRESS_LINE1"/>
+            <column length="30" name="ADDRESS_LINE1"/>
         </property>
         <property name="addressLine2" type="java.lang.String" unique="false">
-            <column length="20" name="ADDRESS_LINE2"/>
+            <column length="30" name="ADDRESS_LINE2"/>
         </property>
         <property name="addressLine3" type="java.lang.String" unique="false">
-            <column length="20" name="ADDRESS_LINE3"/>
+            <column length="30" name="ADDRESS_LINE3"/>
         </property>
         <property name="createdBy" type="java.lang.String" unique="false">
-            <column length="20" name="CREATED_BY" not-null="true"/>
+            <column length="16" name="CREATED_BY" not-null="true"/>
         </property>
         <property name="createdDate" type="date" unique="false">
-            <column length="7" name="CREATED_DATE" not-null="true"/>
+            <column name="CREATED_DATE" not-null="true"/>
         </property>
         <property name="lastModifiedBy" type="java.lang.String" unique="false">
-            <column length="20" name="LAST_MODIFIED_BY" not-null="true"/>
+            <column length="16" name="LAST_MODIFIED_BY" not-null="true"/>
         </property>
         <property name="lastModifiedDate" type="date" unique="false">
-            <column length="7" name="LAST_MODIFIED_DATE" not-null="true"/>
+            <column name="LAST_MODIFIED_DATE" not-null="true"/>
         </property>
         <property name="picture" type="blob" unique="false">
             <column name="PICTURE"/>
@@ -73,10 +76,10 @@
             <column length="8" name="ROLE_ID" not-null="true"/>
         </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">
-            <column length="10" name="COMPANY_ID" not-null="true"/>
+            <column length="16" name="COMPANY_OID" not-null="true"/>
         </many-to-one>
-        <property name="aadhaar" type="java.lang.String" unique="false">
-            <column length="12" name="AADHAAR"/>
+        <property name="documentID" type="java.lang.String" unique="false">
+            <column length="12" name="DOCUMENT_ID"/>
         </property>
         <!-- 
                 <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">

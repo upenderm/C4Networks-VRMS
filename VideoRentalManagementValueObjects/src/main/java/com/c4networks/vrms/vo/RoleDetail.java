@@ -19,6 +19,7 @@ public class RoleDetail implements Serializable {
 	private String roleName;
 	private String roleDesc;
 	private String accessPage;
+	private CompanyDetail companyDetails;
 
 	public RoleDetail() {
 	}
@@ -81,6 +82,14 @@ public class RoleDetail implements Serializable {
 	 */
 	public void setAccessPage(String accessPage) {
 		this.accessPage = accessPage;
+	}
+
+	public final CompanyDetail getCompanyDetails() {
+		return companyDetails;
+	}
+
+	public final void setCompanyDetails(CompanyDetail companyDetails) {
+		this.companyDetails = companyDetails;
 	}
 
 }

@@ -238,19 +238,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="getCustomersListForUser">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
-      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="getCustomersListForUserResponse">
-    <xs:sequence>
-      <xs:element name="return" type="ns1:CustomerDetails" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="viewAllRentalsForAgent">
     <xs:sequence>
       <xs:element name="arg0" type="xs:string" minOccurs="0"/>
@@ -261,6 +248,19 @@
   <xs:complexType name="viewAllRentalsForAgentResponse">
     <xs:sequence>
       <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCustomersListForUser">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="getCustomersListForUserResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:CustomerDetails" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -290,19 +290,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="viewActiveRentalsForAgent">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
-      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="viewActiveRentalsForAgentResponse">
-    <xs:sequence>
-      <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="closeRental">
     <xs:sequence>
       <xs:element name="arg0" type="ns1:RentalFinalData" minOccurs="0"/>
@@ -313,6 +300,19 @@
   <xs:complexType name="closeRentalResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewActiveRentalsForAgent">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewActiveRentalsForAgentResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

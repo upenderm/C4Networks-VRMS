@@ -16,6 +16,7 @@ import javax.xml.bind.annotation.XmlType;
 public class CompanyDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
+	private String companyOID;
 	private String addressLine1;
 	private String addressLine2;
 	private String city;
@@ -29,6 +30,8 @@ public class CompanyDetail implements Serializable {
 	private Date createdDate;
 	private String lastModifiedBy;
 	private Date lastModifiedDate;
+	private String mobile;
+	private String mobile2;
 	private String phone;
 	private String registeredNum;
 	private String state;
@@ -37,11 +40,12 @@ public class CompanyDetail implements Serializable {
 	public CompanyDetail() {
 	}
 
-	public CompanyDetail(String addressLine1, String addressLine2, String city, String companyDesc, String companyId,
+	public CompanyDetail(String companyOID, String addressLine1, String addressLine2, String city, String companyDesc, String companyId,
 			byte[] companyImage, byte[] companyLogo, String companyName, String country, String createdBy,
 			Date createdDate, String lastModifiedBy, Date lastModifiedDate, String phone, String registeredNum,
 			String state, String zipcode) {
 		super();
+		this.companyOID = companyOID;
 		this.addressLine1 = addressLine1;
 		this.addressLine2 = addressLine2;
 		this.city = city;
@@ -195,6 +199,30 @@ public class CompanyDetail implements Serializable {
 
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
+	}
+
+	public final String getCompanyOID() {
+		return companyOID;
+	}
+
+	public final void setCompanyOID(String companyOID) {
+		this.companyOID = companyOID;
+	}
+
+	public final String getMobile() {
+		return mobile;
+	}
+
+	public final void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+
+	public final String getMobile2() {
+		return mobile2;
+	}
+
+	public final void setMobile2(String mobile2) {
+		this.mobile2 = mobile2;
 	}
 
 }

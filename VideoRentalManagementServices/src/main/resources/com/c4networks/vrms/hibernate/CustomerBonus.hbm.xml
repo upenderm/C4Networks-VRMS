@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class name="com.c4networks.vrms.vo.CustomerBonus" schema="VRMS" table="CUSTOMER_BONUS">
+    <class name="com.c4networks.vrms.vo.CustomerBonus" schema="ADMIN" table="CUSTOMER_BONUS">
 		<id name="bonusId" type="java.lang.String"> 
 			<column length="12"	name="BONUS_ID"/> 
 			<generator class="assigned"/> 

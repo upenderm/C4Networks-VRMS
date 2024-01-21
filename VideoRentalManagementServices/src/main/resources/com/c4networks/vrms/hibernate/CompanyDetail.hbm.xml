@@ -2,22 +2,30 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.c4networks.vrms.vo.CompanyDetail" schema="VRMS" table="COMPANY_DETAILS">
-        <id name="companyId" type="java.lang.String">
-            <column length="10" name="COMPANY_ID"/>
-            <generator class="assigned"/>
+    <class name="com.c4networks.vrms.vo.CompanyDetail" schema="ADMIN" table="C4_COMPANY_DETAILS">
+        <id name="companyOID" type="java.lang.String">
+            <column length="16" name="COMPANY_OID"/>
         </id>
+        <property name="companyId" type="java.lang.String">
+            <column length="10" name="COMPANY_ID" not-null="true"/>
+        </property>
         <property name="companyName" type="java.lang.String">
-            <column length="20" name="COMPANY_NAME" not-null="true"/>
+            <column length="30" name="COMPANY_NAME" not-null="true"/>
         </property>
         <property name="companyDesc" type="java.lang.String">
             <column length="100" name="COMPANY_DESC"/>
         </property>
         <property name="registeredNum" type="java.lang.String">
-            <column length="10" name="REGISTERED_NUM"/>
+            <column length="100" name="REGISTERED_NUM"/>
         </property>
         <property name="phone" type="java.lang.String">
             <column length="10" name="PHONE"/>
+        </property>
+        <property name="mobile" type="java.lang.String">
+            <column length="10" name="MOBILE"/>
+        </property>
+        <property name="mobile2" type="java.lang.String">
+            <column length="10" name="MOBILE2"/>
         </property>
         <property name="addressLine1" type="java.lang.String">
             <column length="10" name="ADDRESS_LINE1"/>
@@ -26,28 +34,28 @@
             <column length="10" name="ADDRESS_LINE2"/>
         </property>
         <property name="city" type="java.lang.String">
-            <column length="10" name="CITY"/>
+            <column length="20" name="CITY"/>
         </property>
         <property name="state" type="java.lang.String">
-            <column length="1" name="STATE"/>
+            <column length="20" name="STATE1"/>
         </property>
         <property name="country" type="java.lang.String">
-            <column length="10" name="COUNTRY"/>
+            <column length="20" name="COUNTRY"/>
         </property>
         <property name="zipcode" type="java.lang.String">
             <column length="6" name="ZIPCODE"/>
         </property>
         <property name="createdBy" type="java.lang.String">
-            <column length="20" name="CREATED_BY"/>
+            <column length="16" name="CREATED_BY"/>
         </property>
         <property name="createdDate" type="date">
-            <column length="7" name="CREATED_DATE"/>
+            <column name="CREATED_DATE"/>
         </property>
         <property name="lastModifiedBy" type="java.lang.String">
             <column length="20" name="LAST_MODIFIED_BY"/>
         </property>
         <property name="lastModifiedDate" type="date">
-            <column length="7" name="LAST_MODIFIED_DATE"/>
+            <column name="LAST_MODIFIED_DATE"/>
         </property>
         <property name="companyLogo" type="blob">
             <column name="COMPANY_LOGO"/>

@@ -50,8 +50,8 @@ public class UserHomeFilter implements Filter {
 							.getLoggedInUserDetails(cookie.getValue());
 					System.out.println("In UserHomeFilter - UserDetails obtained from webservice call :" + userDetails);
 					if (userDetails != null) {
-						
-						Map<String,String> selectedMenuMap = new HashMap<String, String>();
+
+						Map<String, String> selectedMenuMap = new HashMap<String, String>();
 						selectedMenuMap.put("home", "active");
 						selectedMenuMap.put("viewCustomers", "");
 						selectedMenuMap.put("addCustomer", "");
@@ -63,7 +63,7 @@ public class UserHomeFilter implements Filter {
 						selectedMenuMap.put("makeRental", "");
 						selectedMenuMap.put("closeRental", "");
 						httpRequest.getSession().setAttribute("selectedMenuMap", selectedMenuMap);
-						
+
 						httpRequest.getSession().setAttribute("userDetails", userDetails);
 						request.getRequestDispatcher("/index.jsp").forward(request, response);
 					} else {

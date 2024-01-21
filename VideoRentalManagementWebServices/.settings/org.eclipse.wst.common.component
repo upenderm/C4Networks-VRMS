@@ -4,10 +4,10 @@
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
-        <dependent-module archiveName="vrms-valueobjects-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/VideoRentalManagementValueObjects/VideoRentalManagementValueObjects">
+        <dependent-module archiveName="vrms-valueobjects-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vrms-valueobjects/vrms-valueobjects">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <dependent-module archiveName="vrms-services-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/VideoRentalManagementServices/VideoRentalManagementServices">
+        <dependent-module archiveName="vrms-services-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vrms-services/vrms-services">
             <dependency-type>uses</dependency-type>
         </dependent-module>
         <property name="java-output-path" value="/VideoRentalManagementWebServices/target/classes"/>

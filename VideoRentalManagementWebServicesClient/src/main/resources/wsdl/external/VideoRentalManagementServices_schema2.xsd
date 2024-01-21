@@ -24,7 +24,6 @@
 
   <xs:complexType name="UserDetails">
     <xs:sequence>
-      <xs:element name="aadhaar" type="xs:string" minOccurs="0"/>
       <xs:element name="addressLine1" type="xs:string" minOccurs="0"/>
       <xs:element name="addressLine2" type="xs:string" minOccurs="0"/>
       <xs:element name="addressLine3" type="xs:string" minOccurs="0"/>
@@ -33,11 +32,13 @@
       <xs:element name="country" type="xs:string" minOccurs="0"/>
       <xs:element name="createdBy" type="xs:string" minOccurs="0"/>
       <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="documentID" type="xs:string" minOccurs="0"/>
       <xs:element name="email" type="xs:string" minOccurs="0"/>
       <xs:element name="firstName" type="xs:string" minOccurs="0"/>
       <xs:element name="lastModifiedBy" type="xs:string" minOccurs="0"/>
       <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+      <xs:element name="middleName" type="xs:string" minOccurs="0"/>
       <xs:element name="mobile" type="xs:string" minOccurs="0"/>
       <xs:element name="mobile2" type="xs:string" minOccurs="0"/>
       <xs:element name="phone" type="xs:string" minOccurs="0"/>
@@ -48,6 +49,7 @@
       <xs:element name="status" type="xs:string" minOccurs="0"/>
       <xs:element name="userId" type="xs:string" minOccurs="0"/>
       <xs:element name="userName" type="xs:string" minOccurs="0"/>
+      <xs:element name="userOID" type="xs:string" minOccurs="0"/>
       <xs:element name="zipcode" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -62,11 +64,14 @@
       <xs:element name="companyImage" type="xs:base64Binary" minOccurs="0"/>
       <xs:element name="companyLogo" type="xs:base64Binary" minOccurs="0"/>
       <xs:element name="companyName" type="xs:string" minOccurs="0"/>
+      <xs:element name="companyOID" type="xs:string" minOccurs="0"/>
       <xs:element name="country" type="xs:string" minOccurs="0"/>
       <xs:element name="createdBy" type="xs:string" minOccurs="0"/>
       <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="lastModifiedBy" type="xs:string" minOccurs="0"/>
       <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="mobile" type="xs:string" minOccurs="0"/>
+      <xs:element name="mobile2" type="xs:string" minOccurs="0"/>
       <xs:element name="phone" type="xs:string" minOccurs="0"/>
       <xs:element name="registeredNum" type="xs:string" minOccurs="0"/>
       <xs:element name="state" type="xs:string" minOccurs="0"/>
@@ -77,6 +82,7 @@
   <xs:complexType name="RoleDetail">
     <xs:sequence>
       <xs:element name="accessPage" type="xs:string" minOccurs="0"/>
+      <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
       <xs:element name="roleDesc" type="xs:string" minOccurs="0"/>
       <xs:element name="roleId" type="xs:string" minOccurs="0"/>
       <xs:element name="roleName" type="xs:string" minOccurs="0"/>

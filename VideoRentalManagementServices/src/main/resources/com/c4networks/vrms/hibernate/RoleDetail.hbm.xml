@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class name="com.c4networks.vrms.vo.RoleDetail" schema="VRMS" table="ROLE_DETAILS">
+    <class name="com.c4networks.vrms.vo.RoleDetail" schema="ADMIN" table="C4_ROLE_DETAILS">
         <id name="roleId" type="java.lang.String">
             <column name="ROLE_ID" precision="8" scale="0"/>
-            <generator class="assigned"/>
         </id>
         <property name="roleName" type="java.lang.String" unique="false">
             <column length="50" name="ROLE_NAME" not-null="true"/>
@@ -15,5 +14,8 @@
         <property name="accessPage" type="java.lang.String" unique="false">
             <column length="50" name="ACCESS_PAGE"/>
         </property>
+        <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" name="companyDetails">
+            <column length="16" name="COMPANY_OID"/>
+        </many-to-one>
     </class>
 </hibernate-mapping>

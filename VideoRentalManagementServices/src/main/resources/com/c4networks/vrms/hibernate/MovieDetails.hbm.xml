@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class name="com.c4networks.vrms.vo.MovieDetails" schema="VRMS" table="MOVIE_DETAILS">
+    <class name="com.c4networks.vrms.vo.MovieDetails" schema="ADMIN" table="MOVIE_DETAILS">
         <id name="movieId" type="java.lang.String">
             <column length="10" name="MOVIE_ID"/>
             <generator class="assigned"/>

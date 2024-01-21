@@ -74,6 +74,10 @@
 			<result name="addrental" type="redirect">rentalAction_viewActiveRentals.action</result>
 			<result name="rentalfinalize" type="tiles">rentalfinalize</result>
 		</action>
+		
+		<action name="logoutAction" class="com.c4networks.vrms.ui.action.LogoutAction">
+			<result name="success" type="redirect">http://localhost:8080/C4IMSUI</result>
+		</action>
 
 	</package>
 </struts>
