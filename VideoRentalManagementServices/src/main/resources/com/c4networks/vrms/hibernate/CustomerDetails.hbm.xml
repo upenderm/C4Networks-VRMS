@@ -1,11 +1,14 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class name="com.c4networks.vrms.vo.CustomerDetails" schema="ADMIN" table="CUSTOMER_DETAILS">
-        <id name="customerId" type="java.lang.String">
-            <column length="12" name="CUSTOMER_ID"/>
+    <class name="com.c4networks.vrms.vo.AgentCustomerDetails" schema="ADMIN" table="VRMS_AGENT_CUSTOMER_DETAILS">
+        <id name="agCustomerOID" type="java.lang.String">
+            <column length="16" name="AG_CUST_OID"/>
             <generator class="assigned"/>
         </id>
+        <property name="agCustomerId" type="java.lang.String" unique="false">
+            <column length="8" name="AG_CUST_ID" not-null="true"/>
+        </property>
         <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">
             <column length="10" name="COMPANY_ID"/>
         </many-to-one>
@@ -14,9 +17,6 @@
         </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="createdBy"  unique="false" update="true">
             <column length="20" name="CREATED_BY"/>
-        </many-to-one>
-        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="agentCode"  unique="false" update="true">
-            <column length="20" name="AGENT_CODE"/>
         </many-to-one>
         <property name="firstName" type="java.lang.String" unique="false">
             <column length="20" name="FIRST_NAME" not-null="true"/>
@@ -54,8 +54,8 @@
         <property name="picture" type="blob" unique="false">
             <column name="PICTURE"/>
         </property>
-        <property name="aadhaar" type="java.lang.String" unique="false">
-            <column length="12" name="AADHAAR"/>
+        <property name="documentID" type="java.lang.String" unique="false">
+            <column length="12" name="DOCUMENT_ID"/>
         </property>
         <!-- <set fetch="select" name="rentalDetailses" table="RENTAL_DETAILS">
             <key on-delete="noaction">

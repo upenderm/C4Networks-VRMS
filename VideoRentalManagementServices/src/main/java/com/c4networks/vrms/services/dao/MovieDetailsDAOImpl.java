@@ -18,10 +18,10 @@ import com.c4networks.vrms.vo.MovieDetails;
 
 @Repository
 public class MovieDetailsDAOImpl extends BaseHibernateDAO implements MovieDetailsDAO {
+
 	private static final Log log = LogFactory.getLog(MovieDetailsDAOImpl.class);
-	// property constants
+
 	public static final String MOVIE_NAME = "movieName";
-	public static final String AGENT_CODE = "agentCode";
 	public static final String COMPANY_ID = "companyId";
 
 	@Override
@@ -91,10 +91,11 @@ public class MovieDetailsDAOImpl extends BaseHibernateDAO implements MovieDetail
 			throw re;
 		}
 	}
-	
+
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<MovieDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2, String propertyName3, Object value3) {
+	public List<MovieDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2,
+			String propertyName3, Object value3) {
 		log.debug("finding MovieDetails instance with property: " + propertyName + ", value: " + value);
 		try {
 			String queryString = "from MovieDetails as model where model." + propertyName + "= ? and model."
@@ -112,10 +113,6 @@ public class MovieDetailsDAOImpl extends BaseHibernateDAO implements MovieDetail
 
 	public List<MovieDetails> findByMovieName(Object movieName) {
 		return findByProperty(MOVIE_NAME, movieName);
-	}
-
-	public List<MovieDetails> findByAgentCode(Object agentCode) {
-		return findByProperty(AGENT_CODE, agentCode);
 	}
 
 	public List<MovieDetails> findByCompanyId(Object companyId) {

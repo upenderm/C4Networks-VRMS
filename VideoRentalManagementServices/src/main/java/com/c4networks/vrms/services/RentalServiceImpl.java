@@ -20,8 +20,8 @@ import com.c4networks.vrms.services.dao.RentalDetailsDAOImpl;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
 import com.c4networks.vrms.services.util.AlphaNumerciRandomGenerator;
 import com.c4networks.vrms.services.util.DateFormatter;
+import com.c4networks.vrms.vo.AgentCustomerDetails;
 import com.c4networks.vrms.vo.CustomerBonus;
-import com.c4networks.vrms.vo.CustomerDetails;
 import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
 import com.c4networks.vrms.vo.RentalFinalData;
@@ -45,10 +45,10 @@ public class RentalServiceImpl implements RentalService {
 	private CustomerBonusDAOImpl customerBonusDAO;
 
 	@Override
-	public List<RentalDetails> getActiveRentalsList(String agentCode, String companyId) {
+	public List<RentalDetails> getActiveRentalsList(String companyId) {
 		logger.info("In getActiveRentalsList() of RentalService");
 		List<RentalDetails> rentalsList;
-		rentalsList = rentalDetailsDAO.findByProperty("agentCode.userId", agentCode, "companyDetails.companyId",
+		rentalsList = rentalDetailsDAO.findByProperty("companyDetails.companyId",
 				companyId, "status", "OPEN");
 		logger.info("Rental List size :" + rentalsList.size());
 
@@ -56,10 +56,10 @@ public class RentalServiceImpl implements RentalService {
 	}
 
 	@Override
-	public List<RentalDetails> getAllRentalsList(String agentCode, String companyId) {
+	public List<RentalDetails> getAllRentalsList(String companyId) {
 		logger.info("In getRentalsList() of RentalService");
 		List<RentalDetails> rentalsList;
-		rentalsList = rentalDetailsDAO.findByProperty("agentCode.userId", agentCode, "companyDetails.companyId",
+		rentalsList = rentalDetailsDAO.findByProperty("companyDetails.companyId",
 				companyId);
 		logger.info("Rental List size :" + rentalsList.size());
 
@@ -80,16 +80,14 @@ public class RentalServiceImpl implements RentalService {
 
 			rentalBean.setRentalId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForRentalID());
 
-			CustomerDetails customerDetails = customerDetailsDAO.findByCustomerId(customerId);
-			rentalBean.setCustomerDetails(customerDetails);
+			AgentCustomerDetails customerDetails = customerDetailsDAO.findByCustomerId(customerId);
+			rentalBean.setAgentCustomerDetails(customerDetails);
 
-			rentalBean.setAgentCode(userDetails);
-			rentalBean.setCompanyCode(userDetails.getCompanyDetails().getCompanyId());
+			rentalBean.setCompanyDetails(userDetails.getCompanyDetails());
 
 			MovieDetails movies = movieDetailsDAO.findByMovieId(movieId);
 			rentalBean.setMovieDetails(movies);
 			rentalBean.setCompanyDetails(userDetails.getCompanyDetails());
-			rentalBean.setAgentCode(userDetails);
 
 			/*String rentalReference = "RNT";
 			List<String> maxRentalReference = rentalDetailsDAO.getMaxRentalReference();
@@ -122,7 +120,7 @@ public class RentalServiceImpl implements RentalService {
 
 			CustomerBonus bonus = new CustomerBonus();
 			bonus.setBonusId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForBonusID());
-			bonus.setCustomerDetails(customerDetails);
+			bonus.setAgentCustomerDetails(customerDetails);
 			bonus.setBonusPoints(movies.getCategories().getBonus());
 			bonus.setBonusVersion(1);
 			bonus.setCreatedBy(userDetails);
@@ -177,7 +175,7 @@ public class RentalServiceImpl implements RentalService {
 
 			logger.info("bonus check from rentalDetails is :" + bonusCheck);
 			if (bonusCheck) {
-				List<CustomerBonus> list = bonusDao.findByProperty("customerDetails.customerId", bean.getCustomerDetails().getCustomerId(), "bonusVersion", 1);
+				List<CustomerBonus> list = bonusDao.findByProperty("customerDetails.customerId", bean.getAgentCustomerDetails().getAgCustomerOID(), "bonusVersion", 1);
 				for (CustomerBonus cb : list) {
 					cb.setBonusVersion(0);
 					session.update(cb);
@@ -233,9 +231,9 @@ public class RentalServiceImpl implements RentalService {
 				total = price * diff;
 				finalData.setTotalPrice(total);
 			}
-			finalData.setCustomerName(rd.getCustomerDetails().getFirstName());
+			finalData.setCustomerName(rd.getAgentCustomerDetails().getFirstName());
 			finalData.setMovieName(rd.getMovieDetails().getMovieName());
-			finalData.setCustomerId(rd.getCustomerDetails().getCustomerId().toString());
+			finalData.setCustomerId(rd.getAgentCustomerDetails().getAgCustomerId().toString());
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -261,10 +259,10 @@ public class RentalServiceImpl implements RentalService {
 	}
 
 	@Override
-	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String agentCode, String companyCode) {
+	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String companyCode) {
 		logger.info("customer id is :" + customerId);
 		RentalDetailsDAOImpl dao = new RentalDetailsDAOImpl();
-		List<RentalDetails> list = dao.findByProperty("customerDetails.customerId", customerId, "agentCode.userId", agentCode, "companyDetails.companyId", companyCode);
+		List<RentalDetails> list = dao.findByProperty("customerDetails.customerId", customerId, "companyDetails.companyId", companyCode);
 		logger.info("history list size is :" + list.size());
 		return list;
 	}

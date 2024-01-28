@@ -1,6 +1,5 @@
 package com.c4networks.vrms.ui.action;
 
-import java.util.Date;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
@@ -10,7 +9,7 @@ import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 import org.apache.struts2.interceptor.validation.SkipValidation;
 
-import com.c4networks.vrms.vo.CustomerDetails;
+import com.c4networks.vrms.vo.AgentCustomerDetails;
 import com.c4networks.vrms.vo.RentalDetails;
 import com.c4networks.vrms.vo.UserDetails;
 import com.c4networks.vrms.wsclient.VideoRentalManagementClient;
@@ -42,7 +41,7 @@ public class CustomerAction extends ActionSupport {
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 		System.out.println("userDetails in session is :"+userDetails);
 		System.out.println(VideoRentalManagementClient.getInstance());
-		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance()
+		List<AgentCustomerDetails> customersList = VideoRentalManagementClient.getInstance()
 				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + customersList.size());
 		session.setAttribute("customersList", customersList);
@@ -63,7 +62,9 @@ public class CustomerAction extends ActionSupport {
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 		String RESULT = SUCCESS;
 		try {
-			CustomerDetails bean = new CustomerDetails();
+			AgentCustomerDetails bean = new AgentCustomerDetails();
+			bean.setAgCustomerOID("");
+			bean.setAgCustomerId("");
 			bean.setFirstName(firstName);
 			bean.setLastName(lastName);
 			bean.setAddressLine1(address);
@@ -72,10 +73,6 @@ public class CustomerAction extends ActionSupport {
 			bean.setEmail(email);
 			bean.setMobile(mobile);
 			bean.setPhone(phone);
-			bean.setCreatedBy(userDetails);
-			bean.setCreatedDate(new Date());
-			bean.setLastModifiedBy(userDetails);
-			bean.setLastModifiedDate(new Date());
 			Integer result = VideoRentalManagementClient.getInstance().addCustomer(bean, userDetails);
 			if (result == 1) {
 				this.addActionMessage("User creation successfull !..");
@@ -98,7 +95,7 @@ public class CustomerAction extends ActionSupport {
 		HttpSession session = request.getSession();
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 		List<RentalDetails> rentalHistoryList = VideoRentalManagementClient.getInstance().viewRentalHistoryByCustomerId(
-				customerId, userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+				customerId, userDetails.getCompanyDetails().getCompanyId());
 		session.setAttribute("rentalHistoryList", rentalHistoryList);
 		return HISTORY;
 	}

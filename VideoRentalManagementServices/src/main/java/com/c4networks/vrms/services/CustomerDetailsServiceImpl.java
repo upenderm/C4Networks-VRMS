@@ -18,7 +18,7 @@ import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
 import com.c4networks.vrms.services.util.AlphaNumerciRandomGenerator;
 import com.c4networks.vrms.services.util.DateFormatter;
 import com.c4networks.vrms.vo.CustomerBonus;
-import com.c4networks.vrms.vo.CustomerDetails;
+import com.c4networks.vrms.vo.AgentCustomerDetails;
 import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
 import com.c4networks.vrms.vo.UserDetails;
@@ -40,11 +40,11 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 	private static final Logger logger = Logger.getLogger(CustomerDetailsServiceImpl.class.getName());
 
-	public List<CustomerDetails> getCustomers(String agentCode, String companyId) {
+	public List<AgentCustomerDetails> getCustomers(String companyId) {
 		logger.info("In getCustomers() of CustomerDetailsService");
-		List<CustomerDetails> customerList = new ArrayList<>();
+		List<AgentCustomerDetails> customerList = new ArrayList<>();
 		try {
-			customerList = customerDetailsDAO.findByProperty("userId", agentCode, "companyId", companyId);
+			customerList = customerDetailsDAO.findByProperty("companyDetails.companyOID", companyId);
 			logger.info("Customer List size :" + customerList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -53,7 +53,7 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	}
 
 	@Override
-	public Integer addCustomer(CustomerDetails custDtls, UserDetails userDetails) {
+	public Integer addCustomer(AgentCustomerDetails custDtls, UserDetails userDetails) {
 		Session session = null;
 		Transaction transaction = null;
 		Integer result = 0;
@@ -61,7 +61,7 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			session = HibernateSessionFactory.getSession();
 			transaction = session.beginTransaction();
 
-			CustomerDetails bean = new CustomerDetails();
+			AgentCustomerDetails bean = new AgentCustomerDetails();
 
 			/*String vrmsReference = "VRMS";
 			List<String> maxVrmsReference = customerDetailsDAO.getMaxVrmsReference();
@@ -83,7 +83,8 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 					bean.setVrmsId("VRMS001");
 			}*/
 
-			bean.setCustomerId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForCustomerID());
+			bean.setAgCustomerOID(custDtls.getAgCustomerOID());
+			bean.setAgCustomerId(custDtls.getAgCustomerId());
 			bean.setFirstName(custDtls.getFirstName());
 			bean.setLastName(custDtls.getLastName());
 			bean.setEmail(custDtls.getEmail());
@@ -92,12 +93,7 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			bean.setAddressLine3(custDtls.getAddressLine3());
 			bean.setPhone(custDtls.getPhone());
 			bean.setMobile(custDtls.getMobile());
-			bean.setCreatedBy(userDetails);
-			bean.setCreatedDate(new Date());
-			bean.setLastModifiedBy(userDetails);
-			bean.setLastModifiedDate(new Date());
 			bean.setSex(custDtls.getSex());
-			bean.setAgentCode(userDetails);
 			bean.setCompanyDetails(userDetails.getCompanyDetails());
 
 			customerDetailsDAO.saveCustomerDetail(bean);
@@ -114,9 +110,9 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 	}
 
 	@Override
-	public CustomerDetails getCustomerById(String customerId) {
+	public AgentCustomerDetails getCustomerById(String customerId) {
 		logger.info("CustomerDetailsServiceImpl.getCustomerById");
-		CustomerDetails customer = new CustomerDetails();
+		AgentCustomerDetails customer = new AgentCustomerDetails();
 		try {
 			customer = customerDetailsDAO.findByCustomerId(customerId);
 			logger.info("customer is ::" + customer);
@@ -124,6 +120,13 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			e.printStackTrace();
 		}
 		return customer;
+	}
+
+	@Override
+	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails, String movieId,
+			String expectedReturnDate) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	/*@Override
@@ -139,7 +142,7 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			RentalDetails rentalBean = new RentalDetails();
 			CustomerBonus bonus = new CustomerBonus();
 
-			CustomerDetails customerDetails = customerDetailsDAO.findByCustomerId(customerId);
+			AgentCustomerDetails customerDetails = customerDetailsDAO.findByCustomerId(customerId);
 			rentalBean.setCustomerDetails(customerDetails);
 
 			MovieDetails movies = movieDetailsDAO.findByMovieId(movieId);

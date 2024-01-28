@@ -2,7 +2,7 @@ package com.c4networks.vrms.services.dao;
 
 import java.util.List;
 
-import com.c4networks.vrms.vo.CustomerDetails;
+import com.c4networks.vrms.vo.AgentCustomerDetails;
 
 /**
  * 
@@ -12,16 +12,16 @@ import com.c4networks.vrms.vo.CustomerDetails;
 
 public interface CustomerDetailsDAO {
 
-	public void saveCustomerDetail(CustomerDetails transientInstance);
+	public void saveCustomerDetail(AgentCustomerDetails transientInstance);
 
-	public void deleteCustomerDetail(CustomerDetails persistentInstance);
+	public void deleteCustomerDetail(AgentCustomerDetails persistentInstance);
 
-	public CustomerDetails findByCustomerId(String id);
+	public AgentCustomerDetails findByCustomerId(String id);
 
-	public List<CustomerDetails> findByProperty(String propertyName, Object value);
+	public List<AgentCustomerDetails> findByProperty(String propertyName, Object value);
 	
-	public List<CustomerDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2);
+	public List<AgentCustomerDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2);
 
-	public List<CustomerDetails> findAll();
+	public List<AgentCustomerDetails> findAll();
 
 }

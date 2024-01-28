@@ -1,6 +1,6 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
 <!-- Header start -->
-<s:form action="logoutAction.action" theme="simple">
+<s:form action="logoutAction" theme="simple">
 <p>&nbsp;</p>
 <h1>VIDEO RENTAL MANAMEMENT SYSTEM</h1>
 <p style="text-align: right">

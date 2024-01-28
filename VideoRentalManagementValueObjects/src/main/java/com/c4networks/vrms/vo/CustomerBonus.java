@@ -17,7 +17,7 @@ public class CustomerBonus implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private String bonusId;
-	private CustomerDetails customerDetails;
+	private AgentCustomerDetails agentCustomerDetails;
 	private Integer bonusPoints;
 	private Integer bonusVersion;
 	private UserDetails createdBy;
@@ -28,28 +28,24 @@ public class CustomerBonus implements Serializable {
 	public CustomerBonus() {
 	}
 
-	public CustomerBonus(CustomerDetails customerDetails, Integer bonusPoints, Integer bonusVersion,
-			UserDetails createdBy, Date createdDate, UserDetails lastModifiedBy, Date lastModifiedDate) {
-		super();
-		this.customerDetails = customerDetails;
-		this.bonusPoints = bonusPoints;
-		this.bonusVersion = bonusVersion;
-		this.createdBy = createdBy;
-		this.createdDate = createdDate;
-		this.lastModifiedBy = lastModifiedBy;
-		this.lastModifiedDate = lastModifiedDate;
+	public String getBonusId() {
+		return bonusId;
 	}
 
-	public CustomerDetails getCustomerDetails() {
-		return this.customerDetails;
+	public void setBonusId(String bonusId) {
+		this.bonusId = bonusId;
 	}
 
-	public void setCustomerDetails(CustomerDetails customerDetails) {
-		this.customerDetails = customerDetails;
+	public AgentCustomerDetails getAgentCustomerDetails() {
+		return agentCustomerDetails;
+	}
+
+	public void setAgentCustomerDetails(AgentCustomerDetails agentCustomerDetails) {
+		this.agentCustomerDetails = agentCustomerDetails;
 	}
 
 	public Integer getBonusPoints() {
-		return this.bonusPoints;
+		return bonusPoints;
 	}
 
 	public void setBonusPoints(Integer bonusPoints) {
@@ -57,7 +53,7 @@ public class CustomerBonus implements Serializable {
 	}
 
 	public Integer getBonusVersion() {
-		return this.bonusVersion;
+		return bonusVersion;
 	}
 
 	public void setBonusVersion(Integer bonusVersion) {
@@ -65,7 +61,7 @@ public class CustomerBonus implements Serializable {
 	}
 
 	public UserDetails getCreatedBy() {
-		return this.createdBy;
+		return createdBy;
 	}
 
 	public void setCreatedBy(UserDetails createdBy) {
@@ -73,7 +69,7 @@ public class CustomerBonus implements Serializable {
 	}
 
 	public Date getCreatedDate() {
-		return this.createdDate;
+		return createdDate;
 	}
 
 	public void setCreatedDate(Date createdDate) {
@@ -81,7 +77,7 @@ public class CustomerBonus implements Serializable {
 	}
 
 	public UserDetails getLastModifiedBy() {
-		return this.lastModifiedBy;
+		return lastModifiedBy;
 	}
 
 	public void setLastModifiedBy(UserDetails lastModifiedBy) {
@@ -89,26 +85,11 @@ public class CustomerBonus implements Serializable {
 	}
 
 	public Date getLastModifiedDate() {
-		return this.lastModifiedDate;
+		return lastModifiedDate;
 	}
 
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
-	}
-
-	/**
-	 * @return the bonusId
-	 */
-	public String getBonusId() {
-		return bonusId;
-	}
-
-	/**
-	 * @param bonusId
-	 *            the bonusId to set
-	 */
-	public void setBonusId(String bonusId) {
-		this.bonusId = bonusId;
 	}
 
 }

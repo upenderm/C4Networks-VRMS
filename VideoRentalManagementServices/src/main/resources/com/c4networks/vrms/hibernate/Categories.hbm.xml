@@ -2,7 +2,7 @@
 <!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 
 <hibernate-mapping>
-    <class name="com.c4networks.vrms.vo.Categories" schema="ADMIN" table="CATEGORIES" >
+    <class name="com.c4networks.vrms.vo.Categories" schema="ADMIN" table="VRMS_CATEGORY_DETAILS" >
         <id name="categoryId" type="java.lang.String">
             <column length="10" name="CATEGORY_ID"/>
             <generator class="assigned"/>
@@ -33,9 +33,6 @@
         </property>
         <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" name="companyDetails">
             <column length="10" name="COMPANY_ID"/>
-        </many-to-one>
-        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" name="agentCode">
-            <column length="20" name="AGENT_CODE"/>
         </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" name="lastModifiedBy">
             <column length="20" name="LAST_MODIFIED_BY"/>

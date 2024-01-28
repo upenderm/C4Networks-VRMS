@@ -8,7 +8,7 @@ import org.hibernate.Query;
 import org.springframework.stereotype.Repository;
 
 import com.c4networks.vrms.services.hibernate.BaseHibernateDAO;
-import com.c4networks.vrms.vo.CustomerDetails;
+import com.c4networks.vrms.vo.AgentCustomerDetails;
 
 /**
  * 
@@ -29,10 +29,10 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 	public static final String CREATED_BY = "createdBy";
 	public static final String LAST_MODIFIED_BY = "lastModifiedBy";
 	public static final String STATUS = "status";
-	public static final String AADHAAR = "aadhaar";
+	public static final String DOCUMENT_ID = "documentID";
 
-	public void saveCustomerDetail(CustomerDetails transientInstance) {
-		log.debug("saving CustomerDetails instance");
+	public void saveCustomerDetail(AgentCustomerDetails transientInstance) {
+		log.debug("saving AgentCustomerDetails instance");
 		try {
 			getSession().save(transientInstance);
 			log.debug("save successful");
@@ -42,8 +42,8 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public void deleteCustomerDetail(CustomerDetails persistentInstance) {
-		log.debug("deleting CustomerDetails instance");
+	public void deleteCustomerDetail(AgentCustomerDetails persistentInstance) {
+		log.debug("deleting AgentCustomerDetails instance");
 		try {
 			getSession().delete(persistentInstance);
 			log.debug("delete successful");
@@ -53,10 +53,10 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public CustomerDetails findByCustomerId(String id) {
-		log.debug("getting CustomerDetails instance with id: " + id);
+	public AgentCustomerDetails findByCustomerId(String id) {
+		log.debug("getting AgentCustomerDetails instance with id: " + id);
 		try {
-			CustomerDetails instance = (CustomerDetails) getSession().get("com.c4networks.vrms.vo.CustomerDetails", id);
+			AgentCustomerDetails instance = (AgentCustomerDetails) getSession().get("com.c4networks.vrms.vo.AgentCustomerDetails", id);
 			return instance;
 		} catch (RuntimeException re) {
 			log.error("get failed", re);
@@ -65,10 +65,10 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CustomerDetails> findByProperty(String propertyName, Object value) {
-		log.debug("finding CustomerDetails instance with property: " + propertyName + ", value: " + value);
+	public List<AgentCustomerDetails> findByProperty(String propertyName, Object value) {
+		log.debug("finding AgentCustomerDetails instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from CustomerDetails as model where model." + propertyName + "= ?";
+			String queryString = "from AgentCustomerDetails as model where model." + propertyName + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
@@ -79,10 +79,10 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CustomerDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2) {
-		log.debug("finding CustomerDetails instance with property: " + propertyName + ", value: " + value);
+	public List<AgentCustomerDetails> findByProperty(String propertyName, Object value, String propertyName2, Object value2) {
+		log.debug("finding AgentCustomerDetails instance with property: " + propertyName + ", value: " + value);
 		try {
-			String queryString = "from CustomerDetails as model where model.agentCode." + propertyName + "= ? and model.companyDetails."
+			String queryString = "from AgentCustomerDetails as model where model.agentCode." + propertyName + "= ? and model.companyDetails."
 					+ propertyName2 + "= ?";
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
@@ -94,47 +94,47 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public List<CustomerDetails> findByFirstName(Object firstName) {
+	public List<AgentCustomerDetails> findByFirstName(Object firstName) {
 		return findByProperty(FIRST_NAME, firstName);
 	}
 
-	public List<CustomerDetails> findByLastName(Object lastName) {
+	public List<AgentCustomerDetails> findByLastName(Object lastName) {
 		return findByProperty(LAST_NAME, lastName);
 	}
 
-	public List<CustomerDetails> findByEmail(Object email) {
+	public List<AgentCustomerDetails> findByEmail(Object email) {
 		return findByProperty(EMAIL, email);
 	}
 
-	public List<CustomerDetails> findByAadhaar(Object aadhaar) {
-		return findByProperty(AADHAAR, aadhaar);
+	public List<AgentCustomerDetails> findByDocumentID(Object documentID) {
+		return findByProperty(DOCUMENT_ID, documentID);
 	}
 
-	public List<CustomerDetails> findByPhone(Object phone) {
+	public List<AgentCustomerDetails> findByPhone(Object phone) {
 		return findByProperty(PHONE, phone);
 	}
 
-	public List<CustomerDetails> findByMobile(Object mobile) {
+	public List<AgentCustomerDetails> findByMobile(Object mobile) {
 		return findByProperty(MOBILE, mobile);
 	}
 
-	public List<CustomerDetails> findByCreatedBy(Object createdBy) {
+	public List<AgentCustomerDetails> findByCreatedBy(Object createdBy) {
 		return findByProperty(CREATED_BY, createdBy);
 	}
 
-	public List<CustomerDetails> findByLastModifiedBy(Object lastModifiedBy) {
+	public List<AgentCustomerDetails> findByLastModifiedBy(Object lastModifiedBy) {
 		return findByProperty(LAST_MODIFIED_BY, lastModifiedBy);
 	}
 
-	public List<CustomerDetails> findByStatus(Object status) {
+	public List<AgentCustomerDetails> findByStatus(Object status) {
 		return findByProperty(STATUS, status);
 	}
 
 	@SuppressWarnings("unchecked")
-	public List<CustomerDetails> findAll() {
-		log.debug("finding all CustomerDetails instances");
+	public List<AgentCustomerDetails> findAll() {
+		log.debug("finding all AgentCustomerDetails instances");
 		try {
-			String queryString = "from CustomerDetails customerDetails where customerDetails.customerId != 1";
+			String queryString = "from AgentCustomerDetails agentCustomerDetails where agentCustomerDetails.customerId != 1";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {
@@ -143,10 +143,10 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		}
 	}
 
-	public CustomerDetails merge(CustomerDetails detachedInstance) {
-		log.debug("merging CustomerDetails instance");
+	public AgentCustomerDetails merge(AgentCustomerDetails detachedInstance) {
+		log.debug("merging AgentCustomerDetails instance");
 		try {
-			CustomerDetails result = (CustomerDetails) getSession().merge(detachedInstance);
+			AgentCustomerDetails result = (AgentCustomerDetails) getSession().merge(detachedInstance);
 			log.debug("merge successful");
 			return result;
 		} catch (RuntimeException re) {
@@ -157,9 +157,9 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 
 	@SuppressWarnings("unchecked")
 	public List<String> getMaxVrmsReference() {
-		log.debug("finding CustomerDetails instance");
+		log.debug("finding AgentCustomerDetails instance");
 		try {
-			String queryString = "select max(Id)from CustomerDetails customerDetails";
+			String queryString = "select max(Id)from AgentCustomerDetails agentCustomerDetails";
 			Query queryObject = getSession().createQuery(queryString);
 			return queryObject.list();
 		} catch (RuntimeException re) {

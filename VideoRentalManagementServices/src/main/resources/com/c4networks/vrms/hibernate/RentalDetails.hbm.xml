@@ -1,19 +1,16 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
-    <class name="com.c4networks.vrms.vo.RentalDetails" schema="ADMIN" table="RENTAL_DETAILS">
+    <class name="com.c4networks.vrms.vo.RentalDetails" schema="ADMIN" table="VRMS_RENTAL_DETAILS">
         <id name="rentalId" type="java.lang.String">
-            <column length="8" name="RENTAL_ID"/>
+            <column length="6" name="RENTAL_ID"/>
             <generator class="assigned"/>
         </id>
-        <many-to-one class="com.c4networks.vrms.vo.CustomerDetails" fetch="select" insert="true" name="customerDetails"  unique="false" update="true">
-            <column length="12" name="CUSTOMER_ID" not-null="true"/>
-        </many-to-one>
-        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="agentCode"  unique="false" update="true">
-            <column length="20" name="AGENT_CODE" not-null="true"/>
+        <many-to-one class="com.c4networks.vrms.vo.AgentCustomerDetails" fetch="select" insert="true" name="agentCustomerDetails"  unique="false" update="true">
+            <column length="16" name="AG_CUST_OID" not-null="true"/>
         </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">
-            <column length="10" name="COMPANY_CODE" not-null="true"/>
+            <column length="10" name="COMPANY_OID" not-null="true"/>
         </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.MovieDetails" fetch="select" insert="true" name="movieDetails"  unique="false" update="true">
             <column length="10" name="MOVIE_ID" not-null="true"/>
@@ -32,6 +29,9 @@
         </property>
         <property name="charges" type="java.lang.Integer" unique="false">
             <column name="CHARGES" precision="22" scale="0"/>
+        </property>
+        <property name="effectiveCharges" type="java.lang.Integer" unique="false">
+            <column name="EFFECTIVE_CHARGES" precision="22" scale="0"/>
         </property>
         <property name="status" type="java.lang.String" unique="false">
             <column length="8" name="STATUS" not-null="true"/>

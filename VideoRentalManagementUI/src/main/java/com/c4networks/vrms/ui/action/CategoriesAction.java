@@ -27,7 +27,7 @@ public class CategoriesAction extends ActionSupport {
 		HttpSession session = request.getSession();
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 		List<Categories> categoriesList = VideoRentalManagementClient.getInstance()
-				.getAllCategoriesForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+				.getAllCategoriesForUser(userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + categoriesList.size());
 		session.setAttribute("categoriesList", categoriesList);
 

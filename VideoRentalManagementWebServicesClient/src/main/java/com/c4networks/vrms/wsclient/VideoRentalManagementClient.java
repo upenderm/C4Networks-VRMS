@@ -8,8 +8,8 @@ import java.util.List;
 import javax.jws.HandlerChain;
 import javax.xml.namespace.QName;
 
+import com.c4networks.vrms.vo.AgentCustomerDetails;
 import com.c4networks.vrms.vo.Categories;
-import com.c4networks.vrms.vo.CustomerDetails;
 import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
 import com.c4networks.vrms.vo.RentalFinalData;
@@ -60,9 +60,9 @@ public class VideoRentalManagementClient {
 		return vrmsClient;
 	}
 
-	public List<CustomerDetails> getCustomersListForUser(String userId, String companyId) {
+	public List<AgentCustomerDetails> getCustomersListForUser(String userId, String companyId) {
 		System.out.println("In getAllCustomers method of Facade client");
-		List<CustomerDetails> customersList = new ArrayList<CustomerDetails>();
+		List<AgentCustomerDetails> customersList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
 			customersList = port.getCustomersListForUser(userId, companyId);
@@ -73,12 +73,12 @@ public class VideoRentalManagementClient {
 		return customersList;
 	}
 
-	public List<MovieDetails> getMoviesList(String userId, String companyId) {
+	public List<MovieDetails> getMoviesList(String companyId) {
 		System.out.println("In getMoviesList method of Facade client");
 		List<MovieDetails> moviesList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			moviesList = port.viewAllMoviesForUser(userId, companyId);
+			moviesList = port.viewAllMoviesForUser(companyId);
 			System.out.println("moviesList size returned from webservice is :" + moviesList.size());
 			for (MovieDetails m : moviesList) {
 				System.out.println(m.getMovieName());
@@ -109,12 +109,12 @@ public class VideoRentalManagementClient {
 		return result;
 	}
 
-	public List<RentalDetails> getActiveRentalsList(String userId, String companyId) {
+	public List<RentalDetails> getActiveRentalsList(String companyId) {
 		System.out.println("In getActiveRentalsList method of Facade client");
 		List<RentalDetails> rentalList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			rentalList = port.viewActiveRentalsForAgent(userId, companyId);
+			rentalList = port.viewActiveRentalsForAgent(companyId);
 			System.out.println("rentalList size returned from webservice is :" + rentalList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -124,12 +124,12 @@ public class VideoRentalManagementClient {
 
 	}
 
-	public List<RentalDetails> getAllRentalsList(String userId, String companyId) {
+	public List<RentalDetails> getAllRentalsList(String companyId) {
 		System.out.println("In getActiveRentalsList method of Facade client");
 		List<RentalDetails> rentalList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			rentalList = port.viewAllRentalsForAgent(userId, companyId);
+			rentalList = port.viewAllRentalsForAgent(companyId);
 			System.out.println("rentalList size returned from webservice is :" + rentalList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,12 +202,12 @@ public class VideoRentalManagementClient {
 		return result;
 	}
 
-	public List<Categories> getAllCategoriesForUser(String userId, String companyId) {
+	public List<Categories> getAllCategoriesForUser(String companyId) {
 		System.out.println("In getActiveRentalsList method of Facade client");
 		List<Categories> categoryList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			categoryList = port.viewAllMovieCategoriesForUser(userId, companyId);
+			categoryList = port.viewAllMovieCategoriesForUser(companyId);
 			System.out.println("categoryList size returned from webservice is :" + categoryList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -217,7 +217,7 @@ public class VideoRentalManagementClient {
 
 	}
 
-	public Integer addCustomer(CustomerDetails customerDetails, UserDetails userDtls) {
+	public Integer addCustomer(AgentCustomerDetails customerDetails, UserDetails userDtls) {
 		System.out.println("VideoRentalManagementClient.addCustomer");
 		Integer result = 0;
 		try {
@@ -230,12 +230,12 @@ public class VideoRentalManagementClient {
 		return result;
 	}
 
-	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String userId, String companyId) {
+	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String companyId) {
 		System.out.println("VIdeoRentalManagementClient.viewRentalHistoryByCustomerId");
 		List<RentalDetails> rentalsList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			rentalsList = port.viewRentalHistoryByCustomerId(customerId, userId, companyId);
+			rentalsList = port.viewRentalHistoryByCustomerId(customerId, companyId);
 		} catch (Exception e) {
 			e.getMessage();
 		}

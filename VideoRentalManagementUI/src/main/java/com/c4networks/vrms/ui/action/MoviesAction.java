@@ -40,8 +40,7 @@ public class MoviesAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
-		List<MovieDetails> moviesList = VideoRentalManagementClient.getInstance().getMoviesList(userDetails.getUserId(),
-				userDetails.getCompanyDetails().getCompanyId());
+		List<MovieDetails> moviesList = VideoRentalManagementClient.getInstance().getMoviesList(userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + moviesList.size());
 		session.setAttribute("moviesList", moviesList);
 
@@ -87,7 +86,7 @@ public class MoviesAction extends ActionSupport {
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 		Map<String, String> categoriesMap = new HashMap<>();
 		List<Categories> categoriesList = VideoRentalManagementClient.getInstance()
-				.getAllCategoriesForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+				.getAllCategoriesForUser(userDetails.getCompanyDetails().getCompanyId());
 		Iterator<Categories> iter = categoriesList.iterator();
 		while (iter.hasNext()) {
 			Categories bean = iter.next();

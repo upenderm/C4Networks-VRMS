@@ -7,7 +7,7 @@ import com.c4networks.vrms.vo.UserDetails;
 
 public interface MoviesService {
 
-	public List<MovieDetails> getMoviesList(String agentCode, String companyId);
+	public List<MovieDetails> getMoviesList(String companyId);
 
 	public Integer addMovie(MovieDetails movie, String categoryId, UserDetails userDetails);
 

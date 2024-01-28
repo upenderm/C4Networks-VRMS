@@ -29,7 +29,7 @@ public class UserDetailsDAOImpl extends BaseHibernateDAO implements UserDetailsD
 	public static final String CREATED_BY = "createdBy";
 	public static final String LAST_MODIFIED_BY = "lastModifiedBy";
 	public static final String STATUS = "status";
-	public static final String AADHAAR = "aadhaar";
+	public static final String DOCUMENT_ID = "documentID";
 	public static final String ROLE_ID = "roleId";
 	public static final String AGENT_CODE = "agentCode";
 
@@ -132,8 +132,8 @@ public class UserDetailsDAOImpl extends BaseHibernateDAO implements UserDetailsD
 		return findByProperty(STATUS, status);
 	}
 
-	public List<UserDetails> findByAadhaar(String aadhaar) {
-		return findByProperty(AADHAAR, aadhaar);
+	public List<UserDetails> findByDocumentID(String documentID) {
+		return findByProperty(DOCUMENT_ID, documentID);
 	}
 
 	public List<UserDetails> findByRoleId(String roleId) {

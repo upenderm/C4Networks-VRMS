@@ -15,7 +15,7 @@ import javax.servlet.http.HttpSession;
 import org.apache.log4j.Logger;
 import org.apache.struts2.ServletActionContext;
 
-import com.c4networks.vrms.vo.CustomerDetails;
+import com.c4networks.vrms.vo.AgentCustomerDetails;
 import com.c4networks.vrms.vo.MovieDetails;
 import com.c4networks.vrms.vo.RentalDetails;
 import com.c4networks.vrms.vo.RentalFinalData;
@@ -55,17 +55,16 @@ public class RentalAction extends ActionSupport {
 		Map<String, String> customerMap = new HashMap<>();
 		Map<String, String> moviesMap = new HashMap<>();
 
-		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance()
+		List<AgentCustomerDetails> customersList = VideoRentalManagementClient.getInstance()
 				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("customer list size :" + customersList.size());
-		List<MovieDetails> moviesList = VideoRentalManagementClient.getInstance().getMoviesList(userDetails.getUserId(),
-				userDetails.getCompanyDetails().getCompanyId());
+		List<MovieDetails> moviesList = VideoRentalManagementClient.getInstance().getMoviesList(userDetails.getCompanyDetails().getCompanyId());
 		logger.info("movies list size :" + moviesList.size());
 
-		Iterator<CustomerDetails> customerIter = customersList.iterator();
+		Iterator<AgentCustomerDetails> customerIter = customersList.iterator();
 		while (customerIter.hasNext()) {
-			CustomerDetails bean = customerIter.next();
-			customerMap.put(bean.getCustomerId(), bean.getFirstName() + " - " + bean.getFirstName());
+			AgentCustomerDetails bean = customerIter.next();
+			customerMap.put(bean.getAgCustomerOID(), bean.getFirstName() + " - " + bean.getFirstName());
 		}
 		Iterator<MovieDetails> moviesIter = moviesList.iterator();
 		while (moviesIter.hasNext()) {
@@ -130,7 +129,7 @@ public class RentalAction extends ActionSupport {
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 
 		List<RentalDetails> rentalsActiveList = VideoRentalManagementClient.getInstance()
-				.getActiveRentalsList(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+				.getActiveRentalsList(userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + rentalsActiveList.size());
 		session.setAttribute("rentalsList", rentalsActiveList);
 
@@ -144,7 +143,7 @@ public class RentalAction extends ActionSupport {
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 
 		List<RentalDetails> rentalsList = VideoRentalManagementClient.getInstance()
-				.getAllRentalsList(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+				.getAllRentalsList(userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + rentalsList.size());
 		session.setAttribute("rentalsList", rentalsList);
 
@@ -158,13 +157,13 @@ public class RentalAction extends ActionSupport {
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
 
 		Map<String, String> customerMap = new HashMap<>();
-		List<CustomerDetails> customersList = VideoRentalManagementClient.getInstance()
+		List<AgentCustomerDetails> customersList = VideoRentalManagementClient.getInstance()
 				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
 		logger.info("customer list size :" + customersList.size());
-		Iterator<CustomerDetails> customerIter = customersList.iterator();
+		Iterator<AgentCustomerDetails> customerIter = customersList.iterator();
 		while (customerIter.hasNext()) {
-			CustomerDetails bean = customerIter.next();
-			customerMap.put(bean.getCustomerId(), bean.getLastName() + " - " + bean.getFirstName());
+			AgentCustomerDetails bean = customerIter.next();
+			customerMap.put(bean.getAgCustomerOID(), bean.getLastName() + " - " + bean.getFirstName());
 		}
 		session.setAttribute("customerMap", customerMap);
 		return DEFINECLOSE;

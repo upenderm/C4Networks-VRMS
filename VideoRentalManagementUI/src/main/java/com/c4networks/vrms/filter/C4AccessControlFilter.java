@@ -1,9 +1,6 @@
 package com.c4networks.vrms.filter;
 
 import java.io.IOException;
-import java.util.Enumeration;
-import java.util.HashMap;
-import java.util.Map;
 
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
@@ -14,9 +11,7 @@ import javax.servlet.ServletResponse;
 import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.commons.lang3.StringUtils;
 import org.apache.log4j.Logger;
-import org.apache.struts2.dispatcher.StrutsRequestWrapper;
 
 public class C4AccessControlFilter implements Filter {
 

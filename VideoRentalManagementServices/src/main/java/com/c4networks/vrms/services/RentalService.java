@@ -8,9 +8,9 @@ import com.c4networks.vrms.vo.UserDetails;
 
 public interface RentalService {
 
-	public List<RentalDetails> getActiveRentalsList(String agentCode, String companyId);
+	public List<RentalDetails> getActiveRentalsList(String companyId);
 
-	public List<RentalDetails> getAllRentalsList(String agentCode, String companyId);
+	public List<RentalDetails> getAllRentalsList(String companyId);
 
 	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails,
 			String movieId, String expectedReturnDate);
@@ -23,6 +23,6 @@ public interface RentalService {
 
 	public Integer viewBonusByCustomerById(String customerId);
 
-	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String agentCode, String companyCode);
+	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String companyCode);
 
 }

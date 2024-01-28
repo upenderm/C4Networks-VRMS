@@ -29,11 +29,11 @@ public class MoviesServiceImpl implements MoviesService {
 	private CategoriesDAO categoriesDAO;
 
 	@Override
-	public List<MovieDetails> getMoviesList(String agentCode, String companyId) {
+	public List<MovieDetails> getMoviesList(String companyId) {
 		logger.info("in getMoviesList() of MoviesServiceImpl");
 		List<MovieDetails> moviesList = new ArrayList<>();
 		try {
-			moviesList = moviesDAO.findByProperty("agentCode.userId", agentCode, "companyDetails.companyId", companyId);
+			moviesList = moviesDAO.findByProperty("companyDetails.companyOID", companyId);
 			logger.info("Movies List size :" + moviesList.size());
 		} catch (Exception e) {
 			e.printStackTrace();

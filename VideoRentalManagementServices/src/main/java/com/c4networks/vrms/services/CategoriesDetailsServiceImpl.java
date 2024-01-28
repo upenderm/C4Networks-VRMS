@@ -17,11 +17,11 @@ public class CategoriesDetailsServiceImpl implements CategoriesDetailsService {
 	@Autowired
 	private CategoriesDAO categoriesDAO;
 
-	public List<Categories> getAllCategoriesForUser(String agentCode, String companyId) {
+	public List<Categories> getAllCategoriesForUser(String companyId) {
 		logger.info("in getCategories() of CategoriesDetailsService");
 		List<Categories> categoriesList = new ArrayList<>();
 		try {
-			categoriesList = categoriesDAO.findByProperty("agentCode.userId", agentCode, "companyDetails.companyId", companyId);
+			categoriesList = categoriesDAO.findByProperty("companyDetails.companyId", companyId);
 			logger.info("Categories list size :" + categoriesList.size());
 		} catch (Exception e) {
 			e.printStackTrace();

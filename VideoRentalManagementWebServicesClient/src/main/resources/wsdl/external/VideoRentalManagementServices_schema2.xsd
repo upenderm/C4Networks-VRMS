@@ -6,12 +6,10 @@
   <xs:complexType name="RentalDetails">
     <xs:sequence>
       <xs:element name="actualReturnDate" type="xs:dateTime" minOccurs="0"/>
-      <xs:element name="agentCode" type="tns:UserDetails" minOccurs="0"/>
+      <xs:element name="agentCustomerDetails" type="tns:AgentCustomerDetails" minOccurs="0"/>
       <xs:element name="charges" type="xs:int" minOccurs="0"/>
       <xs:element name="comments" type="xs:string" minOccurs="0"/>
-      <xs:element name="companyCode" type="xs:string" minOccurs="0"/>
       <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
-      <xs:element name="customerDetails" type="tns:CustomerDetails" minOccurs="0"/>
       <xs:element name="effectiveCharges" type="xs:int" minOccurs="0"/>
       <xs:element name="expectedReturnDate" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="lateCharges" type="xs:int" minOccurs="0"/>
@@ -22,11 +20,13 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="UserDetails">
+  <xs:complexType name="AgentCustomerDetails">
     <xs:sequence>
       <xs:element name="addressLine1" type="xs:string" minOccurs="0"/>
       <xs:element name="addressLine2" type="xs:string" minOccurs="0"/>
       <xs:element name="addressLine3" type="xs:string" minOccurs="0"/>
+      <xs:element name="agCustomerId" type="xs:string" minOccurs="0"/>
+      <xs:element name="agCustomerOID" type="xs:string" minOccurs="0"/>
       <xs:element name="city" type="xs:string" minOccurs="0"/>
       <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
       <xs:element name="country" type="xs:string" minOccurs="0"/>
@@ -47,9 +47,6 @@
       <xs:element name="sex" type="xs:string" minOccurs="0"/>
       <xs:element name="state" type="xs:string" minOccurs="0"/>
       <xs:element name="status" type="xs:string" minOccurs="0"/>
-      <xs:element name="userId" type="xs:string" minOccurs="0"/>
-      <xs:element name="userName" type="xs:string" minOccurs="0"/>
-      <xs:element name="userOID" type="xs:string" minOccurs="0"/>
       <xs:element name="zipcode" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
@@ -89,30 +86,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="CustomerDetails">
-    <xs:sequence>
-      <xs:element name="aadhaar" type="xs:string" minOccurs="0"/>
-      <xs:element name="addressLine1" type="xs:string" minOccurs="0"/>
-      <xs:element name="addressLine2" type="xs:string" minOccurs="0"/>
-      <xs:element name="addressLine3" type="xs:string" minOccurs="0"/>
-      <xs:element name="agentCode" type="tns:UserDetails" minOccurs="0"/>
-      <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
-      <xs:element name="companyId" type="xs:string" minOccurs="0"/>
-      <xs:element name="createdBy" type="tns:UserDetails" minOccurs="0"/>
-      <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
-      <xs:element name="customerId" type="xs:string" minOccurs="0"/>
-      <xs:element name="email" type="xs:string" minOccurs="0"/>
-      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
-      <xs:element name="lastModifiedBy" type="tns:UserDetails" minOccurs="0"/>
-      <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
-      <xs:element name="lastName" type="xs:string" minOccurs="0"/>
-      <xs:element name="mobile" type="xs:string" minOccurs="0"/>
-      <xs:element name="phone" type="xs:string" minOccurs="0"/>
-      <xs:element name="picture" type="xs:base64Binary" minOccurs="0"/>
-      <xs:element name="sex" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="MovieDetails">
     <xs:sequence>
       <xs:element name="agentCode" type="tns:UserDetails" minOccurs="0"/>
@@ -132,10 +105,41 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="UserDetails">
+    <xs:sequence>
+      <xs:element name="addressLine1" type="xs:string" minOccurs="0"/>
+      <xs:element name="addressLine2" type="xs:string" minOccurs="0"/>
+      <xs:element name="addressLine3" type="xs:string" minOccurs="0"/>
+      <xs:element name="city" type="xs:string" minOccurs="0"/>
+      <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
+      <xs:element name="country" type="xs:string" minOccurs="0"/>
+      <xs:element name="createdBy" type="xs:string" minOccurs="0"/>
+      <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="documentID" type="xs:string" minOccurs="0"/>
+      <xs:element name="email" type="xs:string" minOccurs="0"/>
+      <xs:element name="firstName" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastModifiedBy" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="lastName" type="xs:string" minOccurs="0"/>
+      <xs:element name="middleName" type="xs:string" minOccurs="0"/>
+      <xs:element name="mobile" type="xs:string" minOccurs="0"/>
+      <xs:element name="mobile2" type="xs:string" minOccurs="0"/>
+      <xs:element name="phone" type="xs:string" minOccurs="0"/>
+      <xs:element name="picture" type="xs:base64Binary" minOccurs="0"/>
+      <xs:element name="roleId" type="tns:RoleDetail" minOccurs="0"/>
+      <xs:element name="sex" type="xs:string" minOccurs="0"/>
+      <xs:element name="state" type="xs:string" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+      <xs:element name="userId" type="xs:string" minOccurs="0"/>
+      <xs:element name="userName" type="xs:string" minOccurs="0"/>
+      <xs:element name="userOID" type="xs:string" minOccurs="0"/>
+      <xs:element name="zipcode" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="Categories">
     <xs:sequence>
       <xs:element name="activePrice" type="xs:int" minOccurs="0"/>
-      <xs:element name="agentCode" type="tns:UserDetails" minOccurs="0"/>
       <xs:element name="bonus" type="xs:int" minOccurs="0"/>
       <xs:element name="categoryDesc" type="xs:string" minOccurs="0"/>
       <xs:element name="categoryId" type="xs:string" minOccurs="0"/>

@@ -16,27 +16,25 @@ import javax.xml.bind.annotation.XmlType;
 public class Categories implements Serializable {
 	private static final long serialVersionUID = 1L;
 
-	private Integer activePrice;
-	private Integer bonus;
-	private String categoryDesc;
 	private String categoryId;
 	private String categoryName;
+	private String categoryDesc;
+	private Integer activePrice;
+	private Integer initialPrice;
+	private Integer bonus;
 	private UserDetails createdBy;
 	private Date createdDate;
-	private Integer initialPrice;
 	private UserDetails lastModifiedBy;
 	private Date lastModifiedDate;
 	private String status;
-	private UserDetails agentCode;
 	private CompanyDetail companyDetails;
-	//	private Set movieDetailses;
 
 	public Categories() {
 	}
 
-	public Categories(Integer activePrice, Integer bonus, String categoryDesc, String categoryId,
-			String categoryName, UserDetails createdBy, Date createdDate, Integer initialPrice,
-			UserDetails lastModifiedBy, Date lastModifiedDate, String status) {
+	public Categories(Integer activePrice, Integer bonus, String categoryDesc, String categoryId, String categoryName,
+			UserDetails createdBy, Date createdDate, Integer initialPrice, UserDetails lastModifiedBy,
+			Date lastModifiedDate, String status) {
 		super();
 		this.activePrice = activePrice;
 		this.bonus = bonus;
@@ -140,36 +138,6 @@ public class Categories implements Serializable {
 	}
 
 	/**
-	 * @return the agentCode
-	 */
-	public UserDetails getAgentCode() {
-		return agentCode;
-	}
-
-	/**
-	 * @param agentCode
-	 *            the agentCode to set
-	 */
-	public void setAgentCode(UserDetails agentCode) {
-		this.agentCode = agentCode;
-	}
-
-	/**
-	 * @return the movieDetailses
-	 */
-	/*public Set getMovieDetailses() {
-		return movieDetailses;
-	}
-	*/
-	/**
-	 * @param movieDetailses
-	 *            the movieDetailses to set
-	 */
-	/*public void setMovieDetailses(Set movieDetailses) {
-		this.movieDetailses = movieDetailses;
-	}*/
-
-	/**
 	 * @return the companyDetails
 	 */
 	public CompanyDetail getCompanyDetails() {
@@ -177,8 +145,7 @@ public class Categories implements Serializable {
 	}
 
 	/**
-	 * @param companyDetails
-	 *            the companyDetails to set
+	 * @param companyDetails the companyDetails to set
 	 */
 	public void setCompanyDetails(CompanyDetail companyDetails) {
 		this.companyDetails = companyDetails;
