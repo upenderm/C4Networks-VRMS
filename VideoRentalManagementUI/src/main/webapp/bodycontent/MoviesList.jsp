@@ -16,8 +16,11 @@
 	<div class="col bodyContainer">
 		<s:actionmessage />
 		<br />
-		<s:form theme="simple">
+		<s:form theme="simple" action="moviesAction_defineMovie.action">
 			<h2>Movies List</h2>
+			<div class="addCustDiv">
+				<s:submit cssClass="buttonAddNew" value="Add Movie"></s:submit>
+			</div>
 			<br>
 			<table border="0" class="bigTable">
 				<tr class="headerRow">

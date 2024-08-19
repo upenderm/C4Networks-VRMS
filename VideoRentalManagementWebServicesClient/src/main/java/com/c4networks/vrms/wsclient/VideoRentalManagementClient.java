@@ -60,12 +60,12 @@ public class VideoRentalManagementClient {
 		return vrmsClient;
 	}
 
-	public List<AgentCustomerDetails> getCustomersListForUser(String userId, String companyId) {
+	public List<AgentCustomerDetails> getCustomersListForUser(String companyOID) {
 		System.out.println("In getAllCustomers method of Facade client");
 		List<AgentCustomerDetails> customersList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			customersList = port.getCustomersListForUser(userId, companyId);
+			customersList = port.getCustomersListForUser(companyOID);
 			System.out.println("customers list size returned from webservice is :" + customersList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -73,12 +73,12 @@ public class VideoRentalManagementClient {
 		return customersList;
 	}
 
-	public List<MovieDetails> getMoviesList(String companyId) {
+	public List<MovieDetails> getMoviesList(String companyOID) {
 		System.out.println("In getMoviesList method of Facade client");
 		List<MovieDetails> moviesList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			moviesList = port.viewAllMoviesForUser(companyId);
+			moviesList = port.viewAllMoviesForUser(companyOID);
 			System.out.println("moviesList size returned from webservice is :" + moviesList.size());
 			for (MovieDetails m : moviesList) {
 				System.out.println(m.getMovieName());
@@ -115,6 +115,21 @@ public class VideoRentalManagementClient {
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
 			rentalList = port.viewActiveRentalsForAgent(companyId);
+			System.out.println("rentalList size returned from webservice is :" + rentalList.size());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		return rentalList;
+
+	}
+	
+	public List<RentalDetails> getInactiveRentalsList(String companyId) {
+		System.out.println("In getInactiveRentalsList method of Facade client");
+		List<RentalDetails> rentalList = new ArrayList<>();
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			rentalList = port.viewInactiveRentalsForAgent(companyId);
 			System.out.println("rentalList size returned from webservice is :" + rentalList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -202,12 +217,24 @@ public class VideoRentalManagementClient {
 		return result;
 	}
 
-	public List<Categories> getAllCategoriesForUser(String companyId) {
+	public Integer addCategory(Categories category, UserDetails userDetails) {
+		System.out.println("VideoRentalManaementUI.addCategory");
+		Integer result = 0;
+		try {
+			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
+			result = port.addCategory(category, userDetails);
+		} catch (Exception e) {
+			e.getMessage();
+		}
+		return result;
+	}
+	
+	public List<Categories> getAllCategoriesForUser(String companyOID) {
 		System.out.println("In getActiveRentalsList method of Facade client");
 		List<Categories> categoryList = new ArrayList<>();
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			categoryList = port.viewAllMovieCategoriesForUser(companyId);
+			categoryList = port.viewAllMovieCategoriesForUser(companyOID);
 			System.out.println("categoryList size returned from webservice is :" + categoryList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -254,12 +281,12 @@ public class VideoRentalManagementClient {
 		return userDetails;
 	}
 
-	public Integer getAvailableMovieCopiesById(String movieId, String userId, String companyId) {
+	public Integer getAvailableMovieCopiesById(String movieId,String companyId) {
 		System.out.println("VideoRentalManaementUI.getAvailableMovieCopiesById");
 		Integer result = 0;
 		try {
 			VideoRentalManagementServicesManager port = service.getVideoRentalManagementServicesPort();
-			result = port.getAvailableMovieCopies(movieId, userId, companyId);
+			result = port.getAvailableMovieCopies(movieId, companyId);
 		} catch (Exception e) {
 			e.getMessage();
 		}

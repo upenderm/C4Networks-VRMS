@@ -7,23 +7,29 @@ import org.apache.commons.lang3.RandomStringUtils;
 public class AlphaNumerciRandomGenerator {
 
 	private final static int CUSTOMER_SEQUENCE = 8; // 12
-	private final static int USER_SEQUENCE = 17; // 20
-	private final static int MOVIE_SEQUENCE = 7; // 10
+	private final static int USER_SEQUENCE = 16; // 20
+	private final static int MOVIE_SEQUENCE = 6; // 10
 	private final static int CATEGORY_SEQUENCE = 7; // 10
 	private final static int ROLE_SEQUENCE = 5; // 8
 	private final static int RENTAL_SEQUENCE = 5; // 8
 	private final static int COMPANY_SEQUENCE = 7; // 10
 	private final static int BONUS_SEQUENCE = 5; // 8
 
-	public static String generateAlphaNumericSeqForUserID() {
+//	public static String generateAlphaNumericSeqForUserID() {
+//		String randomSequence;
+//		randomSequence = "USR" + RandomStringUtils.randomAlphanumeric(USER_SEQUENCE).toUpperCase();
+//		return randomSequence;
+//	}
+
+	public static String generateAgentCustomerIdentifier() {
 		String randomSequence;
-		randomSequence = "USR" + RandomStringUtils.randomAlphanumeric(USER_SEQUENCE).toUpperCase();
+		randomSequence = RandomStringUtils.random(USER_SEQUENCE, "AGC").toUpperCase();
 		return randomSequence;
 	}
 
-	public static String generateAlphaNumericSeqForCustomerID() {
+	public static String generateAlphaNumericSeqForAgentCustomerID() {
 		String randomSequence;
-		randomSequence = "CUST" + RandomStringUtils.randomAlphanumeric(CUSTOMER_SEQUENCE).toUpperCase();
+		randomSequence = RandomStringUtils.random(CUSTOMER_SEQUENCE, "CUST").toUpperCase();
 		return randomSequence;
 	}
 

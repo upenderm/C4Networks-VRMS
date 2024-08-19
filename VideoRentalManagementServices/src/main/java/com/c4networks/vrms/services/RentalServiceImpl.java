@@ -4,7 +4,6 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.apache.commons.collections.ListUtils;
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
 import org.hibernate.Transaction;
@@ -50,7 +49,18 @@ public class RentalServiceImpl implements RentalService {
 		List<RentalDetails> rentalsList;
 		rentalsList = rentalDetailsDAO.findByProperty("companyDetails.companyId",
 				companyId, "status", "OPEN");
-		logger.info("Rental List size :" + rentalsList.size());
+		logger.info("Active Rental List size :" + rentalsList.size());
+
+		return rentalsList;
+	}
+	
+	@Override
+	public List<RentalDetails> getInactiveRentalsList(String companyId) {
+		logger.info("In getInactiveRentalsList() of RentalService");
+		List<RentalDetails> rentalsList;
+		rentalsList = rentalDetailsDAO.findByProperty("companyDetails.companyId",
+				companyId, "status", "CLOSE");
+		logger.info("Inactive Rental List size :" + rentalsList.size());
 
 		return rentalsList;
 	}
@@ -117,6 +127,12 @@ public class RentalServiceImpl implements RentalService {
 			rentalBean.setEffectiveCharges(0);
 			rentalBean.setStatus("OPEN");
 			rentalBean.setComments(rentalDetails.getComments());
+			rentalBean.setAgentCustomerDetails(customerDetails);
+			rentalBean.setCreatedBy(userDetails);
+			rentalBean.setCreatedDate(new Date());
+			rentalBean.setLastModifiedBy(userDetails);
+			rentalBean.setLastModifiedDate(new Date());
+			
 
 			CustomerBonus bonus = new CustomerBonus();
 			bonus.setBonusId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForBonusID());
@@ -127,6 +143,7 @@ public class RentalServiceImpl implements RentalService {
 			bonus.setCreatedDate(new Date());
 			bonus.setLastModifiedBy(userDetails);
 			bonus.setLastModifiedDate(new Date());
+			bonus.setCompanyDetails(userDetails.getCompanyDetails());
 
 			movies.setAvailableCopies(movies.getAvailableCopies() - 1);
 			movies.setLastModifiedBy(userDetails);
@@ -194,12 +211,12 @@ public class RentalServiceImpl implements RentalService {
 	}
 
 	@Override
-	public List<RentalDetails> getRentalsByCustomerId(String customerId) {
+	public List<RentalDetails> getRentalsByCustomerId(String agCustomerOID) {
 		List<RentalDetails> list = new ArrayList<RentalDetails>();
-		logger.info("Received customer id is :" + customerId);
+		logger.info("Received customer id is :" + agCustomerOID);
 		try {
 			RentalDetailsDAOImpl rentalDetailsDAO = new RentalDetailsDAOImpl();
-			list = rentalDetailsDAO.findByProperty("customerDetails.customerId", customerId, "status", "OPEN");
+			list = rentalDetailsDAO.findByProperty("agentCustomerDetails.agCustomerOID", agCustomerOID, "status", "OPEN");
 			logger.info("rental details list size:" + list.size());
 		} catch (Exception e) {
 			logger.error(e);
@@ -244,7 +261,7 @@ public class RentalServiceImpl implements RentalService {
 	@Override
 	public Integer viewBonusByCustomerById(String customerId) {
 		Integer bonus = 0;
-		List<CustomerBonus> list = customerBonusDAO.findByProperty("customerDetails.customerId", customerId,
+		List<CustomerBonus> list = customerBonusDAO.findByProperty("agentCustomerDetails.agCustomerId", customerId,
 				"bonusVersion", 1);
 		if (list.size() == 0) {
 			bonus = list.get(0).getBonusPoints();
@@ -262,7 +279,7 @@ public class RentalServiceImpl implements RentalService {
 	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String companyCode) {
 		logger.info("customer id is :" + customerId);
 		RentalDetailsDAOImpl dao = new RentalDetailsDAOImpl();
-		List<RentalDetails> list = dao.findByProperty("customerDetails.customerId", customerId, "companyDetails.companyId", companyCode);
+		List<RentalDetails> list = dao.findByProperty("agentCustomerDetails.agCustomerOID", customerId, "companyDetails.companyId", companyCode);
 		logger.info("history list size is :" + list.size());
 		return list;
 	}

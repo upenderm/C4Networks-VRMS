@@ -69,12 +69,17 @@ public class CustomerDetailsDAOImpl extends BaseHibernateDAO implements Customer
 		log.debug("finding AgentCustomerDetails instance with property: " + propertyName + ", value: " + value);
 		try {
 			String queryString = "from AgentCustomerDetails as model where model." + propertyName + "= ?";
+//			getSession().flush();
+//			getSession().refresh(AgentCustomerDetails.class);
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			return queryObject.list();
 		} catch (RuntimeException re) {
 			log.error("find by property name failed", re);
 			throw re;
+		} finally {
+//			getSession().flush();
+//			getSession().close();
 		}
 	}
 

@@ -15,9 +15,13 @@
 	<div class="col bodyContainer">
 		<s:actionmessage />
 		<br />
-		<s:form theme="simple">
+		<s:form theme="simple" action="categoriesAction_defineCategory.action">
 
 			<h2>Categories List</h2>
+			<div class="addCustDiv">
+				<s:submit cssClass="buttonAddNew" value="Add Category"></s:submit>
+			</div>
+			<br>
 			<table border="0" class="bigTable">
 				<tr class="headerRow">
 					<th>Category Name</th>
@@ -30,7 +34,7 @@
 						<tr>
 							<td><s:property value="categoryName" /></td>
 							<td><s:property value="categoryDesc" /></td>
-							<td><s:property value="price" /></td>
+							<td><s:property value="activePrice" /></td>
 							<td><s:property value="status" /></td>
 						</tr>
 					</s:iterator>

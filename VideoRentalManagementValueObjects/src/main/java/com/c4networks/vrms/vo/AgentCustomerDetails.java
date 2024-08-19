@@ -33,9 +33,9 @@ public class AgentCustomerDetails implements Serializable {
 	private String addressLine1;
 	private String addressLine2;
 	private String addressLine3;
-	private String createdBy;
+	private UserDetails createdBy;
 	private Date createdDate;
-	private String lastModifiedBy;
+	private UserDetails lastModifiedBy;
 	private Date lastModifiedDate;
 	private byte[] picture;
 	private String status;
@@ -258,14 +258,14 @@ public class AgentCustomerDetails implements Serializable {
 	/**
 	 * @return the createdBy
 	 */
-	public String getCreatedBy() {
+	public UserDetails getCreatedBy() {
 		return createdBy;
 	}
 
 	/**
 	 * @param createdBy the createdBy to set
 	 */
-	public void setCreatedBy(String createdBy) {
+	public void setCreatedBy(UserDetails createdBy) {
 		this.createdBy = createdBy;
 	}
 
@@ -286,14 +286,14 @@ public class AgentCustomerDetails implements Serializable {
 	/**
 	 * @return the lastModifiedBy
 	 */
-	public String getLastModifiedBy() {
+	public UserDetails getLastModifiedBy() {
 		return lastModifiedBy;
 	}
 
 	/**
 	 * @param lastModifiedBy the lastModifiedBy to set
 	 */
-	public void setLastModifiedBy(String lastModifiedBy) {
+	public void setLastModifiedBy(UserDetails lastModifiedBy) {
 		this.lastModifiedBy = lastModifiedBy;
 	}
 

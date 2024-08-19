@@ -8,7 +8,7 @@ import com.c4networks.vrms.vo.UserDetails;
 
 public interface CustomerDetailsService {
 
-	public List<AgentCustomerDetails> getCustomers(String companyId);
+	public List<AgentCustomerDetails> getCustomers(String companyOID);
 
 	public Integer addCustomer(AgentCustomerDetails custDtls, UserDetails userDetails);
 	

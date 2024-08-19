@@ -25,6 +25,10 @@
       	<put-attribute name = "body"   value = "/bodycontent/ViewHistory.jsp"/>      
    	</definition>
   
+   	<definition name = "addCategory" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/AddCategory.jsp"/>      
+   	</definition>
+   	
    	<definition name = "categoriesList" extends = "baseLayout">
       	<put-attribute name = "body"   value = "/bodycontent/CategoriesList.jsp"/>      
    	</definition>
@@ -55,6 +59,10 @@
    	
    	<definition name = "rentalfinalize" extends = "baseLayout">
       	<put-attribute name = "body"   value = "/bodycontent/RentalFinalize.jsp"/>      
+   	</definition>
+   	
+   	<definition name = "userSettings" extends = "baseLayout">
+      	<put-attribute name = "body"   value = "/bodycontent/UserSettings.jsp"/>      
    	</definition>
 
 </tiles-definitions>

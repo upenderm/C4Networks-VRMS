@@ -24,6 +24,7 @@ public class CustomerBonus implements Serializable {
 	private Date createdDate;
 	private UserDetails lastModifiedBy;
 	private Date lastModifiedDate;
+	private CompanyDetail companyDetails;
 
 	public CustomerBonus() {
 	}
@@ -90,6 +91,14 @@ public class CustomerBonus implements Serializable {
 
 	public void setLastModifiedDate(Date lastModifiedDate) {
 		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public CompanyDetail getCompanyDetails() {
+		return companyDetails;
+	}
+
+	public void setCompanyDetails(CompanyDetail companyDetails) {
+		this.companyDetails = companyDetails;
 	}
 
 }

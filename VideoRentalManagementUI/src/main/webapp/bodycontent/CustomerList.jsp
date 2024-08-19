@@ -4,20 +4,13 @@
 	final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(this.getClass());
 	logger.info("In " + this.getClass().getSimpleName().replace("_", "."));
 %>
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+
 <html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
-
+<link type="text/css" href="css/vrms-styles.css" rel="stylesheet" />
+<link type="text/css" href="css/vrms-content-styles.css" rel="stylesheet" />
 <title>VRMS</title>
-<script type="text/javascript">
-function viewCustomerRentalHistory(customerId){
-	console.log("customer id is :"+customerId);
-	document.getElementById('customerId').value = customerId;
-	document.customerList.action="customerAction_viewRentalHistory.action";
-	document.customerList.submit();
-}
-</script>
+
 </head>
 <body>
 	<div class="col bodyContainer">
@@ -35,6 +28,19 @@ function viewCustomerRentalHistory(customerId){
 		<br />
 		<s:form theme="simple" id="customerList" name="customerList">
 			<h2>Customers List</h2>
+			<div class="addCustDiv">
+				<button type="button" class="open-button buttonAddNew">Add New Customer</button>
+			</div>
+			
+			
+			<dialog class="modal" id="addCustModalDlg">
+				<object data="customerAction_defineCustomer.action" style="height:33em; width: 50vh"></object>
+				<template class="fallback"></template>
+				<br>
+				<button type="button" class="button close-button" style="background: darkred">close</button>
+			</dialog>
+			
+			
 			<div style="position: relative;">
 				<table border="0" class="bigTable">
 					<tr class="headerRow">
@@ -49,13 +55,14 @@ function viewCustomerRentalHistory(customerId){
 					<s:if test="#session.customersList.size()>0">
 						<s:iterator value="#session.customersList">
 							<tr>
-								<td><s:property value="customerId" /></td>
-								<td><s:property value="firstName" /></td>
+								<td><s:property value="agCustomerId" /></td>
+								<td><s:property value="firstName" />, <s:property value="lastName" /></td>
 								<td><s:property value="email" /></td>
 								<td><s:property value="mobile" /></td>
 								<td><s:property value="addressLine1" /></td>
-								<td><s:property value="addressLine2" /></td>
-								<td><a href="javascript:void(0)" onclick="viewCustomerRentalHistory('${customerId}')">View</a></td>
+								<td><s:property value="createdDate" /></td>
+								<td><a href="javascript:void(0)"
+									onclick="viewCustomerRentalHistory('${agCustomerOID}')">View</a></td>
 							</tr>
 						</s:iterator>
 					</s:if>
@@ -66,3 +73,37 @@ function viewCustomerRentalHistory(customerId){
 	</div>
 </body>
 </html>
+<script>
+
+	const modalDlg = document.getElementById('addCustModalDlg');
+	const openModal = document.querySelector(".open-button");
+	const closeModal = document.querySelector(".close-button");
+
+	document.addEventListener('DOMContentLoaded', () => {
+		fillDialogContent(modalDlg);
+	})
+	openModal.addEventListener("click", () => {
+	//	console.log("Modal clicked to open");
+		localStorage["mymodaldlg"] = modalDlg;
+		modalDlg.showModal();
+	})
+	if (closeModal!=null ){
+		closeModal.addEventListener("click", () => {
+			modalDlg.close();
+		})
+	}
+
+function fillDialogContent(modalDlg) {
+	const template = modalDlg.querySelector(':scope > .fallback');
+	const content = template.content.cloneNode(true);
+	const objectE1 = modalDlg.querySelector('object');
+	objectE1.append(content);
+}
+
+function viewCustomerRentalHistory(customerId){
+	console.log("customer id is :"+customerId);
+	document.getElementById('customerId').value = customerId;
+	document.customerList.action="customerAction_viewRentalHistory.action";
+	document.customerList.submit();
+}
+</script>

@@ -29,11 +29,11 @@ public class MoviesServiceImpl implements MoviesService {
 	private CategoriesDAO categoriesDAO;
 
 	@Override
-	public List<MovieDetails> getMoviesList(String companyId) {
+	public List<MovieDetails> getMoviesList(String companyOID) {
 		logger.info("in getMoviesList() of MoviesServiceImpl");
 		List<MovieDetails> moviesList = new ArrayList<>();
 		try {
-			moviesList = moviesDAO.findByProperty("companyDetails.companyOID", companyId);
+			moviesList = moviesDAO.findByProperty("companyDetails.companyOID", companyOID);
 			logger.info("Movies List size :" + moviesList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -54,14 +54,13 @@ public class MoviesServiceImpl implements MoviesService {
 			bean.setMovieId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForMovieID());
 			bean.setMovieName(movie.getMovieName().trim());
 			bean.setMovieDesc(movie.getMovieDesc().trim());
-			bean.setAgentCode(userDetails);
 			bean.setCompanyDetails(userDetails.getCompanyDetails());
 			bean.setCreatedBy(userDetails);
 			bean.setCreatedDate(new Date());
 			bean.setLastModifiedBy(userDetails);
 			bean.setLastModifiedDate(new Date());
 			bean.setStatus("ACTIVE");
-			bean.setTotalCopies(movie.getTotalCopies());
+			bean.setTotalCopies(movie.getAvailableCopies());
 			bean.setAvailableCopies(movie.getAvailableCopies());
 			Categories categories = categoriesDAO.findByCategoryId(categoryId);
 			bean.setCategories(categories);
@@ -78,10 +77,10 @@ public class MoviesServiceImpl implements MoviesService {
 	}
 
 	@Override
-	public Integer getAvailableMovieCopiesById(String movieId, String userId, String companyId) {
+	public Integer getAvailableMovieCopiesById(String movieId, String companyId) {
 		Integer result = 0;
 		try {
-			List<MovieDetails> bean = moviesDAO.findByProperty("movieId", movieId, "agentCode.userId", userId, "companyDetails.companyId", companyId);
+			List<MovieDetails> bean = moviesDAO.findByProperty("movieId", movieId, "companyDetails.companyId", companyId);
 			result = (bean.get(0)==null)?0:bean.get(0).getAvailableCopies();
 		} catch (Exception e) {
 			e.printStackTrace();

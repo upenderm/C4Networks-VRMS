@@ -61,6 +61,19 @@ public class CompanyDetailsDAOImpl extends BaseHibernateDAO implements CompanyDe
 			throw re;
 		}
 	}
+	
+	@Override
+	public CompanyDetail findByCompanyDetailsByOID(String companyOID) {
+		log.debug("getting CompanyDetail instance with id: " + companyOID);
+		try {
+			CompanyDetail instance = (CompanyDetail) getSession().get("com.c4networks.vrms.vo.CompanyDetail",
+					companyOID);
+			return instance;
+		} catch (RuntimeException re) {
+			log.error("get failed", re);
+			throw re;
+		}
+	}
 
 	@SuppressWarnings("unchecked")
 	@Override

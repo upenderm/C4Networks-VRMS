@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
 <hibernate-mapping auto-import="true" default-access="property" default-cascade="none" default-lazy="true">
     <class name="com.c4networks.vrms.vo.MovieDetails" schema="ADMIN" table="VRMS_MOVIE_DETAILS">
         <id name="movieId" type="java.lang.String">
@@ -14,9 +16,6 @@
         </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="createdBy"  unique="false" update="true">
             <column length="20" name="CREATED_BY"/>
-        </many-to-one>
-        <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="agentCode"  unique="false" update="true">
-            <column length="20" name="AGENT_CODE"/>
         </many-to-one>
         <many-to-one class="com.c4networks.vrms.vo.UserDetails" fetch="select" insert="true" name="lastModifiedBy"  unique="false" update="true">
             <column length="20" name="LAST_MODIFIED_BY"/>

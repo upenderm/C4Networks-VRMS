@@ -10,8 +10,12 @@
       <xs:element name="charges" type="xs:int" minOccurs="0"/>
       <xs:element name="comments" type="xs:string" minOccurs="0"/>
       <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
+      <xs:element name="createdBy" type="tns:UserDetails" minOccurs="0"/>
+      <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="effectiveCharges" type="xs:int" minOccurs="0"/>
       <xs:element name="expectedReturnDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="lastModifiedBy" type="tns:UserDetails" minOccurs="0"/>
+      <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="lateCharges" type="xs:int" minOccurs="0"/>
       <xs:element name="movieDetails" type="tns:MovieDetails" minOccurs="0"/>
       <xs:element name="rentalDate" type="xs:dateTime" minOccurs="0"/>
@@ -30,12 +34,12 @@
       <xs:element name="city" type="xs:string" minOccurs="0"/>
       <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
       <xs:element name="country" type="xs:string" minOccurs="0"/>
-      <xs:element name="createdBy" type="xs:string" minOccurs="0"/>
+      <xs:element name="createdBy" type="tns:UserDetails" minOccurs="0"/>
       <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="documentID" type="xs:string" minOccurs="0"/>
       <xs:element name="email" type="xs:string" minOccurs="0"/>
       <xs:element name="firstName" type="xs:string" minOccurs="0"/>
-      <xs:element name="lastModifiedBy" type="xs:string" minOccurs="0"/>
+      <xs:element name="lastModifiedBy" type="tns:UserDetails" minOccurs="0"/>
       <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
       <xs:element name="lastName" type="xs:string" minOccurs="0"/>
       <xs:element name="middleName" type="xs:string" minOccurs="0"/>
@@ -76,35 +80,6 @@
     </xs:sequence>
   </xs:complexType>
 
-  <xs:complexType name="RoleDetail">
-    <xs:sequence>
-      <xs:element name="accessPage" type="xs:string" minOccurs="0"/>
-      <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
-      <xs:element name="roleDesc" type="xs:string" minOccurs="0"/>
-      <xs:element name="roleId" type="xs:string" minOccurs="0"/>
-      <xs:element name="roleName" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="MovieDetails">
-    <xs:sequence>
-      <xs:element name="agentCode" type="tns:UserDetails" minOccurs="0"/>
-      <xs:element name="availableCopies" type="xs:int" minOccurs="0"/>
-      <xs:element name="categories" type="tns:Categories" minOccurs="0"/>
-      <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
-      <xs:element name="createdBy" type="tns:UserDetails" minOccurs="0"/>
-      <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
-      <xs:element name="lastModifiedBy" type="tns:UserDetails" minOccurs="0"/>
-      <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
-      <xs:element name="movieDesc" type="xs:string" minOccurs="0"/>
-      <xs:element name="movieId" type="xs:string" minOccurs="0"/>
-      <xs:element name="movieName" type="xs:string" minOccurs="0"/>
-      <xs:element name="picture" type="xs:base64Binary" minOccurs="0"/>
-      <xs:element name="status" type="xs:string" minOccurs="0"/>
-      <xs:element name="totalCopies" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
   <xs:complexType name="UserDetails">
     <xs:sequence>
       <xs:element name="addressLine1" type="xs:string" minOccurs="0"/>
@@ -134,6 +109,34 @@
       <xs:element name="userName" type="xs:string" minOccurs="0"/>
       <xs:element name="userOID" type="xs:string" minOccurs="0"/>
       <xs:element name="zipcode" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="RoleDetail">
+    <xs:sequence>
+      <xs:element name="accessPage" type="xs:string" minOccurs="0"/>
+      <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
+      <xs:element name="roleDesc" type="xs:string" minOccurs="0"/>
+      <xs:element name="roleId" type="xs:string" minOccurs="0"/>
+      <xs:element name="roleName" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="MovieDetails">
+    <xs:sequence>
+      <xs:element name="availableCopies" type="xs:int" minOccurs="0"/>
+      <xs:element name="categories" type="tns:Categories" minOccurs="0"/>
+      <xs:element name="companyDetails" type="tns:CompanyDetail" minOccurs="0"/>
+      <xs:element name="createdBy" type="tns:UserDetails" minOccurs="0"/>
+      <xs:element name="createdDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="lastModifiedBy" type="tns:UserDetails" minOccurs="0"/>
+      <xs:element name="lastModifiedDate" type="xs:dateTime" minOccurs="0"/>
+      <xs:element name="movieDesc" type="xs:string" minOccurs="0"/>
+      <xs:element name="movieId" type="xs:string" minOccurs="0"/>
+      <xs:element name="movieName" type="xs:string" minOccurs="0"/>
+      <xs:element name="picture" type="xs:base64Binary" minOccurs="0"/>
+      <xs:element name="status" type="xs:string" minOccurs="0"/>
+      <xs:element name="totalCopies" type="xs:int" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
     <wb-module deploy-name="VideoRentalManagementWebServices">
-        <wb-resource deploy-path="/" source-path="/target/VideoRentalManagementWebServices"/>
+        <wb-resource deploy-path="/" source-path="/WebContent"/>
         <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
         <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
         <wb-resource deploy-path="/WEB-INF/classes" source-path="/src/main/resources"/>
@@ -10,7 +10,7 @@
         <dependent-module archiveName="vrms-services-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vrms-services/vrms-services">
             <dependency-type>uses</dependency-type>
         </dependent-module>
-        <property name="java-output-path" value="/VideoRentalManagementWebServices/target/classes"/>
+        <property name="java-output-path" value="/vrms-webservices/bin"/>
         <property name="context-root" value="VideoRentalManagementWebServices"/>
     </wb-module>
 </project-modules>

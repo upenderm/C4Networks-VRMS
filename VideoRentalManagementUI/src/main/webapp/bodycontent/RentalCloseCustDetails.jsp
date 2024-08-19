@@ -38,5 +38,5 @@
 			</tr>
 		</s:else>
 	</table>
-	<s:hidden name="rentalEditId" id="rentalEditId"></s:hidden>
+	
 </s:form>

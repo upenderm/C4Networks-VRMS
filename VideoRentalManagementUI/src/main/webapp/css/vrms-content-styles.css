@@ -23,7 +23,7 @@
 .midTable {
   font-family: "Trebuchet MS", Arial, Helvetica, sans-serif;
   border-collapse: collapse;
-  width: 75%;
+  width: 100%;
 }
 .midTable td, .midTable th {
   border: 1px solid #ddd;

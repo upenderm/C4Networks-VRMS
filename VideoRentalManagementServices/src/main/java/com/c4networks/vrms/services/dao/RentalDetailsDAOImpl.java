@@ -80,6 +80,7 @@ public class RentalDetailsDAOImpl extends BaseHibernateDAO implements RentalDeta
 		try {
 			String queryString = "from RentalDetails as model where model." + propertyName + "= ? and model."
 					+ propertyName2 + "= ?";
+//			getSession().refresh(RentalDetails.class);
 			Query queryObject = getSession().createQuery(queryString);
 			queryObject.setParameter(0, value);
 			queryObject.setParameter(1, value2);

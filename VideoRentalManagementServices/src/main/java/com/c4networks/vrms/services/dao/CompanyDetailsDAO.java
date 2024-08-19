@@ -16,6 +16,8 @@ public interface CompanyDetailsDAO {
 
 	public void deleteCompanyDetails(CompanyDetail persistentInstance);
 
+	public CompanyDetail findByCompanyDetailsByOID(String companyDetailOID);
+	
 	public CompanyDetail findByCompanyDetailsId(String companyDetailId);
 
 	public List<CompanyDetail> findByProperty(String propertyName, Object value);

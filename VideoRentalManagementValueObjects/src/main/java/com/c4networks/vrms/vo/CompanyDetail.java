@@ -17,56 +17,63 @@ public class CompanyDetail implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	private String companyOID;
+	private String companyId;
+	private String companyName;
+	private String companyDesc;
 	private String addressLine1;
 	private String addressLine2;
 	private String city;
-	private String companyDesc;
-	private String companyId;
-	private byte[] companyImage;
-	private byte[] companyLogo;
-	private String companyName;
+	private String state;
+	private String zipcode;
 	private String country;
-	private String createdBy;
-	private Date createdDate;
-	private String lastModifiedBy;
-	private Date lastModifiedDate;
 	private String mobile;
 	private String mobile2;
 	private String phone;
 	private String registeredNum;
-	private String state;
-	private String zipcode;
+	private byte[] companyImage;
+	private byte[] companyLogo;
+	private String createdBy;
+	private Date createdDate;
+	private String lastModifiedBy;
+	private Date lastModifiedDate;
 
 	public CompanyDetail() {
 	}
 
-	public CompanyDetail(String companyOID, String addressLine1, String addressLine2, String city, String companyDesc, String companyId,
-			byte[] companyImage, byte[] companyLogo, String companyName, String country, String createdBy,
-			Date createdDate, String lastModifiedBy, Date lastModifiedDate, String phone, String registeredNum,
-			String state, String zipcode) {
-		super();
+	public String getCompanyOID() {
+		return companyOID;
+	}
+
+	public void setCompanyOID(String companyOID) {
 		this.companyOID = companyOID;
-		this.addressLine1 = addressLine1;
-		this.addressLine2 = addressLine2;
-		this.city = city;
-		this.companyDesc = companyDesc;
+	}
+
+	public String getCompanyId() {
+		return companyId;
+	}
+
+	public void setCompanyId(String companyId) {
 		this.companyId = companyId;
-		this.companyImage = companyImage;
-		this.companyLogo = companyLogo;
+	}
+
+	public String getCompanyName() {
+		return companyName;
+	}
+
+	public void setCompanyName(String companyName) {
 		this.companyName = companyName;
-		this.country = country;
-		this.createdBy = createdBy;
-		this.createdDate = createdDate;
-		this.lastModifiedBy = lastModifiedBy;
-		this.lastModifiedDate = lastModifiedDate;
-		this.phone = phone;
-		this.registeredNum = registeredNum;
-		this.state = state;
-		this.zipcode = zipcode;
+	}
+
+	public String getCompanyDesc() {
+		return companyDesc;
+	}
+
+	public void setCompanyDesc(String companyDesc) {
+		this.companyDesc = companyDesc;
 	}
 
 	public String getAddressLine1() {
-		return this.addressLine1;
+		return addressLine1;
 	}
 
 	public void setAddressLine1(String addressLine1) {
@@ -74,7 +81,7 @@ public class CompanyDetail implements Serializable {
 	}
 
 	public String getAddressLine2() {
-		return this.addressLine2;
+		return addressLine2;
 	}
 
 	public void setAddressLine2(String addressLine2) {
@@ -82,111 +89,15 @@ public class CompanyDetail implements Serializable {
 	}
 
 	public String getCity() {
-		return this.city;
+		return city;
 	}
 
 	public void setCity(String city) {
 		this.city = city;
 	}
 
-	public String getCompanyDesc() {
-		return this.companyDesc;
-	}
-
-	public void setCompanyDesc(String companyDesc) {
-		this.companyDesc = companyDesc;
-	}
-
-	public String getCompanyId() {
-		return this.companyId;
-	}
-
-	public void setCompanyId(String companyId) {
-		this.companyId = companyId;
-	}
-
-	public byte[] getCompanyImage() {
-		return this.companyImage;
-	}
-
-	public void setCompanyImage(byte[] companyImage) {
-		this.companyImage = companyImage;
-	}
-
-	public byte[] getCompanyLogo() {
-		return this.companyLogo;
-	}
-
-	public void setCompanyLogo(byte[] companyLogo) {
-		this.companyLogo = companyLogo;
-	}
-
-	public String getCompanyName() {
-		return this.companyName;
-	}
-
-	public void setCompanyName(String companyName) {
-		this.companyName = companyName;
-	}
-
-	public String getCountry() {
-		return this.country;
-	}
-
-	public void setCountry(String country) {
-		this.country = country;
-	}
-
-	public String getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(String createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public String getLastModifiedBy() {
-		return this.lastModifiedBy;
-	}
-
-	public void setLastModifiedBy(String lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
-
-	public Date getLastModifiedDate() {
-		return this.lastModifiedDate;
-	}
-
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
-
-	public String getPhone() {
-		return this.phone;
-	}
-
-	public void setPhone(String phone) {
-		this.phone = phone;
-	}
-
-	public String getRegisteredNum() {
-		return this.registeredNum;
-	}
-
-	public void setRegisteredNum(String registeredNum) {
-		this.registeredNum = registeredNum;
-	}
-
 	public String getState() {
-		return this.state;
+		return state;
 	}
 
 	public void setState(String state) {
@@ -194,35 +105,99 @@ public class CompanyDetail implements Serializable {
 	}
 
 	public String getZipcode() {
-		return this.zipcode;
+		return zipcode;
 	}
 
 	public void setZipcode(String zipcode) {
 		this.zipcode = zipcode;
 	}
 
-	public final String getCompanyOID() {
-		return companyOID;
+	public String getCountry() {
+		return country;
 	}
 
-	public final void setCompanyOID(String companyOID) {
-		this.companyOID = companyOID;
+	public void setCountry(String country) {
+		this.country = country;
 	}
 
-	public final String getMobile() {
+	public String getMobile() {
 		return mobile;
 	}
 
-	public final void setMobile(String mobile) {
+	public void setMobile(String mobile) {
 		this.mobile = mobile;
 	}
 
-	public final String getMobile2() {
+	public String getMobile2() {
 		return mobile2;
 	}
 
-	public final void setMobile2(String mobile2) {
+	public void setMobile2(String mobile2) {
 		this.mobile2 = mobile2;
+	}
+
+	public String getPhone() {
+		return phone;
+	}
+
+	public void setPhone(String phone) {
+		this.phone = phone;
+	}
+
+	public String getRegisteredNum() {
+		return registeredNum;
+	}
+
+	public void setRegisteredNum(String registeredNum) {
+		this.registeredNum = registeredNum;
+	}
+
+	public byte[] getCompanyImage() {
+		return companyImage;
+	}
+
+	public void setCompanyImage(byte[] companyImage) {
+		this.companyImage = companyImage;
+	}
+
+	public byte[] getCompanyLogo() {
+		return companyLogo;
+	}
+
+	public void setCompanyLogo(byte[] companyLogo) {
+		this.companyLogo = companyLogo;
+	}
+
+	public String getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(String createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public String getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(String lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 }

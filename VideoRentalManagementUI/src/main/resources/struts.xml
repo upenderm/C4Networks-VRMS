@@ -46,14 +46,20 @@
 			</interceptor-ref>
 			<!-- <interceptor-ref name="menuSelector" />	 -->
 			<result name="success" type="tiles">customerList</result>
-			<result name="input" type="tiles">addCustomer</result>
-			<result name="addcustomer" type="redirect">customerAction_viewCustomerList.action</result>
-			<result name="definecustomer" type="tiles">addCustomer</result>
+			<result name="input">/bodycontent/AddCustomer.jsp</result>
+			<!-- <result name="addcustomer" type="redirect">
+				<param name="location">customerAction_viewCustomerList.action</param>
+        		<param name="addCustResult">created</param>
+			</result> -->
+			<result name="addcustomer">/bodycontent/AddCustomer.jsp</result>
+			<result name="definecustomer">/bodycontent/AddCustomer.jsp</result>
 			<result name="history" type="tiles">viewHistory</result>
 		</action>
 
-		<action name="categoriesAction_viewCategories" class="com.c4networks.vrms.ui.action.CategoriesAction">
+		<action name="categoriesAction_*" class="com.c4networks.vrms.ui.action.CategoriesAction" method="{1}">
 			<result name="success" type="tiles">categoriesList</result>
+			<result name="addcategory" type="tiles">addCategory</result>
+			<result name="definecategory" type="tiles">addCategory</result>
 		</action>
 
 		<action name="moviesAction_*" class="com.c4networks.vrms.ui.action.MoviesAction"
@@ -77,6 +83,10 @@
 		
 		<action name="logoutAction" class="com.c4networks.vrms.ui.action.LogoutAction">
 			<result name="success" type="redirect">http://localhost:8080/C4IMSUI</result>
+		</action>
+		
+		<action name="userSettingsAction" class="com.c4networks.vrms.ui.action.UserSettingsAction">
+			<result name="success" type="tiles">userSettings</result>
 		</action>
 
 	</package>

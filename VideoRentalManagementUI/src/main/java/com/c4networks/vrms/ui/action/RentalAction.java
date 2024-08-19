@@ -44,6 +44,7 @@ public class RentalAction extends ActionSupport {
 	private String comments;
 	private Integer billedAmount;
 	private Boolean bonusCheck;
+	private String showRentals;
 
 	public String defineRental() {
 		logger.info("In defineRental() of RentalAction");
@@ -56,9 +57,9 @@ public class RentalAction extends ActionSupport {
 		Map<String, String> moviesMap = new HashMap<>();
 
 		List<AgentCustomerDetails> customersList = VideoRentalManagementClient.getInstance()
-				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+				.getCustomersListForUser(userDetails.getCompanyDetails().getCompanyOID());
 		logger.info("customer list size :" + customersList.size());
-		List<MovieDetails> moviesList = VideoRentalManagementClient.getInstance().getMoviesList(userDetails.getCompanyDetails().getCompanyId());
+		List<MovieDetails> moviesList = VideoRentalManagementClient.getInstance().getMoviesList(userDetails.getCompanyDetails().getCompanyOID());
 		logger.info("movies list size :" + moviesList.size());
 
 		Iterator<AgentCustomerDetails> customerIter = customersList.iterator();
@@ -115,7 +116,7 @@ public class RentalAction extends ActionSupport {
 			e.printStackTrace();
 		}
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
-		Integer result = VideoRentalManagementClient.getInstance().getAvailableMovieCopiesById(request.getParameter("movieId"), userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+		Integer result = VideoRentalManagementClient.getInstance().getAvailableMovieCopiesById(request.getParameter("movieId"), userDetails.getCompanyDetails().getCompanyId());
 
 		out.write(result.toString());
 
@@ -131,11 +132,27 @@ public class RentalAction extends ActionSupport {
 		List<RentalDetails> rentalsActiveList = VideoRentalManagementClient.getInstance()
 				.getActiveRentalsList(userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + rentalsActiveList.size());
+		showRentals = "active";
 		session.setAttribute("rentalsList", rentalsActiveList);
 
 		return SUCCESS;
 	}
 
+	public String viewInactiveRentals() {
+		logger.info("In viewInactiveRentals of RentalAction");
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpSession session = request.getSession();
+		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+
+		List<RentalDetails> rentalsList = VideoRentalManagementClient.getInstance()
+				.getInactiveRentalsList(userDetails.getCompanyDetails().getCompanyId());
+		logger.info("list size:" + rentalsList.size());
+		showRentals = "inactive";
+		session.setAttribute("rentalsList", rentalsList);
+
+		return SUCCESS;
+	}
+	
 	public String viewAllRentals() {
 		logger.info("In viewRentals of RentalAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
@@ -145,6 +162,7 @@ public class RentalAction extends ActionSupport {
 		List<RentalDetails> rentalsList = VideoRentalManagementClient.getInstance()
 				.getAllRentalsList(userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + rentalsList.size());
+		showRentals = "all";
 		session.setAttribute("rentalsList", rentalsList);
 
 		return SUCCESS;
@@ -158,7 +176,7 @@ public class RentalAction extends ActionSupport {
 
 		Map<String, String> customerMap = new HashMap<>();
 		List<AgentCustomerDetails> customersList = VideoRentalManagementClient.getInstance()
-				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+				.getCustomersListForUser(userDetails.getCompanyDetails().getCompanyOID());
 		logger.info("customer list size :" + customersList.size());
 		Iterator<AgentCustomerDetails> customerIter = customersList.iterator();
 		while (customerIter.hasNext()) {
@@ -293,6 +311,14 @@ public class RentalAction extends ActionSupport {
 	 */
 	public void setCustomerId(String customerId) {
 		this.customerId = customerId;
+	}
+
+	public String getShowRentals() {
+		return showRentals;
+	}
+
+	public void setShowRentals(String showRentals) {
+		this.showRentals = showRentals;
 	}
 
 }

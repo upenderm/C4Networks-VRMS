@@ -19,6 +19,10 @@
 
   <xs:element name="UserDetails" type="ns1:UserDetails"/>
 
+  <xs:element name="addCategory" type="tns:addCategory"/>
+
+  <xs:element name="addCategoryResponse" type="tns:addCategoryResponse"/>
+
   <xs:element name="addCustomerForUser" type="tns:addCustomerForUser"/>
 
   <xs:element name="addCustomerForUserResponse" type="tns:addCustomerForUserResponse"/>
@@ -34,6 +38,10 @@
   <xs:element name="closeRental" type="tns:closeRental"/>
 
   <xs:element name="closeRentalResponse" type="tns:closeRentalResponse"/>
+
+  <xs:element name="deleteCategory" type="tns:deleteCategory"/>
+
+  <xs:element name="deleteCategoryResponse" type="tns:deleteCategoryResponse"/>
 
   <xs:element name="getAvailableMovieCopies" type="tns:getAvailableMovieCopies"/>
 
@@ -82,6 +90,10 @@
   <xs:element name="viewBonusByCustomerById" type="tns:viewBonusByCustomerById"/>
 
   <xs:element name="viewBonusByCustomerByIdResponse" type="tns:viewBonusByCustomerByIdResponse"/>
+
+  <xs:element name="viewInactiveRentalsForAgent" type="tns:viewInactiveRentalsForAgent"/>
+
+  <xs:element name="viewInactiveRentalsForAgentResponse" type="tns:viewInactiveRentalsForAgentResponse"/>
 
   <xs:element name="viewRentalHistoryByCustomerId" type="tns:viewRentalHistoryByCustomerId"/>
 
@@ -136,6 +148,18 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="viewInactiveRentalsForAgent">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewInactiveRentalsForAgentResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="viewAllMoviesForUser">
     <xs:sequence>
       <xs:element name="arg0" type="xs:string" minOccurs="0"/>
@@ -181,6 +205,31 @@
   </xs:complexType>
 
   <xs:complexType name="addMoviesResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addCategory">
+    <xs:sequence>
+      <xs:element name="arg0" type="ns1:Categories" minOccurs="0"/>
+      <xs:element name="arg1" type="ns1:UserDetails" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="addCategoryResponse">
+    <xs:sequence>
+      <xs:element name="return" type="xs:int" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteCategory">
+    <xs:sequence>
+      <xs:element name="arg0" type="ns1:Categories" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="deleteCategoryResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:int" minOccurs="0"/>
     </xs:sequence>
@@ -238,7 +287,6 @@
   <xs:complexType name="getCustomersListForUser">
     <xs:sequence>
       <xs:element name="arg0" type="xs:string" minOccurs="0"/>
-      <xs:element name="arg1" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -264,7 +312,6 @@
     <xs:sequence>
       <xs:element name="arg0" type="xs:string" minOccurs="0"/>
       <xs:element name="arg1" type="xs:string" minOccurs="0"/>
-      <xs:element name="arg2" type="xs:string" minOccurs="0"/>
     </xs:sequence>
   </xs:complexType>
 
@@ -286,6 +333,18 @@
     </xs:sequence>
   </xs:complexType>
 
+  <xs:complexType name="viewActiveRentalsForAgent">
+    <xs:sequence>
+      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
+    </xs:sequence>
+  </xs:complexType>
+
+  <xs:complexType name="viewActiveRentalsForAgentResponse">
+    <xs:sequence>
+      <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
+    </xs:sequence>
+  </xs:complexType>
+
   <xs:complexType name="closeRental">
     <xs:sequence>
       <xs:element name="arg0" type="ns1:RentalFinalData" minOccurs="0"/>
@@ -296,18 +355,6 @@
   <xs:complexType name="closeRentalResponse">
     <xs:sequence>
       <xs:element name="return" type="xs:int" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="viewActiveRentalsForAgent">
-    <xs:sequence>
-      <xs:element name="arg0" type="xs:string" minOccurs="0"/>
-    </xs:sequence>
-  </xs:complexType>
-
-  <xs:complexType name="viewActiveRentalsForAgentResponse">
-    <xs:sequence>
-      <xs:element name="return" type="ns1:RentalDetails" minOccurs="0" maxOccurs="unbounded"/>
     </xs:sequence>
   </xs:complexType>
 </xs:schema>

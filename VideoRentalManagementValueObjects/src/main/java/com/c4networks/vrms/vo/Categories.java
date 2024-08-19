@@ -22,11 +22,11 @@ public class Categories implements Serializable {
 	private Integer activePrice;
 	private Integer initialPrice;
 	private Integer bonus;
+	private String status;
 	private UserDetails createdBy;
 	private Date createdDate;
 	private UserDetails lastModifiedBy;
 	private Date lastModifiedDate;
-	private String status;
 	private CompanyDetail companyDetails;
 
 	public Categories() {

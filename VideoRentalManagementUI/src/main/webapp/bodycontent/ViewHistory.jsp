@@ -32,8 +32,8 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 			<s:if test="#session.rentalHistoryList.size()>0">
 			<s:iterator value="#session.rentalHistoryList">
 			<tr>
-				<td><s:property value="customerDetails.customerId" /></td>
-				<td><s:property value="customerDetails.firstName" /></td>
+				<td><s:property value="agentCustomerDetails.agCustomerId" /></td>
+				<td><s:property value="agentCustomerDetails.firstName" />, <s:property value="agentCustomerDetails.lastName" /></td>
 				<td><s:property value="movieDetails.movieName" /></td>
 				<td><s:property value="movieDetails.categories.categoryName" /></td>
 				<td><s:property value="rentalId" /></td>

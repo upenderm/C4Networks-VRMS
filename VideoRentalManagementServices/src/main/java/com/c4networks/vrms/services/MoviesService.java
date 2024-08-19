@@ -11,6 +11,6 @@ public interface MoviesService {
 
 	public Integer addMovie(MovieDetails movie, String categoryId, UserDetails userDetails);
 
-	public Integer getAvailableMovieCopiesById(String movieId, String userId, String companyId);
+	public Integer getAvailableMovieCopiesById(String movieId, String companyId);
 	
 }

@@ -2,7 +2,6 @@ package com.c4networks.vrms.vo;
 
 import java.io.Serializable;
 import java.util.Date;
-import java.util.Set;
 
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlType;
@@ -17,110 +16,25 @@ import javax.xml.bind.annotation.XmlType;
 public class MovieDetails implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-	private UserDetails agentCode;
+	private String movieId;
+	private String movieName;
+	private String movieDesc;
 	private Integer availableCopies;
-	private CompanyDetail companyDetails;
+	private String status;
+	private Integer totalCopies;
+	private Categories categories;
 	private UserDetails createdBy;
 	private Date createdDate;
 	private UserDetails lastModifiedBy;
 	private Date lastModifiedDate;
-	private String movieDesc;
-	private String movieId;
-	private String movieName;
+	private CompanyDetail companyDetails;
 	private byte[] picture;
-	private String status;
-	private String totalCopies;
-	private Categories categories;
-//	private Set rentalDetailses;
 
 	public MovieDetails() {
 	}
 
-	public MovieDetails(UserDetails agentCode, Integer availableCopies, CompanyDetail companyId, UserDetails createdBy,
-			Date createdDate, UserDetails lastModifiedBy, Date lastModifiedDate, String movieDesc, String movieId,
-			String movieName, byte[] picture, String status, String totalCopies) {
-		super();
-		this.agentCode = agentCode;
-		this.availableCopies = availableCopies;
-		this.companyDetails = companyId;
-		this.createdBy = createdBy;
-		this.createdDate = createdDate;
-		this.lastModifiedBy = lastModifiedBy;
-		this.lastModifiedDate = lastModifiedDate;
-		this.movieDesc = movieDesc;
-		this.movieId = movieId;
-		this.movieName = movieName;
-		this.picture = picture;
-		this.status = status;
-		this.totalCopies = totalCopies;
-	}
-
-	public UserDetails getAgentCode() {
-		return this.agentCode;
-	}
-
-	public void setAgentCode(UserDetails agentCode) {
-		this.agentCode = agentCode;
-	}
-
-	public Integer getAvailableCopies() {
-		return this.availableCopies;
-	}
-
-	public void setAvailableCopies(Integer availableCopies) {
-		this.availableCopies = availableCopies;
-	}
-
-	public CompanyDetail getCompanyDetails() {
-		return this.companyDetails;
-	}
-
-	public void setCompanyDetails(CompanyDetail companyDetails) {
-		this.companyDetails = companyDetails;
-	}
-
-	public UserDetails getCreatedBy() {
-		return this.createdBy;
-	}
-
-	public void setCreatedBy(UserDetails createdBy) {
-		this.createdBy = createdBy;
-	}
-
-	public Date getCreatedDate() {
-		return this.createdDate;
-	}
-
-	public void setCreatedDate(Date createdDate) {
-		this.createdDate = createdDate;
-	}
-
-	public UserDetails getLastModifiedBy() {
-		return this.lastModifiedBy;
-	}
-
-	public void setLastModifiedBy(UserDetails lastModifiedBy) {
-		this.lastModifiedBy = lastModifiedBy;
-	}
-
-	public Date getLastModifiedDate() {
-		return this.lastModifiedDate;
-	}
-
-	public void setLastModifiedDate(Date lastModifiedDate) {
-		this.lastModifiedDate = lastModifiedDate;
-	}
-
-	public String getMovieDesc() {
-		return this.movieDesc;
-	}
-
-	public void setMovieDesc(String movieDesc) {
-		this.movieDesc = movieDesc;
-	}
-
 	public String getMovieId() {
-		return this.movieId;
+		return movieId;
 	}
 
 	public void setMovieId(String movieId) {
@@ -128,65 +42,99 @@ public class MovieDetails implements Serializable {
 	}
 
 	public String getMovieName() {
-		return this.movieName;
+		return movieName;
 	}
 
 	public void setMovieName(String movieName) {
 		this.movieName = movieName;
 	}
 
-	public byte[] getPicture() {
-		return this.picture;
+	public String getMovieDesc() {
+		return movieDesc;
 	}
 
-	public void setPicture(byte[] picture) {
-		this.picture = picture;
+	public void setMovieDesc(String movieDesc) {
+		this.movieDesc = movieDesc;
+	}
+
+	public Integer getAvailableCopies() {
+		return availableCopies;
+	}
+
+	public void setAvailableCopies(Integer availableCopies) {
+		this.availableCopies = availableCopies;
 	}
 
 	public String getStatus() {
-		return this.status;
+		return status;
 	}
 
 	public void setStatus(String status) {
 		this.status = status;
 	}
 
-	public String getTotalCopies() {
-		return this.totalCopies;
+	public Integer getTotalCopies() {
+		return totalCopies;
 	}
 
-	public void setTotalCopies(String totalCopies) {
+	public void setTotalCopies(Integer totalCopies) {
 		this.totalCopies = totalCopies;
 	}
 
-	/**
-	 * @return the categories
-	 */
 	public Categories getCategories() {
 		return categories;
 	}
 
-	/**
-	 * @param categories
-	 *            the categories to set
-	 */
 	public void setCategories(Categories categories) {
 		this.categories = categories;
 	}
 
-	/**
-	 * @return the rentalDetailses
-	 */
-	/*public Set getRentalDetailses() {
-		return rentalDetailses;
+	public UserDetails getCreatedBy() {
+		return createdBy;
 	}
 
-	*//**
-	 * @param rentalDetailses
-	 *            the rentalDetailses to set
-	 *//*
-	public void setRentalDetailses(Set rentalDetailses) {
-		this.rentalDetailses = rentalDetailses;
+	public void setCreatedBy(UserDetails createdBy) {
+		this.createdBy = createdBy;
 	}
-*/
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public UserDetails getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(UserDetails lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
+	}
+
+	public CompanyDetail getCompanyDetails() {
+		return companyDetails;
+	}
+
+	public void setCompanyDetails(CompanyDetail companyDetails) {
+		this.companyDetails = companyDetails;
+	}
+
+	public byte[] getPicture() {
+		return picture;
+	}
+
+	public void setPicture(byte[] picture) {
+		this.picture = picture;
+	}
+
 }

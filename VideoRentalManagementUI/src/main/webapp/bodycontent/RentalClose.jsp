@@ -38,8 +38,8 @@ function closeRental(rentalId)
 {
 	console.log("rental Id is :"+rentalId);
 	document.getElementById('rentalEditId').value=rentalId;
-	document.forms[0].action='rentalAction_rentalFinalize.action';
-	document.forms[0].submit();
+	document.forms[1].action='rentalAction_rentalFinalize.action';
+	document.forms[1].submit();
     return true;   
 }
 </script>
@@ -48,6 +48,7 @@ function closeRental(rentalId)
 <div class="col bodyContainer">
 <br />
 <s:form action="rentalAction_addRental.action" theme="simple">
+<s:hidden name="rentalEditId" id="rentalEditId"></s:hidden>
 	<h2>Close a Rental</h2>
 	<s:if test="hasActionMessages()">
 	<div class="successMsg">

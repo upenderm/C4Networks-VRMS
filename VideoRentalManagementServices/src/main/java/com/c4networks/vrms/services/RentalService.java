@@ -9,6 +9,8 @@ import com.c4networks.vrms.vo.UserDetails;
 public interface RentalService {
 
 	public List<RentalDetails> getActiveRentalsList(String companyId);
+	
+	public List<RentalDetails> getInactiveRentalsList(String companyId);
 
 	public List<RentalDetails> getAllRentalsList(String companyId);
 

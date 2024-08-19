@@ -3,6 +3,7 @@ package com.c4networks.vrms.ui.action;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -31,6 +32,7 @@ public class CustomerAction extends ActionSupport {
 	private String mobile;
 	private String customerId;
 	private String selectItemToHighlight;
+	private String addCustomerResult;
 
 	@SkipValidation
 	public String viewCustomerList() {
@@ -39,10 +41,15 @@ public class CustomerAction extends ActionSupport {
 		HttpSession session = request.getSession();
 		System.out.println("***************"+session.getAttribute("userDetails"));
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
+		
+		System.out.println("*******-----------********"+session.getAttribute("selectItemToHighlight"));
+		if(!session.getAttribute("selectItemToHighlight").equals("viewCustomers")) {
+			session.setAttribute("selectItemToHighlight", "viewCustomers");
+		}
 		System.out.println("userDetails in session is :"+userDetails);
 		System.out.println(VideoRentalManagementClient.getInstance());
 		List<AgentCustomerDetails> customersList = VideoRentalManagementClient.getInstance()
-				.getCustomersListForUser(userDetails.getUserId(), userDetails.getCompanyDetails().getCompanyId());
+				.getCustomersListForUser(userDetails.getCompanyDetails().getCompanyOID());
 		logger.info("list size:" + customersList.size());
 		session.setAttribute("customersList", customersList);
 		return SUCCESS;
@@ -76,7 +83,12 @@ public class CustomerAction extends ActionSupport {
 			Integer result = VideoRentalManagementClient.getInstance().addCustomer(bean, userDetails);
 			if (result == 1) {
 				this.addActionMessage("User creation successfull !..");
+//				HttpSession session = request.getSession();
+				session.setAttribute("selectItemToHighlight", "viewCustomers");
+				addCustomerResult = "CREATED";
 				RESULT = ADDCUSTOMER;
+//				HttpServletResponse response = ServletActionContext.getResponse();
+//				response.sendRedirect("http://localhost:8080/VideoRentalManagementUI/customerAction_viewCustomerList.action");
 			} else {
 				this.addActionError("User creation failed...");
 				RESULT = DEFINECUSTOMER;
@@ -169,5 +181,14 @@ public class CustomerAction extends ActionSupport {
 	public void setSelectItemToHighlight(String selectItemToHighlight) {
 		this.selectItemToHighlight = selectItemToHighlight;
 	}
+
+	public String getAddCustomerResult() {
+		return addCustomerResult;
+	}
+
+	public void setAddCustomerResult(String addCustomerResult) {
+		this.addCustomerResult = addCustomerResult;
+	}
+
 
 }

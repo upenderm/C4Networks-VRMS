@@ -2,18 +2,10 @@
 <jsp:directive.page import="java.util.ArrayList"  />
 <% final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(this.getClass());
 logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
-<!DOCTYPE html>
-<html>
-<head>
-<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
 <link type="text/css" href="css/vrms-styles.css" rel="stylesheet" />
 <link type="text/css" href="css/vrms-content-styles.css" rel="stylesheet" />
-<title>VRMS</title>
-</head>
 <body>
-<div class="col bodyContainer">
-<br />
-<s:form action="customerAction_addCustomer.action" theme="simple">
+<s:form action="customerAction_addCustomer.action" theme="simple" onsubmit="">
 	<s:token></s:token>
 	<h2>Add Customer</h2>
 	<s:if test="hasActionMessages()">
@@ -38,7 +30,7 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 			<td><s:textfield name="lastName" cssClass="selwidth"></s:textfield></td>
 		</tr>
 		<tr>
-			<td>Email</td>
+			<td>Email<span style="color:red">&nbsp;*</span></td>
 			<td><s:textfield name="email" cssClass="selwidth" required="true"></s:textfield></td>
 		</tr>
 		<tr>
@@ -59,6 +51,25 @@ logger.info("In "+this.getClass().getSimpleName().replace("_",".")); %>
 		</tr>
 	</table>
 </s:form>
-</div>
 </body>
-</html>
+<script>
+	
+	window.onload = function(){
+        window.document.body.onload = doThis();
+    };
+	function doThis() {
+	//	console.log("#####################");
+	//	console.log("---------------------1-----------------------"+window.document.getElementById('addCustModalDlg'));
+		var mymodaldlg = localStorage["mymodaldlg"];
+	//	console.log("--------------------2------------------------"+mymodaldlg);
+	//	console.log(window.document.querySelectorAll('*[id]'))
+		if(document.querySelector('.actionMessage')) {
+	//		console.log("--------------------3------------------------"+mymodaldlg);
+		//	mymodaldlg.close();
+			if(document.getElementById('addCustModalDlg')!=null){
+				document.getElementById('addCustModalDlg').close();
+			}
+		}
+    }
+
+</script>

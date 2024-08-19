@@ -28,6 +28,10 @@ public class RentalDetails implements Serializable {
 	private Integer effectiveCharges;
 	private String status;
 	private String comments;
+	private UserDetails createdBy;
+	private Date createdDate;
+	private UserDetails lastModifiedBy;
+	private Date lastModifiedDate;
 
 	public RentalDetails() {
 
@@ -127,6 +131,38 @@ public class RentalDetails implements Serializable {
 
 	public void setComments(String comments) {
 		this.comments = comments;
+	}
+
+	public UserDetails getCreatedBy() {
+		return createdBy;
+	}
+
+	public void setCreatedBy(UserDetails createdBy) {
+		this.createdBy = createdBy;
+	}
+
+	public Date getCreatedDate() {
+		return createdDate;
+	}
+
+	public void setCreatedDate(Date createdDate) {
+		this.createdDate = createdDate;
+	}
+
+	public UserDetails getLastModifiedBy() {
+		return lastModifiedBy;
+	}
+
+	public void setLastModifiedBy(UserDetails lastModifiedBy) {
+		this.lastModifiedBy = lastModifiedBy;
+	}
+
+	public Date getLastModifiedDate() {
+		return lastModifiedDate;
+	}
+
+	public void setLastModifiedDate(Date lastModifiedDate) {
+		this.lastModifiedDate = lastModifiedDate;
 	}
 
 }

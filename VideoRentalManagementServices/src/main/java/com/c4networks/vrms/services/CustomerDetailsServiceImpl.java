@@ -10,22 +10,25 @@ import org.hibernate.Transaction;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
+import com.c4networks.vrms.services.dao.CompanyDetailsDAOImpl;
 import com.c4networks.vrms.services.dao.CustomerBonusDAOImpl;
 import com.c4networks.vrms.services.dao.CustomerDetailsDAOImpl;
 import com.c4networks.vrms.services.dao.MovieDetailsDAOImpl;
 import com.c4networks.vrms.services.dao.RentalDetailsDAOImpl;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
 import com.c4networks.vrms.services.util.AlphaNumerciRandomGenerator;
-import com.c4networks.vrms.services.util.DateFormatter;
-import com.c4networks.vrms.vo.CustomerBonus;
 import com.c4networks.vrms.vo.AgentCustomerDetails;
-import com.c4networks.vrms.vo.MovieDetails;
+import com.c4networks.vrms.vo.CompanyDetail;
 import com.c4networks.vrms.vo.RentalDetails;
+import com.c4networks.vrms.vo.RoleDetail;
 import com.c4networks.vrms.vo.UserDetails;
 
 @Component
 public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
+	@Autowired
+	private CompanyDetailsDAOImpl companyDetailsDAO;
+	
 	@Autowired
 	private CustomerDetailsDAOImpl customerDetailsDAO;
 
@@ -40,11 +43,12 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 	private static final Logger logger = Logger.getLogger(CustomerDetailsServiceImpl.class.getName());
 
-	public List<AgentCustomerDetails> getCustomers(String companyId) {
+	public List<AgentCustomerDetails> getCustomers(String companyOID) {
 		logger.info("In getCustomers() of CustomerDetailsService");
 		List<AgentCustomerDetails> customerList = new ArrayList<>();
 		try {
-			customerList = customerDetailsDAO.findByProperty("companyDetails.companyOID", companyId);
+			CompanyDetail companyDetails = companyDetailsDAO.findByCompanyDetailsByOID(companyOID);
+			customerList = customerDetailsDAO.findByProperty("companyDetails", companyDetails);
 			logger.info("Customer List size :" + customerList.size());
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -63,28 +67,28 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 			AgentCustomerDetails bean = new AgentCustomerDetails();
 
-			/*String vrmsReference = "VRMS";
-			List<String> maxVrmsReference = customerDetailsDAO.getMaxVrmsReference();
-			logger.info("Size-------" + maxVrmsReference.size());
-			if (maxVrmsReference.size() > 0) {
-				String maxId = (String) maxVrmsReference.get(0);
-				logger.info("max id is:" + maxId);
-				if (maxId != null && !maxId.equals("")) {
-					Integer max = Integer.parseInt(maxId.substring(4));
-					max = max + 1;
-					if (max.toString().length() == 1)
-						vrmsReference += "00" + max;
-					else if (max.toString().length() == 2)
-						vrmsReference += "0" + max;
-					else
-						vrmsReference += max;
-					bean.setcVrmsId(vrmsReference);
-				} else
-					bean.setVrmsId("VRMS001");
-			}*/
+//			String vrmsReference = "VRMS";
+//			List<String> maxVrmsReference = customerDetailsDAO.getMaxVrmsReference();
+//			logger.info("Size-------" + maxVrmsReference.size());
+//			if (maxVrmsReference.size() > 0) {
+//				String maxId = (String) maxVrmsReference.get(0);
+//				logger.info("max id is:" + maxId);
+//				if (maxId != null && !maxId.equals("")) {
+//					Integer max = Integer.parseInt(maxId.substring(4));
+//					max = max + 1;
+//					if (max.toString().length() == 1)
+//						vrmsReference += "00" + max;
+//					else if (max.toString().length() == 2)
+//						vrmsReference += "0" + max;
+//					else
+//						vrmsReference += max;
+//					bean.setcVrmsId(vrmsReference);
+//				} else
+//					bean.setVrmsId("VRMS001");
+//			}
 
-			bean.setAgCustomerOID(custDtls.getAgCustomerOID());
-			bean.setAgCustomerId(custDtls.getAgCustomerId());
+			bean.setAgCustomerOID(AlphaNumerciRandomGenerator.generateAgentCustomerIdentifier());
+			bean.setAgCustomerId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForAgentCustomerID());
 			bean.setFirstName(custDtls.getFirstName());
 			bean.setLastName(custDtls.getLastName());
 			bean.setEmail(custDtls.getEmail());
@@ -95,7 +99,11 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			bean.setMobile(custDtls.getMobile());
 			bean.setSex(custDtls.getSex());
 			bean.setCompanyDetails(userDetails.getCompanyDetails());
-
+			bean.setCreatedBy(userDetails);
+			bean.setCreatedDate(new Date());
+			bean.setLastModifiedBy(userDetails);
+			bean.setLastModifiedDate(new Date());
+			bean.setRoleId(userDetails.getRoleId());
 			customerDetailsDAO.saveCustomerDetail(bean);
 			transaction.commit();
 			if (transaction.wasCommitted()) {

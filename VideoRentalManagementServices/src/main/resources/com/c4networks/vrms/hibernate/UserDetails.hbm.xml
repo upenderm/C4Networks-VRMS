@@ -1,5 +1,7 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<!-- Generated 14 Oct, 2018 3:53:26 PM by Hibernate Tools 5.2.3.Final --><!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN" "http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+
 <hibernate-mapping>
     <class name="com.c4networks.vrms.vo.UserDetails" schema="ADMIN" table="VRMS_USER_DETAILS">
         <id name="userOID" type="java.lang.String">
@@ -72,10 +74,10 @@
         <property name="status" type="java.lang.String" unique="false">
             <column length="8" name="STATUS" not-null="true"/>
         </property>
-        <many-to-one class="com.c4networks.vrms.vo.RoleDetail" fetch="select" insert="true" name="roleId"  unique="false" update="true">
+        <many-to-one class="com.c4networks.vrms.vo.RoleDetail" lazy="false" fetch="select" insert="true" name="roleId"  unique="false" update="true">
             <column length="8" name="ROLE_ID" not-null="true"/>
         </many-to-one>
-        <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" fetch="select" insert="true" name="companyDetails"  unique="false" update="true">
+        <many-to-one class="com.c4networks.vrms.vo.CompanyDetail" name="companyDetails" lazy="false" fetch="join">
             <column length="16" name="COMPANY_OID" not-null="true"/>
         </many-to-one>
         <property name="documentID" type="java.lang.String" unique="false">
