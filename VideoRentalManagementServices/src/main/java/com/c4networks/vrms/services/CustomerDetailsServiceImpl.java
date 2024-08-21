@@ -1,8 +1,10 @@
 package com.c4networks.vrms.services;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import org.apache.log4j.Logger;
 import org.hibernate.Session;
@@ -11,16 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.c4networks.vrms.services.dao.CompanyDetailsDAOImpl;
-import com.c4networks.vrms.services.dao.CustomerBonusDAOImpl;
 import com.c4networks.vrms.services.dao.CustomerDetailsDAOImpl;
-import com.c4networks.vrms.services.dao.MovieDetailsDAOImpl;
-import com.c4networks.vrms.services.dao.RentalDetailsDAOImpl;
 import com.c4networks.vrms.services.hibernate.HibernateSessionFactory;
 import com.c4networks.vrms.services.util.AlphaNumerciRandomGenerator;
 import com.c4networks.vrms.vo.AgentCustomerDetails;
 import com.c4networks.vrms.vo.CompanyDetail;
-import com.c4networks.vrms.vo.RentalDetails;
-import com.c4networks.vrms.vo.RoleDetail;
 import com.c4networks.vrms.vo.UserDetails;
 
 @Component
@@ -28,18 +25,9 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 
 	@Autowired
 	private CompanyDetailsDAOImpl companyDetailsDAO;
-	
+
 	@Autowired
 	private CustomerDetailsDAOImpl customerDetailsDAO;
-
-	@Autowired
-	private RentalDetailsDAOImpl rentalDetailsDAO;
-
-	@Autowired
-	private CustomerBonusDAOImpl CustomerBonusDAO;
-
-	@Autowired
-	private MovieDetailsDAOImpl movieDetailsDAO;
 
 	private static final Logger logger = Logger.getLogger(CustomerDetailsServiceImpl.class.getName());
 
@@ -50,6 +38,11 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 			CompanyDetail companyDetails = companyDetailsDAO.findByCompanyDetailsByOID(companyOID);
 			customerList = customerDetailsDAO.findByProperty("companyDetails", companyDetails);
 			logger.info("Customer List size :" + customerList.size());
+			if (!customerList.isEmpty()) {
+				Comparator<AgentCustomerDetails> comparator = Comparator
+						.comparing(AgentCustomerDetails::getLastModifiedDate);
+				return customerList.stream().sorted(comparator.reversed()).collect(Collectors.toList());
+			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -130,87 +123,4 @@ public class CustomerDetailsServiceImpl implements CustomerDetailsService {
 		return customer;
 	}
 
-	@Override
-	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails, String movieId,
-			String expectedReturnDate) {
-		// TODO Auto-generated method stub
-		return null;
-	}
-
-	/*@Override
-	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails,
-			String movieId, String expectedReturnDate) {
-		Session session = null;
-		Transaction transaction = null;
-		Integer result = 0;
-		try {
-			session = HibernateSessionFactory.getSession();
-			transaction = session.beginTransaction();
-
-			RentalDetails rentalBean = new RentalDetails();
-			CustomerBonus bonus = new CustomerBonus();
-
-			AgentCustomerDetails customerDetails = customerDetailsDAO.findByCustomerId(customerId);
-			rentalBean.setCustomerDetails(customerDetails);
-
-			MovieDetails movies = movieDetailsDAO.findByMovieId(movieId);
-			rentalBean.setMovieDetails(movies);
-			rentalBean.setCompanyDetails(userDetails.getCompanyDetails());
-			rentalBean.setAgentCode(userDetails);
-
-			String rentalReference = "RNT";
-			List<String> maxRentalReference = rentalDetailsDAO.getMaxRentalReference();
-			logger.info("Size-------" + maxRentalReference.size());
-			if (maxRentalReference.size() > 0) {
-				String maxId = (String) maxRentalReference.get(0);
-				logger.info("max id is:" + maxId);
-				if (maxId != null && !maxId.equals("")) {
-					Integer max = Integer.parseInt(maxId.substring(3));
-					max = max + 1;
-					if (max.toString().length() == 1)
-						rentalReference += "00" + max;
-					else if (max.toString().length() == 2)
-						rentalReference += "0" + max;
-					else
-						rentalReference += max;
-					bean.setRentalId(rentalReference);
-				} else
-					bean.setRentalId("RNT001");
-			}
-
-			rentalBean.setRentalId(AlphaNumerciRandomGenerator.generateAlphaNumericSeqForRentalID());
-			rentalBean.setRentalDate(new Date());
-			rentalBean.setExpectedReturnDate(DateFormatter.convertStringToDate(expectedReturnDate));
-
-			rentalBean.setStatus("OPEN");
-			//			bean.setLateCharges(0);
-
-			bonus.setCustomerId(customerDetails);
-			bonus.setBonusPoints(movies.getCategories().getBonus());
-			bonus.setBonusVersion(1);
-			bonus.setCreatedBy(userDetails.getUserId());
-			bonus.setCreatedDate(new Date());
-			bonus.setLastModifiedBy(userDetails.getUserId());
-			bonus.setLastModifiedDate(new Date());
-
-			movies.setAvailableCopies(movies.getAvailableCopies() - 1);
-			movies.setLastModifiedBy(userDetails);
-			movies.setLastModifiedDate(new Date());
-
-			CustomerBonusDAO.saveCustomerBonus(bonus);
-			movieDetailsDAO.saveMovieDetail(movies);
-			rentalDetailsDAO.saveRentalDetails(rentalBean);
-
-			transaction.commit();
-			if (transaction.wasCommitted()) {
-				result = 1;
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		return result;
-	}
-*/
 }
