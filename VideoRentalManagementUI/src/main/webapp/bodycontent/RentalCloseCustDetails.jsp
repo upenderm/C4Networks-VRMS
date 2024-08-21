@@ -5,8 +5,9 @@
 	logger.info("In " + this.getClass().getSimpleName().replace("_", "."));
 %>
 
-<s:form theme="simple" id="rentalCloseCustDetailsForm" name="rentalCloseCustDetailsForm">
-	<table border="0" class="bigTable">
+<s:form theme="simple" id="rentalCloseCustDetailsForm"
+	name="rentalCloseCustDetailsForm">
+	<table class="bigTable">
 		<tr class="headerRow">
 			<th>Rental Id</th>
 			<th>Movie Name</th>
@@ -34,9 +35,9 @@
 		</s:if>
 		<s:else>
 			<tr>
-				<td style="color: red; text-align: center;" colspan="6">No rentals found for this customer</td>
+				<td style="color: red; text-align: center;" colspan="6">No
+					rentals found for this customer</td>
 			</tr>
 		</s:else>
 	</table>
-	
 </s:form>

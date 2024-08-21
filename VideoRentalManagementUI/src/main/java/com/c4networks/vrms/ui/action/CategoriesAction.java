@@ -1,9 +1,6 @@
 package com.c4networks.vrms.ui.action;
 
-import java.util.HashMap;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -26,7 +23,7 @@ public class CategoriesAction extends ActionSupport {
 	private static final Logger logger = Logger.getLogger(CategoriesAction.class.getName());
 	private static final String ADDCATEGORY = "addcategory";
 	private static final String DEFINECATEGORY = "definecategory";
-	
+
 	private String categoryName;
 	private String categoryDescription;
 	private Integer activePrice;
@@ -46,14 +43,14 @@ public class CategoriesAction extends ActionSupport {
 
 		return SUCCESS;
 	}
-	
+
 	@SkipValidation
 	public String defineCategory() {
 		logger.info("In defineCategory() of CategoriesAction");
 
 		return ADDCATEGORY;
 	}
-	
+
 	public String addCategory() {
 		String RESULT = SUCCESS;
 		logger.info("In addCategory() of CategoryAction");
@@ -67,7 +64,7 @@ public class CategoriesAction extends ActionSupport {
 		bean.setInitialPrice(this.activePrice);
 		bean.setStatus("ACTIVE");
 		bean.setBonus(this.bonus);
-		
+
 		Integer result = VideoRentalManagementClient.getInstance().addCategory(bean, userDetails);
 		if (result == 1) {
 			this.addActionMessage("Category creation successfull !..");

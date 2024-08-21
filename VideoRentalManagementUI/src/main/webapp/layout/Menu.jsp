@@ -1,5 +1,5 @@
 <%@ taglib uri="/struts-tags" prefix="s" %>
-<link type="text/css" href="css/vrms-styles.css" rel="stylesheet" />
+
 <a class="menuItem ${selectedMenuMap.home}" onclick="setSelectedMenuItem('home')" href="index.jsp">HOME</a> 
 <a class="menuItem ${selectedMenuMap.viewCustomers}" onclick="setSelectedMenuItem('viewCustomers')" href="customerAction_viewCustomerList.action">VIEW CUSTOMERS</a> 
 <!-- <a class="menuItem ${selectedMenuMap.addCustomer}" onclick="setSelectedMenuItem('addCustomer')" href="customerAction_defineCustomer.action">ADD CUSTOMER</a>  --> 

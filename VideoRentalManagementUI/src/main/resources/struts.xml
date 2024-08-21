@@ -22,7 +22,7 @@
 		 </interceptors>
 		<default-interceptor-ref name="defaultStack" />
 	
-		<!-- 
+		
 		<global-results>
 			<result name="securityerror">/securityerror.jsp</result>
 			<result name="error">/HTTP500.html</result>
@@ -35,7 +35,7 @@
 			<exception-mapping exception="java.lang.Exception"
 				result="error" />
 		</global-exception-mappings>
- 		-->
+ 		
  	
 		<action name="customerAction_*" class="com.c4networks.vrms.ui.action.CustomerAction"
 			method="{1}">

@@ -54,7 +54,6 @@ article {
 </article>
 </div>
 
-
 <footer><h3>Copyright © C4Networks</h3></footer>
 
 </div>

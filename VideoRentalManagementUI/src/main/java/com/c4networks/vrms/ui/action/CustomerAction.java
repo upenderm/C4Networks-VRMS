@@ -3,7 +3,6 @@ package com.c4networks.vrms.ui.action;
 import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.apache.log4j.Logger;
@@ -39,14 +38,14 @@ public class CustomerAction extends ActionSupport {
 		logger.info("In viewCustomerList() of CustomerAction");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
-		System.out.println("***************"+session.getAttribute("userDetails"));
+		System.out.println("***************" + session.getAttribute("userDetails"));
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
-		
-		System.out.println("*******-----------********"+session.getAttribute("selectItemToHighlight"));
-		if(!session.getAttribute("selectItemToHighlight").equals("viewCustomers")) {
+
+		System.out.println("*******-----------********" + session.getAttribute("selectItemToHighlight"));
+		if (!session.getAttribute("selectItemToHighlight").equals("viewCustomers")) {
 			session.setAttribute("selectItemToHighlight", "viewCustomers");
 		}
-		System.out.println("userDetails in session is :"+userDetails);
+		System.out.println("userDetails in session is :" + userDetails);
 		System.out.println(VideoRentalManagementClient.getInstance());
 		List<AgentCustomerDetails> customersList = VideoRentalManagementClient.getInstance()
 				.getCustomersListForUser(userDetails.getCompanyDetails().getCompanyOID());
@@ -106,8 +105,8 @@ public class CustomerAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
-		List<RentalDetails> rentalHistoryList = VideoRentalManagementClient.getInstance().viewRentalHistoryByCustomerId(
-				customerId, userDetails.getCompanyDetails().getCompanyId());
+		List<RentalDetails> rentalHistoryList = VideoRentalManagementClient.getInstance()
+				.viewRentalHistoryByCustomerId(customerId, userDetails.getCompanyDetails().getCompanyId());
 		session.setAttribute("rentalHistoryList", rentalHistoryList);
 		return HISTORY;
 	}
@@ -189,6 +188,5 @@ public class CustomerAction extends ActionSupport {
 	public void setAddCustomerResult(String addCustomerResult) {
 		this.addCustomerResult = addCustomerResult;
 	}
-
 
 }
