@@ -147,7 +147,7 @@ public class RentalAction extends ActionSupport {
 		List<RentalDetails> rentalsList = VideoRentalManagementClient.getInstance()
 				.getInactiveRentalsList(userDetails.getCompanyDetails().getCompanyId());
 		logger.info("list size:" + rentalsList.size());
-		showRentals = "inactive";
+		setShowRentals("inactive");
 		session.setAttribute("rentalsList", rentalsList);
 
 		return SUCCESS;

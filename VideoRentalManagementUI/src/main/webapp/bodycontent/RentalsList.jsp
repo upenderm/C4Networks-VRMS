@@ -25,7 +25,7 @@
 		<s:if test="getShowRentals()=='active'">
 			<h2>Active Rentals</h2>
 		</s:if>
-		<s:elseif test="getShowRentals()=='inactive">
+		<s:elseif test="getShowRentals()=='inactive'">
 			<h2>Inactive Rentals</h2>
 		</s:elseif>
 		<s:else>
