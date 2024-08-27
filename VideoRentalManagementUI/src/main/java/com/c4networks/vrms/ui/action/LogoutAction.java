@@ -52,6 +52,11 @@ public class LogoutAction extends ActionSupport {
 			cookie3.setMaxAge(0);
 			cookie3.setSecure(isSecure);
 			response.addCookie(cookie3);
+			Cookie cookie4 = new Cookie("C4TOKEN2", null);
+			cookie4.setPath(cookiePath);
+			cookie4.setMaxAge(0);
+			cookie4.setSecure(isSecure);
+			response.addCookie(cookie4);
 		}
 		return SUCCESS;
 	}

@@ -54,13 +54,9 @@ public class UserHomeFilter implements Filter {
 						Map<String, String> selectedMenuMap = new HashMap<String, String>();
 						selectedMenuMap.put("home", "active");
 						selectedMenuMap.put("viewCustomers", "");
-						selectedMenuMap.put("addCustomer", "");
 						selectedMenuMap.put("categories", "");
 						selectedMenuMap.put("movies", "");
-						selectedMenuMap.put("addMovie", "");
 						selectedMenuMap.put("activeRentals", "");
-						selectedMenuMap.put("allRentals", "");
-						selectedMenuMap.put("makeRental", "");
 						selectedMenuMap.put("closeRental", "");
 						httpRequest.getSession().setAttribute("selectedMenuMap", selectedMenuMap);
 
