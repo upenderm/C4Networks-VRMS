@@ -1,7 +1,6 @@
 package com.c4networks.vrms.handler;
 
 import java.io.ByteArrayOutputStream;
-import java.io.IOException;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.util.Set;
@@ -45,6 +44,7 @@ public class C4NetworksSOAPHandlerClient implements SOAPHandler<SOAPMessageConte
 				SOAPEnvelope soapEnv = soapMsg.getSOAPPart().getEnvelope();
 				SOAPHeader soapHeader = soapEnv.getHeader();
 				this.printFormattedXML(soapMsg);
+				System.out.println("SOAPHeader:" + soapHeader);
 
 			} catch (SOAPException e) {
 				System.err.println(e);

@@ -34,7 +34,7 @@ public class C4AccessControlFilter implements Filter {
 		if (cookies != null) {
 			for (Cookie cookie : cookies) {
 				System.out.println(cookie.getName());
-				if (cookie.getName().equals("C4TOKEN") && cookie.getValue().equals("C4NetworkToken")) {
+				if (cookie.getName().equals("C4TOKEN2") && cookie.getValue().equals("C4NetworkToken")) {
 					System.out.println("Allowed to login");
 					authenticatedRequest = true;
 				}

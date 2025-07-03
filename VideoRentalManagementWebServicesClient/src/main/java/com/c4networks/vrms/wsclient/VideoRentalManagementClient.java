@@ -5,7 +5,6 @@ import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.jws.HandlerChain;
 import javax.xml.namespace.QName;
 
 import com.c4networks.vrms.vo.AgentCustomerDetails;
@@ -16,6 +15,8 @@ import com.c4networks.vrms.vo.RentalFinalData;
 import com.c4networks.vrms.vo.UserDetails;
 import com.c4networks.vrms.webservices.VideoRentalManagementServices;
 import com.c4networks.vrms.webservices.VideoRentalManagementServicesManager;
+
+import javax.jws.HandlerChain;
 
 @HandlerChain(file = "handler-chain.xml")
 public class VideoRentalManagementClient {
