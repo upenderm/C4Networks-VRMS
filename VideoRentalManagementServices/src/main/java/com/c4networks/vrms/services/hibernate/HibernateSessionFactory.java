@@ -27,6 +27,8 @@ public class HibernateSessionFactory {
 
 	static {
     	try {
+			System.out.println("[VideoRentalManagementService] Catalina base directory >>>------------------------------->>" + System.getProperty("catalina.base"));
+			System.out.println("oracle.net.tns_admin >>>------------------------------->>" + System.getProperty("oracle.net.tns_admin"));
 			configuration.configure(configFile);
 			sessionFactory = configuration.buildSessionFactory();
 		} catch (Exception e) {
