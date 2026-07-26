@@ -6,10 +6,6 @@
 %>
 
 <script>
-$(function() {
-	$( "#expectedReturnDate" ).datepicker({dateFormat: 'yy-mm-dd'});
-});
-
 function getAvailableCopies(movieId){
 	x=getXmlHttpObject();
     if(x==null){
@@ -60,7 +56,7 @@ function stateChanged(){
 			<tr>
 				<td>Return Date</td>
 				<td colspan="2">
-					<s:textfield name="expectedReturnDate" id="expectedReturnDate" cssClass="selwidth" />
+					<input type="date" name="expectedReturnDate" id="expectedReturnDate" value="<s:property value="expectedReturnDate" />" />
 				</td>
 			</tr>
 			<tr>

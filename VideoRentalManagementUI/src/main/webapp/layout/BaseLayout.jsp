@@ -19,10 +19,7 @@
 
 <link type="text/css" href="css/vrms-styles.css" rel="stylesheet" />
 <link type="text/css" href="css/vrms-content-styles.css" rel="stylesheet" />
-<link href="css/ui-lightness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" type="text/css" />
 
-<script src="js/jquery-1.10.2.js"></script>
-<script src="js/jquery-ui-1.10.4.custom.min.js"></script>
 <script src="js/vrms.js"></script>
 <script src="js/vrms-topnav.js"></script>
 
