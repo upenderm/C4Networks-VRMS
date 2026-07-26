@@ -1,6 +1,13 @@
 eclipse.preferences.version=1
 encoding//src/main/java=UTF-8
 encoding//src/main/resources=UTF-8
+encoding//src/main/webapp/bodycontent/AddCustomer.jsp=UTF-8
+encoding//src/main/webapp/bodycontent/RentalClose.jsp=UTF-8
+encoding//src/main/webapp/bodycontent/RentalCloseCustDetails.jsp=UTF-8
+encoding//src/main/webapp/bodycontent/RentalDefine.jsp=UTF-8
+encoding//src/main/webapp/bodycontent/RentalFinalize.jsp=UTF-8
+encoding//src/main/webapp/layout/BaseLayout.jsp=UTF-8
+encoding//src/main/webapp/layout/Menu.jsp=UTF-8
 encoding//src/test/java=UTF-8
 encoding//src/test/resources=UTF-8
 encoding/<project>=UTF-8

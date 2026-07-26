@@ -17,11 +17,21 @@ public class LogoutAction extends ActionSupport {
 	 */
 	private static final long serialVersionUID = 1L;
 	private static final Logger logger = Logger.getLogger(LogoutAction.class.getName());
+	private String targetUrl;
 
 	public String execute() {
 		logger.info("Logout Action call invoked");
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		String host = request.getServerName();
+		if("localhost".equalsIgnoreCase(host)) {
+			targetUrl = "http://localhost:8080/C4IMSUI";
+		} else {
+			targetUrl = "https://www.c4cloudlab.com/ims/";
+		}
+		System.out.println("TARGET URL = "+ targetUrl);
+
 		boolean isSecure = false;
 //		String contextPath = null;
 		if (request != null) {
@@ -59,6 +69,10 @@ public class LogoutAction extends ActionSupport {
 			response.addCookie(cookie4);
 		}
 		return SUCCESS;
+	}
+
+	public String getTargetUrl() {
+		return targetUrl;
 	}
 
 }
