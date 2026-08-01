@@ -1,0 +1,112 @@
+* {
+	box-sizing: border-box;
+}
+
+body {
+	margin: 0;
+}
+
+.container {
+	background: linear-gradient(to top, #00bffe, #00fd95);
+	height: 100vh;
+}
+/* Style the header */
+.header {
+	background-color: #2D3E50;
+	padding: 10px;
+	text-align: center;
+	border: 0px solid red;
+	text-align: center;
+	font-family: Gadugi;
+	clear: left;
+	color: white;
+	font-size: 20px;
+}
+/* Footer */
+.footer {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 50px; /* Height of the footer */
+	background-color: #2D3E50;
+	text-align: center;
+	color: white;
+	font-family: Gadugi;
+	margin: 0 auto;
+
+}
+/* Style the top navigation bar */
+.topnav {
+	overflow: hidden;
+	background-color: #333;
+	padding: 0px 0px 0px 20px;
+	border: 0px solid white;
+}
+
+/* Style the topnav links */
+.topnav a {
+	float: left;
+	display: block;
+	color: #f2f2f2;
+	text-align: center;
+	font-family: Arial bold;
+	font-size: 20px;
+	padding: 20px 15px;
+	text-decoration: none;
+}
+
+/* Change color on hover */
+.topnav a:hover {
+	background-color: #ddd;
+	color: black;
+}
+
+/* Create three unequal columns that floats next to each other */
+.column {
+	float: left;
+	height: 67vh;
+}
+
+/* Left and right column */
+.column.leftside {
+	width: 10%;
+	background-image: border: 0px solid black;
+	background-color: red;
+}
+
+.column.rightside {
+	width: 10%;
+	background-image: border: 0px solid black;
+	background-color: pink;
+}
+/* Middle column */
+.column.middle {
+	width: 80%;
+	border: 0px solid pink;
+}
+
+/* Clear floats after the columns */
+.row:after {
+	content: "";
+	display: table;
+	clear: both;
+}
+
+/* Responsive layout - makes the three columns stack on top of each other instead of next to each other */
+@media ( max-width : 600px) {
+	.column.side, .column.middle {
+		width: 100%;
+	}
+}
+
+img {
+	width: 100%;
+	height: 100%;
+}
+
+.mysettings-menu {
+	position: absolute;
+	right: 0px;
+	top: 0px;
+	padding-right: 20px;
+}

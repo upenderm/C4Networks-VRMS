@@ -128,9 +128,6 @@ public class RentalAction extends ActionSupport {
 		HttpServletRequest request = ServletActionContext.getRequest();
 		HttpSession session = request.getSession();
 		UserDetails userDetails = (UserDetails) session.getAttribute("userDetails");
-		if (userDetails == null || userDetails.getCompanyDetails() == null) {
-			System.out.println("ERROR:: User Details is null");
-		}
 
 		List<RentalDetails> rentalsActiveList = VideoRentalManagementClient.getInstance()
 				.getActiveRentalsList(userDetails.getCompanyDetails().getCompanyId());

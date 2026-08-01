@@ -1,106 +1,86 @@
-<%@ page contentType="text/html;charset=UTF-8" language="java"%>
 <%@ taglib uri="/struts-tags" prefix="s"%>
 <jsp:directive.page import="java.util.ArrayList" />
 <%
-final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(this.getClass());
-logger.info("In " + this.getClass().getSimpleName().replace("_", "."));
+	final org.apache.log4j.Logger logger = org.apache.log4j.Logger.getLogger(this.getClass());
+	logger.info("In " + this.getClass().getSimpleName().replace("_", "."));
 %>
+<?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE html>
-<html lang="en">
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-<title>VRMS - ReelTrack</title>
-<meta charset="utf-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>VRMS</title>
+<meta http-equiv="Content-Type" content="application/xhtml+xml; charset=utf-8" />
+<meta name="description" content="Video Rental Management System" />
+<meta name="keywords" content="C4VRMS, VRMS" />
+<meta name="robots" content="index, follow" />
 <link type="text/css" href="css/vrms-styles.css" rel="stylesheet" />
-<script src="js/vrms-theme.js"></script>
+<link type="text/css" href="css/vrms-content-styles.css" rel="stylesheet" />
 <script src="js/vrms-topnav.js"></script>
 <script src="js/vrms.js"></script>
+<script type="text/javascript">
+	function submitThisForm(action) {
+		document.headerForm.action = action;
+		document.headerForm.submit();
+	}
+</script>
+<!--[if lt IE 7]>
+	<style media="screen" type="text/css">
+	#container {
+		height:100%;
+	}
+	</style>
+	<![endif]-->
 </head>
 <body>
-	<div class="app">
-		<div class="app-banner">
-			<div class="banner-logo-area">
-				<span class="logo-placeholder">🎬</span>
-				<div class="banner-text">
-					<span class="banner-title">Reel<span>Track</span></span> <span
-						class="banner-subtitle">Video Rental Management System</span>
+	<s:form id="headerForm" name="headerForm" action="" theme="simple">
+		<div id="container">
+			<div id="header">
+				<!-- Header start -->
+				<p>&nbsp;</p>
+				<h1>VIDEO RENTAL MANAMEMENT SYSTEM</h1>
+				<p style="text-align: right">
+					<s:submit cssClass="button buttonSettings" value="Settings" type="button" onclick="submitThisForm('userSettingsAction.action')"></s:submit>
+					<s:submit cssClass="button buttonLogout" value="LogOut" type="button" onclick="submitThisForm('logoutAction.action')"></s:submit>
+					<%-- <button class="button buttonSettings" style="vertical-align: middle">
+						<span>Settings</span>
+					</button>
+					<button class="button buttonLogout" style="vertical-align: middle">
+						<span>LogOut</span>
+					</button> --%>
+				</p>
+				<!-- Header end -->
+			</div>
+			<div class="topnav" id="menuItemList">
+				<a class="menuItem ${selectedMenuMap.home}" onclick="setSelectedMenuItem('home')" href="index.jsp">HOME</a> 
+				<a class="menuItem ${selectedMenuMap.viewCustomers}" onclick="setSelectedMenuItem('viewCustomers')" href="customerAction_viewCustomerList.action">VIEW CUSTOMERS</a> 
+				<!-- <a class="menuItem ${selectedMenuMap.addCustomer}" onclick="setSelectedMenuItem('addCustomer')"	href="customerAction_defineCustomer.action">ADD CUSTOMER</a>  --> 
+				<a class="menuItem ${selectedMenuMap.categories}" onclick="setSelectedMenuItem('categories')" href="categoriesAction_viewCategories.action">CATEGORIES</a> 
+				<a class="menuItem ${selectedMenuMap.movies}" onclick="setSelectedMenuItem('movies')" href="moviesAction_viewMoviesList.action">MOVIES</a> 
+				<!-- <a class="menuItem ${selectedMenuMap.addMovie}" onclick="setSelectedMenuItem('addMovie')" href="moviesAction_defineMovie.action">ADD MOVIE</a>  --> 
+				<a class="menuItem ${selectedMenuMap.activeRentals}" onclick="setSelectedMenuItem('activeRentals')" href="rentalAction_viewActiveRentals.action">RENTALS</a> 
+				<!-- <a class="menuItem ${selectedMenuMap.allRentals}" onclick="setSelectedMenuItem('allRentals')" href="rentalAction_viewAllRentals.action">ALL RENTALS</a>  --> 
+				<!-- <a class="menuItem ${selectedMenuMap.makeRental}" onclick="setSelectedMenuItem('makeRental')" href="rentalAction_defineRental.action">MAKE A RENTAL</a>  --> 
+				<a class="menuItem ${selectedMenuMap.closeRental}" onclick="setSelectedMenuItem('closeRental')" href="rentalAction_closeRentalPage.action">CLOSE A RENTAL</a>
+			</div>
+
+			<div id="body">
+				<!-- Body start -->
+				<div class="col-container">
+					<div class="col leftBanner" style="background-image: url('images/vb1.jpg')";>&nbsp;</div>
+					<div class="col bodyContainer" style="background-image: url('images/InternetOfThings.jpg')";>&nsbp;</div>
+					<div class="col rightBanner" style="background-image: url('images/vb2.jpg')";>&nbsp;</div>
+					<!--	<image src="images/vb4.jpg" /> -->
+
+				</div>
+				<div id="footer">
+					<!-- Footer start -->
+					<p>
+						<strong>Copyright � C4Networks</strong>
+					</p>
+					<!-- Footer end -->
 				</div>
 			</div>
-			<div class="banner-tagline">Your movies. Your customers. All in
-				one place.</div>
 		</div>
-		<jsp:include page="layout/Header.jsp" />
-		<div class="app-body">
-			<nav class="sidebar">
-				<jsp:include page="layout/Menu.jsp" />
-			</nav>
-			<main class="main-content">
-				<div class="page-heading">
-					<h1>Dashboard</h1>
-					<p>Welcome back – here's what's happening today.</p>
-				</div>
-				<div class="stat-row">
-					<div class="stat-card">
-						<span class="sc-label">Active Rentals</span><span class="sc-value">—</span><span
-							class="sc-sub">Live data</span>
-					</div>
-					<div class="stat-card">
-						<span class="sc-label">Due Today</span><span class="sc-value"
-							style="color: var(--warning)">—</span><span class="sc-sub"
-							style="color: var(--warning)">Needs attention</span>
-					</div>
-					<div class="stat-card">
-						<span class="sc-label">Overdue</span><span class="sc-value"
-							style="color: var(--danger)">—</span><span class="sc-sub"
-							style="color: var(--danger)">Contact customers</span>
-					</div>
-					<div class="stat-card">
-						<span class="sc-label">Total Customers</span><span
-							class="sc-value">—</span><span class="sc-sub">Registered</span>
-					</div>
-					<div class="stat-card">
-						<span class="sc-label">Movies in Stock</span><span
-							class="sc-value">—</span><span class="sc-sub">Across all
-							categories</span>
-					</div>
-					<div class="stat-card">
-						<span class="sc-label">Revenue (Month)</span><span
-							class="sc-value">—</span><span class="sc-sub">vs last
-							month</span>
-					</div>
-				</div>
-				<div class="panel">
-					<div class="panel-header">
-						<h2>Recent Rentals</h2>
-						<a href="rentalAction_defineRental.action"
-							class="btn btn-primary btn-sm">+ New Rental</a>
-					</div>
-					<div class="tbl-wrap">
-						<table>
-							<thead>
-								<tr>
-									<th>ID</th>
-									<th>Customer</th>
-									<th>Movie</th>
-									<th>Rented</th>
-									<th>Due</th>
-									<th>Status</th>
-									<th></th>
-								</tr>
-							</thead>
-							<tbody>
-								<tr>
-									<td colspan="7"
-										style="text-align: center; padding: 2rem; color: var(--muted)">No
-										recent rentals.</td>
-								</tr>
-							</tbody>
-						</table>
-					</div>
-				</div>
-			</main>
-		</div>
-		<jsp:include page="layout/Footer.jsp" />
-	</div>
+	</s:form>
 </body>
 </html>
