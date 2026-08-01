@@ -1,0 +1,78 @@
+package com.c4networks.vrms.ui.action;
+
+import javax.servlet.http.Cookie;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+
+import org.apache.log4j.Logger;
+import org.apache.struts2.ServletActionContext;
+
+import com.opensymphony.xwork2.ActionSupport;
+
+public class LogoutAction extends ActionSupport {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 1L;
+	private static final Logger logger = Logger.getLogger(LogoutAction.class.getName());
+	private String targetUrl;
+
+	public String execute() {
+		logger.info("Logout Action call invoked");
+		HttpServletRequest request = ServletActionContext.getRequest();
+		HttpServletResponse response = ServletActionContext.getResponse();
+		
+		String host = request.getServerName();
+		if("localhost".equalsIgnoreCase(host)) {
+			targetUrl = "http://localhost:8080/C4IMSUI";
+		} else {
+			targetUrl = "https://www.c4cloudlab.com/ims/";
+		}
+		System.out.println("TARGET URL = "+ targetUrl);
+
+		boolean isSecure = false;
+//		String contextPath = null;
+		if (request != null) {
+			HttpSession session = request.getSession(false);
+			if (session != null) {
+				session.invalidate();
+			}
+			isSecure = request.isSecure();
+//			contextPath = request.getContextPath();
+		}
+//	    SecurityContext context = SecurityContextHolder.getContext();
+//	    SecurityContextHolder.clearContext();
+//	    context.setAuthentication(null);
+		if (response != null) {
+			Cookie cookie = new Cookie("JSESSIONID", null);
+			String cookiePath = "/";
+			cookie.setPath(cookiePath);
+			cookie.setMaxAge(0);
+			cookie.setSecure(isSecure);
+			response.addCookie(cookie);
+			Cookie cookie2 = new Cookie("C4TOKEN", null);
+			cookie2.setPath(cookiePath);
+			cookie2.setMaxAge(0);
+			cookie2.setSecure(isSecure);
+			response.addCookie(cookie2);
+			Cookie cookie3 = new Cookie("SSOSESSIONID", null);
+			cookie3.setPath(cookiePath);
+			cookie3.setMaxAge(0);
+			cookie3.setSecure(isSecure);
+			response.addCookie(cookie3);
+			Cookie cookie4 = new Cookie("C4TOKEN2", null);
+			cookie4.setPath(cookiePath);
+			cookie4.setMaxAge(0);
+			cookie4.setSecure(isSecure);
+			response.addCookie(cookie4);
+		}
+		return SUCCESS;
+	}
+
+	public String getTargetUrl() {
+		return targetUrl;
+	}
+
+}

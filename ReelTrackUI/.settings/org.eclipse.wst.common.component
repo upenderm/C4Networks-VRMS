@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?><project-modules id="moduleCoreId" project-version="1.5.0">
+            
+    
+    <wb-module deploy-name="VideoRentalManagementUI">
+                        
+        
+        <wb-resource deploy-path="/" source-path="/target/VideoRentalManagementUI"/>
+                        
+        
+        <wb-resource deploy-path="/" source-path="/src/main"/>
+                        
+        
+        <wb-resource deploy-path="/" source-path="/target/m2e-wtp/web-resources"/>
+                        
+        
+        <wb-resource deploy-path="/" source-path="/src/main/webapp" tag="defaultRootSource"/>
+                        
+        
+        <dependent-module archiveName="vrms-valueobjects-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vrms-valueobjects/vrms-valueobjects">
+                                    
+            
+            <dependency-type>uses</dependency-type>
+                                
+        
+        </dependent-module>
+                        
+        
+        <dependent-module archiveName="vrms-webservices-client-1.0.0-SNAPSHOT.jar" deploy-path="/WEB-INF/lib" handle="module:/resource/vrms-webservices-client/vrms-webservices-client">
+                                    
+            
+            <dependency-type>uses</dependency-type>
+                                
+        
+        </dependent-module>
+                        
+        
+        <property name="context-root" value="VideoRentalManagementUI"/>
+                        
+        
+        <property name="java-output-path" value="/VideoRentalManagementUI/target/classes"/>
+                    
+    
+    </wb-module>
+        
+
+</project-modules>

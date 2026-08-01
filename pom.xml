@@ -12,5 +12,6 @@
 		<module>VideoRentalManagementWebServices</module>
 		<module>VideoRentalManagementWebServicesClient</module>
 		<module>VideoRentalManagementUI</module>
+		<module>ReelTrackUI</module>
 	</modules>
 </project>

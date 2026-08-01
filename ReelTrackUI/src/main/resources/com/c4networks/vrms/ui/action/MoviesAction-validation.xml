@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE validators PUBLIC
+			"-//OpenSymphony Group//XWork Validator 1.0//EN"
+				"http://struts.apache.org/dtds/xwork-validator-1.0.2.dtd">
+
+<validators>
+
+	<field name="movieName">
+		<field-validator type="requiredstring">
+			<message>Movie Name is required</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[([a-zA-Z&-:\s]*)]]></param>
+			<message>Movie Name is invalid</message>
+		</field-validator>
+	</field>
+	
+	<field name="availableCopies">
+		<field-validator type="required">
+			<message>No. of copies is required</message>
+		</field-validator>
+		<field-validator type="regex">
+			<param name="expression"><![CDATA[([0-9]*)]]></param>
+			<message>No. of copies is invalid</message>
+		</field-validator>
+	</field>
+	
+</validators>
