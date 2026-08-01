@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE struts PUBLIC
 "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
-"http://struts.apache.org/dtds/struts-2.0.dtd ">
+"http://struts.apache.org/dtds/struts-2.0.dtd">
 <struts>
 
 	<include file="struts-default.xml"/>
@@ -46,13 +46,13 @@
 			</interceptor-ref>
 			<!-- <interceptor-ref name="menuSelector" />	 -->
 			<result name="success" type="tiles">customerList</result>
-			<result name="input">/bodycontent/AddCustomer.jsp</result>
+			<result name="input" type="tiles">addcustomer</result>
 			<!-- <result name="addcustomer" type="redirect">
 				<param name="location">customerAction_viewCustomerList.action</param>
         		<param name="addCustResult">created</param>
 			</result> -->
-			<result name="addcustomer">/bodycontent/AddCustomer.jsp</result>
-			<result name="definecustomer">/bodycontent/AddCustomer.jsp</result>
+			<result name="addcustomer" type="tiles">addcustomer</result>
+			<result name="definecustomer" type="tiles">addcustomer</result>
 			<result name="history" type="tiles">viewHistory</result>
 		</action>
 
@@ -70,8 +70,7 @@
 			<result name="definemovie" type="tiles">addMovie</result>
 		</action>
 
-		<action name="rentalAction_*" class="com.c4networks.vrms.ui.action.RentalAction"
-			method="{1}">
+		<action name="rentalAction_*" class="com.c4networks.vrms.ui.action.RentalAction" method="{1}">
 			<result name="success" type="tiles">rentalsList</result>
 			<result name="input" type="tiles">rentalDefine</result>
 			<result name="definerental" type="tiles">rentalDefine</result>
