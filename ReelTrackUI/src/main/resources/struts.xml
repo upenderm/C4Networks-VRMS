@@ -46,13 +46,13 @@
 			</interceptor-ref>
 			<!-- <interceptor-ref name="menuSelector" />	 -->
 			<result name="success" type="tiles">customerList</result>
-			<result name="input" type="tiles">addcustomer</result>
+			<result name="input" type="tiles">addCustomer</result>
 			<!-- <result name="addcustomer" type="redirect">
 				<param name="location">customerAction_viewCustomerList.action</param>
         		<param name="addCustResult">created</param>
 			</result> -->
-			<result name="addcustomer" type="tiles">addcustomer</result>
-			<result name="definecustomer" type="tiles">addcustomer</result>
+			<result name="addcustomer" type="tiles">addCustomer</result>
+			<result name="definecustomer" type="tiles">addCustomer</result>
 			<result name="history" type="tiles">viewHistory</result>
 		</action>
 

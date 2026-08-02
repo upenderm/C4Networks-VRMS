@@ -8,8 +8,8 @@
       <!-- <put-attribute name = "title"  value = "Template"/> -->
 	  	<put-attribute name = "header" value = "/layout/Header.jsp"/>
       	<put-attribute name = "menu" value = "/layout/Menu.jsp"/>
-      	<put-attribute name = "leftBanner"   value = "/layout/LeftBanner.jsp"/>
-	  	<put-attribute name = "rightBanner"   value = "/layout/RightBanner.jsp"/>
+<!--      	<put-attribute name = "leftBanner"   value = "/layout/LeftBanner.jsp"/>-->
+<!--	  	<put-attribute name = "rightBanner"   value = "/layout/RightBanner.jsp"/>-->
       	<put-attribute name = "footer"   value = "/layout/Footer.jsp"/>
    	</definition>
 
