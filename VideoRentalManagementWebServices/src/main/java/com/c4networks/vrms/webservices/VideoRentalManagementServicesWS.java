@@ -7,6 +7,7 @@ import java.util.List;
 import javax.jws.HandlerChain;
 import javax.jws.WebMethod;
 import javax.jws.WebService;
+import javax.jws.soap.SOAPBinding;
 import javax.xml.bind.annotation.XmlSeeAlso;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,6 +28,7 @@ import com.c4networks.vrms.vo.UserDetails;
 @HandlerChain(file = "handler-chain.xml")
 @WebService(name = "VideoRentalManagementServicesManager", serviceName = "VideoRentalManagementServices", portName = "VideoRentalManagementServicesPort")
 @XmlSeeAlso({ RentalDetails.class, MovieDetails.class, AgentCustomerDetails.class, Categories.class, RentalFinalData.class })
+@SOAPBinding(style = SOAPBinding.Style.DOCUMENT, use = SOAPBinding.Use.LITERAL)
 public class VideoRentalManagementServicesWS {
 
 	@Autowired
@@ -44,7 +46,7 @@ public class VideoRentalManagementServicesWS {
 	@Autowired
 	private UserDetailsService usrDtlsService;
 
-	@WebMethod
+	@WebMethod(operationName = "getCustomersListForUser")
 	public List<AgentCustomerDetails> getCustomersListForUser(String companyOID) {
 		List<AgentCustomerDetails> custDtlsList = new ArrayList<>();
 		try {
@@ -56,7 +58,7 @@ public class VideoRentalManagementServicesWS {
 		return custDtlsList;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "addCustomerForUser")
 	public Integer addCustomerForUser(AgentCustomerDetails custDtls, UserDetails userDetails) {
 		Integer result = 0;
 		try {
@@ -68,7 +70,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "viewAllMoviesForUser")
 	public List<MovieDetails> viewAllMoviesForUser(String companyOID) {
 		List<MovieDetails> moviesList = new ArrayList<>();
 		try {
@@ -89,7 +91,7 @@ public class VideoRentalManagementServicesWS {
 		return moviesList;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "addMovies")
 	public Integer addMovies(MovieDetails movie, String categoryId, UserDetails userDetails) {
 		Integer result = 0;
 		try {
@@ -101,7 +103,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "viewAllMovieCategoriesForUser")
 	public List<Categories> viewAllMovieCategoriesForUser(String companyOID) {
 		List<Categories> categoriesList = new ArrayList<>();
 		try {
@@ -113,7 +115,7 @@ public class VideoRentalManagementServicesWS {
 		return categoriesList;
 	}
 	
-	@WebMethod
+	@WebMethod(operationName = "getCategoriesDetailsById")
 	public Categories getCategoriesDetailsById(String catId) {
 		Categories cdls = null;
 		try {
@@ -125,7 +127,7 @@ public class VideoRentalManagementServicesWS {
 		return cdls;
 	}
 	
-	@WebMethod
+	@WebMethod(operationName = "addCategory")
 	public Integer addCategory(Categories category, UserDetails userDetails) {
 		Integer result = 0;
 		try {
@@ -137,7 +139,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 	
-	@WebMethod
+	@WebMethod(operationName = "deleteCategory")
 	public Integer deleteCategory(Categories category) {
 		Integer result = 0;
 		try {
@@ -149,7 +151,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "addRental")
 	public Integer addRental(RentalDetails rentalDetails, String customerId, UserDetails userDetails, String movieId,
 			String expectedReturnDate) {
 		Integer result = 0;
@@ -162,7 +164,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "viewActiveRentalsForAgent")
 	public List<RentalDetails> viewActiveRentalsForAgent(String companyId) {
 		List<RentalDetails> activeRentalsList = new ArrayList<>();
 		try {
@@ -174,7 +176,7 @@ public class VideoRentalManagementServicesWS {
 		return activeRentalsList;
 	}
 	
-	@WebMethod
+	@WebMethod(operationName = "viewInactiveRentalsForAgent")
 	public List<RentalDetails> viewInactiveRentalsForAgent(String companyId) {
 		List<RentalDetails> inActiveRentalsList = new ArrayList<>();
 		try {
@@ -186,7 +188,7 @@ public class VideoRentalManagementServicesWS {
 		return inActiveRentalsList;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "viewAllRentalsForAgent")
 	public List<RentalDetails> viewAllRentalsForAgent(String companyId) {
 		List<RentalDetails> allRentalList = new ArrayList<>();
 		try {
@@ -198,7 +200,7 @@ public class VideoRentalManagementServicesWS {
 		return allRentalList;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "getRentalsByCustomerId")
 	public List<RentalDetails> getRentalsByCustomerId(String customerId) {
 		List<RentalDetails> allRentalList = new ArrayList<>();
 		try {
@@ -210,7 +212,7 @@ public class VideoRentalManagementServicesWS {
 		return allRentalList;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "viewRentalHistoryByCustomerId")
 	public List<RentalDetails> viewRentalHistoryByCustomerId(String customerId, String companyId) {
 		List<RentalDetails> rentalHistoryList = new ArrayList<>();
 		try {
@@ -222,7 +224,7 @@ public class VideoRentalManagementServicesWS {
 		return rentalHistoryList;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "closeRental")
 	public Integer closeRental(RentalFinalData finalData, boolean bonusCheck) {
 		Integer result = 0;
 		try {
@@ -234,7 +236,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "rentalFinalize")
 	public RentalFinalData rentalFinalize(String rentalId) {
 		RentalFinalData result = null;
 		try {
@@ -246,7 +248,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "viewBonusByCustomerById")
 	public Integer viewBonusByCustomerById(String customerId) {
 		Integer result = 0;
 		try {
@@ -258,7 +260,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "getAvailableMovieCopies")
 	public Integer getAvailableMovieCopies(String movieId, String companyId) {
 		Integer result = 0;
 		try {
@@ -270,7 +272,7 @@ public class VideoRentalManagementServicesWS {
 		return result;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "getCustomerDetailsById")
 	public AgentCustomerDetails getCustomerDetailsById(String custId) {
 		AgentCustomerDetails cdls = null;
 		try {
@@ -282,7 +284,7 @@ public class VideoRentalManagementServicesWS {
 		return cdls;
 	}
 
-	@WebMethod
+	@WebMethod(operationName = "getUserDetailsById")
 	public UserDetails getUserDetailsById(String userId) {
 		System.out.println("UserId is :" + userId);
 		UserDetails userDetails = null;

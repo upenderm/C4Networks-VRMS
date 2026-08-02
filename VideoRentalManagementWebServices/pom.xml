@@ -24,11 +24,7 @@
 		</dependency>
 		
 		<!-- https://mvnrepository.com/artifact/com.sun.xml.ws/jaxws-maven-plugin -->
-		<dependency>
-		    <groupId>com.sun.xml.ws</groupId>
-		    <artifactId>jaxws-maven-plugin</artifactId>
-		    <version>2.3.2</version>
-		</dependency>
+
 		<dependency>
 			<groupId>com.sun.xml.ws</groupId>
 			<artifactId>jaxws-rt</artifactId>
@@ -96,20 +92,20 @@
 		<!-- <pluginManagement> -->
 		<plugins>
 			<plugin>
-				<groupId>org.jvnet.jax-ws-commons</groupId>
+				<groupId>com.sun.xml.ws</groupId>
 				<artifactId>jaxws-maven-plugin</artifactId>
-				<version>2.3</version>
+				<version>2.3.2</version>
 				<executions>
 					<execution>
 						<id>VideoRentalManagementServicesWS</id>
-						<phase>compile</phase>
+						<phase>process-classes</phase>
 						<goals>
 							<goal>wsgen</goal>
 						</goals>
 						<configuration>
-							<target>2.1</target>
 							<sei>
-								com.c4networks.vrms.webservices.VideoRentalManagementServicesWS</sei>
+								com.c4networks.vrms.webservices.VideoRentalManagementServicesWS
+							</sei>
 							<genWsdl>true</genWsdl>
 							<resourceDestDir>
 								${project.build.directory}/generated-sources/wsdl/external</resourceDestDir>
@@ -124,7 +120,7 @@
 					<execution>
 						<id>copy-resources</id>
 						<!-- here the phase you need -->
-						<phase>compile</phase>
+						<phase>process-resources</phase>
 						<goals>
 							<goal>copy-resources</goal>
 						</goals>
@@ -134,7 +130,7 @@
 							<resources>
 								<resource>
 									<directory>target/generated-sources/wsdl</directory>
-									<filtering>true</filtering>
+									<filtering>false</filtering>
 								</resource>
 							</resources>
 						</configuration>
