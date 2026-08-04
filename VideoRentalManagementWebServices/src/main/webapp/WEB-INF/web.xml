@@ -11,6 +11,19 @@
 	<listener>
 		<listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
 	</listener>
+
+	<filter>
+		<filter-name>HibernateCleanupFilter</filter-name>
+		<filter-class>
+			com.c4networks.vrms.web.HibernateCleanupFilter
+		</filter-class>
+	</filter>
+
+	<filter-mapping>
+		<filter-name>HibernateCleanupFilter</filter-name>
+		<url-pattern>/services/*</url-pattern>
+	</filter-mapping>
+
 	<welcome-file-list>
 		<welcome-file>index.jsp</welcome-file>
 	</welcome-file-list>
@@ -29,4 +42,5 @@
 		<servlet-name>VideoRentalManagementWebServices</servlet-name>
 		<url-pattern>/services/*</url-pattern>
 	</servlet-mapping>
+
 </web-app>
