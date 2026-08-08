@@ -1,5 +1,5 @@
-INSERT INTO C4_PRODUCT_DETAILS VALUES ('VRMS', 'VRMS', 'VideoRentalManagementSystem', 'http://localhost:8080/VideoRentalManagementUI/');
-INSERT INTO C4_PRODUCT_DETAILS VALUES ('CDMS', 'CDMS', 'ContractDocumentsManagementSystem', 'http://localhost:8081/ContractDocumentsManagementUI/');
+INSERT INTO C4_PRODUCT_DETAILS VALUES ('VRMS', 'VRMS', 'VideoRentalManagementSystem');
+INSERT INTO C4_PRODUCT_DETAILS VALUES ('CDMS', 'CDMS', 'ContractDocumentsManagementSystem');
 
 INSERT INTO C4_COMPANY_DETAILS (
 COMPANY_OID, COMPANY_ID, COMPANY_NAME, PHONE, CREATED_BY, CREATED_DATE, LAST_MODIFIED_BY, LAST_MODIFIED_DATE, PRODUCT_ID
